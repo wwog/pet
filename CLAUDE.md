@@ -1,3 +1,17 @@
+# Project Overview
+
+**Puppy Life OS (小狗人生)** — an AI-native pet life management platform for modern pet-owning families, positioned as a family "AI pet butler" and a "digital life archive" for the dog. It uses AI and family-collaboration mechanisms to consolidate scattered pet-care information into a visualized, traceable, and collaborative full-lifecycle pet archive. Core domains include: family system with flexible RBAC permissions, pet profiles, health records, cloud album, smart calendar, walk tracking, AI pet translator, daily briefing, and finance manager. (Product requirements: `degisn/产品原型.md`; API design: `api_doc/`.)
+
+## Architecture (DDD layering)
+
+This is a Rust workspace structured with Domain-Driven Design (DDD). Each crate maps to one architectural layer:
+
+- `crates/domain` — **Domain layer**: core business models (entities, value objects, domain errors `AppError` / `AppResult`). Depends on no infrastructure — only serialization and primitive-type libraries (serde, uuid, chrono, thiserror).
+- `crates/db` — **Infrastructure layer**: persistence and data access; implements the repository contracts defined by the domain layer.
+- `crates/api` — **Application / interface layer**: the entry point (`main.rs`, on tokio), responsible for exposing HTTP endpoints and orchestrating use cases.
+
+Dependencies always point inward (api / db → domain); the domain layer stays pure and never depends back on infrastructure or frameworks.
+
 # Rust coding guidelines
 
 - Prioritize code correctness and clarity. Speed and efficiency are secondary priorities unless otherwise specified.
@@ -11,7 +25,6 @@
   - Example: avoid `let _ = client.request(...).await?;` - use `client.request(...).await?;` instead
 - When implementing async operations that may fail, ensure errors propagate to the superstratum so users get meaningful feedback.
 - Never create files with `mod.rs` paths - prefer `src/some_module.rs` instead of `src/some_module/mod.rs`.
-- When creating new crates, prefer specifying the library root path in `Cargo.toml` using `[lib] path = "...rs"` instead of the default `lib.rs`, to maintain consistent and descriptive naming (e.g., `imsdk.rs` or `main.rs`).
 - Avoid creative additions unless explicitly requested
 - Use full words for variable names (no abbreviations like "q" for "queue")
 - Use variable shadowing to scope clones in async contexts for clarity, minimizing the lifetime of borrowed references.
