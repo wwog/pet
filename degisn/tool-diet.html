@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>饮食计算器 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .nav-bar svg { color: var(--fg); }
+  .nav-bar .title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .screen-body { padding: 0 16px 100px; }
+
+  /* 今日热量环 —— 惊艳一笔 */
+  .cal-hero { display: flex; align-items: center; gap: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; margin-bottom: 14px; }
+  .cal-ring { width: 96px; height: 96px; flex-shrink 0; position: relative; }
+  .cal-ring svg { transform: rotate(-90deg); }
+  .cal-ring .center { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
+  .cal-ring .center .v { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .cal-ring .center .l { font-size: 9px; color: var(--muted); }
+  .cal-hero .info .t { font-size: 13px; color: var(--muted); }
+  .cal-hero .info .st { font-size: 16px; font-weight: 700; margin: 3px 0; }
+  .cal-hero .info .st.ok { color: var(--success); }
+  .cal-hero .info .d { font-size: 12px; color: var(--muted); line-height: 1.45; }
+  .cal-hero .info .d b { color: var(--fg); }
+
+  /* 输入卡 */
+  .input-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; margin-bottom: 14px; }
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+  .field .lab { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+  .field .lab .v { color: var(--accent-deep); font-family: var(--font-mono); }
+  .brand-input { border: 1.5px solid var(--border); border-radius: var(--r-md); padding: 0 14px; display: flex; align-items: center; gap: 8px; }
+  .brand-input:focus-within { border-color: var(--accent); }
+  .brand-input input { flex: 1; border: 0; background: transparent; outline: none; min-height: 44px; font-size: 14px; color: var(--fg); }
+  .brand-input .tag { font-size: 10px; color: var(--muted); background: var(--surface-2); padding: 3px 7px; border-radius: var(--r-pill); }
+
+  .slider-row { display: flex; align-items: center; gap: 12px; }
+  .slider-row .num { font-family: var(--font-mono); font-size: 20px; font-weight: 700; width: 64px; text-align: right; font-variant-numeric: tabular-nums; }
+  .slider-row .num .u { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .slider-track { flex: 1; height: 6px; background: var(--surface-2); border-radius: 3px; position: relative; }
+  .slider-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 3px; width: 42%; }
+  .slider-thumb { position: absolute; top: 50%; left: 42%; transform: translate(-50%, -50%); width: 22px; height: 22px; background: #fff; border: 2px solid var(--accent); border-radius: 50%; box-shadow: 0 2px 6px oklch(24% 0.03 60 / 0.2); }
+
+  /* 换算结果 */
+  .result-card { background: var(--accent-soft); border: 1px solid oklch(80% 0.06 55); border-radius: var(--r-md); padding: 14px; margin-bottom: 14px; }
+  .result-card .row { display: flex; justify-content: space-between; align-items: baseline; }
+  .result-card .row .l { font-size: 12px; color: var(--accent-deep); font-weight: 600; }
+  .result-card .row .v { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--accent-deep); font-variant-numeric: tabular-nums; }
+  .result-card .row .v .u { font-size: 11px; font-weight: 500; }
+  .result-card .hint { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.45; }
+
+  /* 今日已喂 */
+  .section-label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; margin: 4px 4px 10px; display: flex; justify-content: space-between; }
+  .section-label .cnt { font-family: var(--font-mono); color: var(--accent-deep); }
+  .feed-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .feed { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .feed:last-child { border-bottom: 0; }
+  .feed .ic { width: 32px; height: 32px; border-radius: 9px; background: var(--accent-soft); display: grid; place-items: center; color: var(--accent-deep); flex-shrink: 0; }
+  .feed .info { flex: 1; }
+  .feed .info .n { font-size: 13px; font-weight: 600; }
+  .feed .info .m { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .feed .amt { font-family: var(--font-mono); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .add-feed { display: flex; gap: 8px; margin-top: 12px; }
+  .add-feed input { flex: 1; border: 1.5px solid var(--border); border-radius: var(--r-md); padding: 0 14px; height: 44px; font-size: 14px; outline: none; background: var(--surface); }
+  .add-feed input:focus { border-color: var(--accent); }
+  .add-feed button { border: 0; background: var(--accent); color: #fff; border-radius: var(--r-md); padding: 0 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="profile-me.html" data-od-id="back"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="title" data-od-id="page-title">饮食计算器</span>
+      <span class="back" style="opacity:0">·</span>
+    </div>
+
+    <div class="screen-body">
+      <div class="cal-hero" data-od-id="cal-hero">
+        <div class="cal-ring">
+          <svg width="96" height="96" viewBox="0 0 96 96">
+            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--surface-2)" stroke-width="10"/>
+            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--success)" stroke-width="10" stroke-dasharray="168 239" stroke-linecap="round"/>
+          </svg>
+          <div class="center"><div><div class="v">842</div><div class="l">kcal / 1100</div></div></div>
+        </div>
+        <div class="info">
+          <div class="t">豆豆今日摄入</div>
+          <div class="st ok">未超标 · 还可吃 258 kcal</div>
+          <div class="d">建议每日 <b>1100 kcal</b>（13kg 金毛 · 已结合今日遛弯 2.34km 消耗）</div>
+        </div>
+      </div>
+
+      <div class="input-card" data-od-id="input-card">
+        <div class="field">
+          <div class="lab"><span>狗粮品牌</span><span class="v">皇家 · 成犬</span></div>
+          <div class="brand-input">
+            <input type="text" value="皇家金毛专用粮" data-od-id="brand-input" />
+            <span class="tag">360 kcal/100g</span>
+          </div>
+        </div>
+        <div class="field">
+          <div class="lab"><span>喂食克重</span><span class="v" data-od-id="gram-val">150 g</span></div>
+          <div class="slider-row">
+            <div class="slider-track"><div class="slider-fill" id="fill"></div><div class="slider-thumb" id="thumb"></div></div>
+            <div class="num" id="num">540<span class="u">kcal</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-card" data-od-id="result">
+        <div class="row"><span class="l">本次换算</span><span class="v">540<span class="u">kcal</span></span></div>
+        <div class="row" style="margin-top:8px"><span class="l">占今日建议</span><span class="v">49<span class="u">%</span></span></div>
+        <div class="hint">150g 皇家金毛粮 = 540kcal。豆豆今日已摄入 842kcal，加这顿后达 1382kcal，将 <b style="color:var(--danger)">超标 282kcal</b>。建议减量至 90g。</div>
+      </div>
+
+      <div class="section-label"><span>今日已喂</span><span class="cnt">2 顿 · 842 kcal</span></div>
+      <div class="feed-list" data-od-id="feed-list">
+        <div class="feed">
+          <div class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6h10l-1 7c0 1-1 2-2 2H6c-1 0-2-1-2-2L3 6z" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <div class="info"><div class="n">早餐 · 皇家粮 170g</div><div class="m">07:15 · 奶妈 小棠</div></div>
+          <span class="amt">612 kcal</span>
+        </div>
+        <div class="feed">
+          <div class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="info"><div class="n">训练零食 · 鸡肉干 3 根</div><div class="m">14:30 · 奶爸 阿哲</div></div>
+          <span class="amt">230 kcal</span>
+        </div>
+      </div>
+
+      <div class="add-feed" data-od-id="add-feed">
+        <input type="text" placeholder="加一顿，如 晚餐 150g" data-od-id="feed-input" />
+        <button data-od-id="feed-add">添加</button>
+      </div>
+    </div>
+
+    <nav class="tab-bar" data-od-id="tab-bar">
+      <a href="tab-briefing.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 3l9 7v10a2 2 0 0 1-2 2h-4v-7h-6v7H6a2 2 0 0 1-2-2V10l9-7z"/></svg>简报</a>
+      <a href="tab-ai-chat.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V8a2 2 0 0 1 1-2z"/></svg>AI</a>
+      <a class="active" href="profile-me.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13" cy="9" r="4"/><path d="M5 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>我的</a>
+    </nav>
+    <div class="home-bar"></div>
+  </div>
+</div>
+<script>
+  var fill=document.getElementById('fill'), thumb=document.getElementById('thumb'), num=document.getElementById('num');
+  var pct=42, grams=150;
+  function render(){ fill.style.width=pct+'%'; thumb.style.left=pct+'%'; num.innerHTML=Math.round(grams*3.6)+'<span class="u">kcal</span>'; document.querySelector('[data-od-id="gram-val"]').textContent=grams+' g'; }
+  thumb.addEventListener('click', function(){ pct=pct>=80?20:pct+10; grams=Math.round(pct/42*150); render(); });
+  fill.addEventListener('click', function(){ pct=pct>=80?20:pct+10; grams=Math.round(pct/42*150); render(); });
+  document.querySelector('[data-od-id="feed-add"]').addEventListener('click', function(){
+    var v=document.querySelector('[data-od-id="feed-input"]').value.trim(); if(!v) return;
+    var list=document.querySelector('[data-od-id="feed-list"]');
+    var d=document.createElement('div'); d.className='feed';
+    d.innerHTML='<div class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6h10l-1 7c0 1-1 2-2 2H6c-1 0-2-1-2-2L3 6z" stroke="currentColor" stroke-width="1.5"/></svg></div><div class="info"><div class="n">'+v+'</div><div class="m">刚刚 · 奶爸 阿哲</div></div><span class="amt">540 kcal</span>';
+    list.appendChild(d); document.querySelector('[data-od-id="feed-input"]').value='';
+  });
+</script>
+</body>
+</html>

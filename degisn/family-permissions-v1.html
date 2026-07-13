@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>家庭·权限管理 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .nav-bar svg { color: var(--fg); }
+  .nav-bar .title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+
+  /* 成员头部 */
+  .member-head { display: flex; align-items: center; gap: 14px; padding: 4px 20px 16px; }
+  .member-head .av { width: 56px; height: 56px; border-radius: 50%; background: var(--mint); display: grid; place-items: center; color: oklch(28% 0.05 145); font-weight: 700; font-size: 20px; flex-shrink: 0; }
+  .member-head .info .name { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+  .member-head .info .role-edit { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 12px; color: var(--accent-deep); background: var(--accent-soft); padding: 4px 10px; border-radius: var(--r-pill); cursor: pointer; }
+
+  /* 首席监护人特殊标识 —— 惊艳一笔 */
+  .guardian-banner {
+    margin: 0 16px 14px; padding: 12px 14px; border-radius: var(--r-md);
+    background: linear-gradient(135deg, oklch(48% 0.04 50), oklch(35% 0.04 55)); color: #fff;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .guardian-banner .ic { width: 28px; height: 28px; border-radius: 8px; background: oklch(99% 0.01 80 / 0.2); display: grid; place-items: center; flex-shrink: 0; }
+  .guardian-banner .t { font-size: 13px; font-weight: 700; }
+  .guardian-banner .d { font-size: 11px; opacity: 0.85; margin-top: 2px; }
+
+  .screen-body { padding: 0 16px 100px; }
+
+  .section-label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.06em; margin: 8px 4px 10px; display: flex; justify-content: space-between; }
+  .section-label .cnt { font-family: var(--font-mono); color: var(--accent-deep); }
+
+  /* 权限开关列表 */
+  .perm-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .perm-row { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-bottom: 1px solid var(--border); }
+  .perm-row:last-child { border-bottom: 0; }
+  .perm-row.locked { opacity: 0.5; }
+  .perm-row .pid { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--muted); width: 26px; flex-shrink: 0; }
+  .perm-row .info { flex: 1; }
+  .perm-row .info .n { font-size: 13px; font-weight: 600; }
+  .perm-row .info .d { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .perm-row .lock-ic { color: var(--muted); }
+
+  /* Toggle */
+  .toggle { width: 44px; height: 26px; border-radius: 13px; background: var(--border); position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+  .toggle::after { content:''; position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px oklch(24% 0.03 60 / 0.3); transition: transform 0.2s; }
+  .toggle.on { background: var(--accent); }
+  .toggle.on::after { transform: translateX(18px); }
+  .toggle.disabled { cursor: not-allowed; }
+
+  /* 模板栏 */
+  .template-bar {
+    margin-top: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px;
+  }
+  .template-bar .label { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .template-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .template-chip { padding: 8px 12px; border-radius: var(--r-pill); background: var(--surface-2); font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; }
+  .template-chip.active { background: var(--accent-soft); color: var(--accent-deep); border-color: oklch(80% 0.06 55); }
+
+  .notify-note { font-size: 11px; color: var(--muted); margin-top: 12px; line-height: 1.5; padding: 10px 12px; background: var(--surface-2); border-radius: 10px; }
+  .notify-note b { color: var(--fg); }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="pet-profile.html" data-od-id="back"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="title" data-od-id="page-title">成员权限</span>
+      <span class="back" style="opacity:0">·</span>
+    </div>
+
+    <div class="member-head" data-od-id="member-head">
+      <div class="av">棠</div>
+      <div class="info">
+        <div class="name">小棠</div>
+        <span class="role-edit" data-od-id="role-edit">奶妈 <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M3 4l2.5 2.5L8 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+    </div>
+
+    <div class="guardian-banner" data-od-id="guardian-banner">
+      <div class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l5 2v4c0 3-2 5-5 7-3-2-5-4-5-7V3l5-2z" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+      <div>
+        <div class="t">柔性 RBAC · 角色与权限解耦</div>
+        <div class="d">角色仅作展示，权限逐项独立开关。P12 管理成员仅首席监护人专属。</div>
+      </div>
+    </div>
+
+    <div class="screen-body">
+      <div class="section-label"><span>权限清单 · 12 项</span><span class="cnt" data-od-id="perm-count">8/12 已开</span></div>
+      <div class="perm-list" data-od-id="perm-list">
+        <div class="perm-row" data-od-id="p1"><span class="pid">P1</span><div class="info"><div class="n">查看宠物基础档案</div><div class="d">姓名、品种、生日、性别、绝育状态</div></div><div class="toggle on" data-od-id="t1"></div></div>
+        <div class="perm-row" data-od-id="p2"><span class="pid">P2</span><div class="info"><div class="n">编辑宠物基础档案</div><div class="d">修改基础信息</div></div><div class="toggle" data-od-id="t2"></div></div>
+        <div class="perm-row" data-od-id="p3"><span class="pid">P3</span><div class="info"><div class="n">查看健康记录</div><div class="d">疫苗、驱虫、体重、过敏史、病历</div></div><div class="toggle on" data-od-id="t3"></div></div>
+        <div class="perm-row" data-od-id="p4"><span class="pid">P4</span><div class="info"><div class="n">编辑/新增健康记录</div><div class="d">添加或修改健康数据</div></div><div class="toggle" data-od-id="t4"></div></div>
+        <div class="perm-row" data-od-id="p5"><span class="pid">P5</span><div class="info"><div class="n">查看每日事件/日记</div><div class="d">时间线动态与日记</div></div><div class="toggle on" data-od-id="t5"></div></div>
+        <div class="perm-row" data-od-id="p6"><span class="pid">P6</span><div class="info"><div class="n">编辑/新增每日事件</div><div class="d">记录、编辑、删除事件</div></div><div class="toggle on" data-od-id="t6"></div></div>
+        <div class="perm-row" data-od-id="p7"><span class="pid">P7</span><div class="info"><div class="n">查看日程列表</div><div class="d">待办与周期性日程</div></div><div class="toggle on" data-od-id="t7"></div></div>
+        <div class="perm-row" data-od-id="p8"><span class="pid">P8</span><div class="info"><div class="n">管理日程</div><div class="d">添加、修改、删除、标记完成</div></div><div class="toggle on" data-od-id="t8"></div></div>
+        <div class="perm-row" data-od-id="p9"><span class="pid">P9</span><div class="info"><div class="n">查看相册</div><div class="d">浏览所有照片/视频</div></div><div class="toggle on" data-od-id="t9"></div></div>
+        <div class="perm-row" data-od-id="p10"><span class="pid">P10</span><div class="info"><div class="n">管理相册</div><div class="d">上传、删除、编辑相册</div></div><div class="toggle on" data-od-id="t10"></div></div>
+        <div class="perm-row" data-od-id="p11"><span class="pid">P11</span><div class="info"><div class="n">使用AI对话</div><div class="d">发起AI咨询、查看历史</div></div><div class="toggle" data-od-id="t11"></div></div>
+        <div class="perm-row locked" data-od-id="p12"><span class="pid">P12</span><div class="info"><div class="n">管理家庭成员 <span class="lock-ic" style="font-size:10px">🔒 专属</span></div><div class="d">仅首席监护人天生拥有，不可授予</div></div><div class="toggle disabled" data-od-id="t12"></div></div>
+      </div>
+
+      <div class="template-bar" data-od-id="template-bar">
+        <div class="label">快速应用模板 · 套用后可继续微调</div>
+        <div class="template-chips">
+          <span class="template-chip" data-od-id="tpl-view">仅查看</span>
+          <span class="template-chip active" data-od-id="tpl-mom">奶妈全选</span>
+          <span class="template-chip" data-od-id="tpl-manager">管家模板</span>
+          <span class="template-chip" data-od-id="tpl-photo">摄影师</span>
+        </div>
+      </div>
+
+      <div class="notify-note" data-od-id="notify-note">
+        <b>实时生效</b>：权限变更后小棠将收到站内通知。若她正在执行被移除权限的操作，系统会强制中断并提示刷新。
+      </div>
+    </div>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+
+<script>
+  function updateCount(){
+    var n = document.querySelectorAll('.perm-list .toggle.on').length;
+    document.querySelector('[data-od-id="perm-count"]').textContent = n + '/12 已开';
+  }
+  document.querySelectorAll('.perm-list .toggle:not(.disabled)').forEach(function(el){
+    el.addEventListener('click', function(){
+      el.classList.toggle('on');
+      updateCount();
+    });
+  });
+  document.querySelectorAll('.template-chip').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.template-chip').forEach(function(o){ o.classList.remove('active'); });
+      el.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

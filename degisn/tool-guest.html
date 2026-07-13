@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>访客临时模式 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .nav-bar svg { color: var(--fg); }
+  .nav-bar .title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .screen-body { padding: 0 16px 100px; }
+
+  /* 访客场景卡 */
+  .scene-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; margin-bottom: 14px; }
+  .scene-card .h { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+  .scene-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .scene-opt { border: 1.5px solid var(--border); border-radius: var(--r-md); padding: 14px 10px; text-align: center; cursor: pointer; transition: all 0.12s; }
+  .scene-opt.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .scene-opt .ic { width: 40px; height: 40px; border-radius: 12px; background: var(--surface-2); display: grid; place-items: center; margin: 0 auto 8px; color: var(--accent-deep); }
+  .scene-opt.selected .ic { background: var(--accent); color: #fff; }
+  .scene-opt .n { font-size: 13px; font-weight: 600; }
+  .scene-opt .d { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* 链接生成卡 —— 惊艳一笔 */
+  .link-card { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%); border-radius: var(--r-md); padding: 18px; color: #fff; margin-bottom: 14px; }
+  .link-card .t { font-size: 13px; font-weight: 700; opacity: 0.9; }
+  .link-card .url-box { background: oklch(99% 0.01 80 / 0.15); border-radius: var(--r-sm); padding: 12px 14px; margin: 10px 0; display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; word-break: break-all; }
+  .link-card .url-box .copy { margin-left: auto; flex-shrink: 0; background: oklch(99% 0.01 80 / 0.2); padding: 5px 10px; border-radius: var(--r-pill); font-size: 11px; font-weight: 600; cursor: pointer; font-family: var(--font-body); }
+  .link-card .meta { display: flex; justify-content: space-between; font-size: 11px; opacity: 0.85; }
+  .link-card .meta .countdown { font-family: var(--font-mono); font-weight: 700; }
+
+  /* 可见范围 */
+  .vis-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; margin-bottom: 14px; }
+  .vis-card .h { font-size: 13px; font-weight: 700; margin-bottom: 12px; display: flex; justify-content: space-between; }
+  .vis-card .h .hint { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .vis-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .vis-row:last-child { border-bottom: 0; }
+  .vis-row .ic { width: 30px; height: 30px; border-radius: 8px; background: var(--surface-2); display: grid; place-items: center; color: var(--muted); flex-shrink: 0; }
+  .vis-row .info { flex: 1; }
+  .vis-row .info .n { font-size: 13px; font-weight: 600; }
+  .vis-row .info .d { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .toggle { width: 44px; height: 26px; border-radius: 13px; background: var(--border); position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+  .toggle::after { content:''; position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px oklch(24% 0.03 60 / 0.3); transition: transform 0.2s; }
+  .toggle.on { background: var(--mint); }
+  .toggle.on::after { transform: translateX(18px); }
+
+  /* 历史访客 */
+  .section-label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; margin: 4px 4px 10px; }
+  .hist-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .hist { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-bottom: 1px solid var(--border); }
+  .hist:last-child { border-bottom: 0; }
+  .hist .av { width: 36px; height: 36px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; color: var(--muted); flex-shrink: 0; font-weight: 700; font-size: 13px; }
+  .hist .info { flex: 1; }
+  .hist .info .n { font-size: 13px; font-weight: 600; }
+  .hist .info .m { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .hist .st { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: var(--r-pill); }
+  .hist .st.active { background: var(--mint-soft); color: oklch(42% 0.1 165); }
+  .hist .st.expire { background: var(--surface-2); color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="profile-me.html" data-od-id="back"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="title" data-od-id="page-title">访客临时模式</span>
+      <span class="back" style="opacity:0">·</span>
+    </div>
+
+    <div class="screen-body">
+      <div class="scene-card" data-od-id="scene-card">
+        <div class="h">选择访客场景</div>
+        <div class="scene-grid">
+          <div class="scene-opt selected" data-od-id="sc-foster">
+            <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7c0-2 2-3 5-3s5 1 5 3v3H5V7z" stroke="currentColor" stroke-width="1.5"/><path d="M5 11c0 2 2 3 5 3s5-1 5-3" stroke="currentColor" stroke-width="1.5"/></svg></div>
+            <div class="n">寄养人</div><div class="d">出差 3 天</div>
+          </div>
+          <div class="scene-opt" data-od-id="sc-feeder">
+            <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 17c0-3 3-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5"/></svg></div>
+            <div class="n">上门喂养</div><div class="d">单次服务</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="link-card" data-od-id="link-card">
+        <div class="t">已生成临时访问链接 · 24 小时有效</div>
+        <div class="url-box">puppy.life/g/k7m3x9<span class="copy" data-od-id="copy">复制</span></div>
+        <div class="meta"><span>仅可查看 · 无写入权限</span><span class="countdown" data-od-id="countdown">23:14:08</span></div>
+      </div>
+
+      <div class="vis-card" data-od-id="vis-card">
+        <div class="h"><span>访客可见范围</span><span class="hint">只读 · 不可修改</span></div>
+        <div class="vis-row"><div class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="4" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.4"/></svg></div><div class="info"><div class="n">基础档案</div><div class="d">姓名、品种、饮食禁忌</div></div><div class="toggle on"></div></div>
+        <div class="vis-row"><div class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="3" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 7h11" stroke="currentColor" stroke-width="1.4"/></svg></div><div class="info"><div class="n">日程与提醒</div><div class="d">喂饭时间、遛弯安排</div></div><div class="toggle on"></div></div>
+        <div class="vis-row"><div class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13s-4.5-2.5-4.5-6a2.5 2.5 0 0 1 4.5-1.5A2.5 2.5 0 0 1 12.5 7c0 3.5-4.5 6-4.5 6z" stroke="currentColor" stroke-width="1.4"/></svg></div><div class="info"><div class="n">基础健康</div><div class="d">过敏、用药禁忌、疫苗状态</div></div><div class="toggle on"></div></div>
+        <div class="vis-row"><div class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="4" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.4"/><circle cx="6" cy="8" r="1.3" fill="currentColor"/></svg></div><div class="info"><div class="n">相册</div><div class="d">默认关闭，避免隐私泄露</div></div><div class="toggle"></div></div>
+      </div>
+
+      <div class="section-label">历史访客链接</div>
+      <div class="hist-list" data-od-id="hist-list">
+        <div class="hist">
+          <div class="av">王</div>
+          <div class="info"><div class="n">王阿姨 · 上门喂养</div><div class="m">6.15-6.18 · 已使用 3 次</div></div>
+          <span class="st expire">已过期</span>
+        </div>
+        <div class="hist">
+          <div class="av">李</div>
+          <div class="info"><div class="n">李哥 · 寄养</div><div class="m">5.20 · 寄养 2 天</div></div>
+          <span class="st expire">已过期</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="tab-bar" data-od-id="tab-bar">
+      <a href="tab-briefing.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 3l9 7v10a2 2 0 0 1-2 2h-4v-7h-6v7H6a2 2 0 0 1-2-2V10l9-7z"/></svg>简报</a>
+      <a href="tab-ai-chat.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V8a2 2 0 0 1 1-2z"/></svg>AI</a>
+      <a class="active" href="profile-me.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13" cy="9" r="4"/><path d="M5 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>我的</a>
+    </nav>
+    <div class="home-bar"></div>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.scene-opt').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.scene-opt').forEach(function(o){o.classList.remove('selected');});
+      el.classList.add('selected');
+    });
+  });
+  document.querySelectorAll('.toggle').forEach(function(el){
+    el.addEventListener('click', function(){ el.classList.toggle('on'); });
+  });
+  var sec=23*3600+14*60+8;
+  setInterval(function(){
+    sec--; var h=String(Math.floor(sec/3600)).padStart(2,'0'); var m=String(Math.floor((sec%3600)/60)).padStart(2,'0'); var s=String(sec%60).padStart(2,'0');
+    document.querySelector('[data-od-id="countdown"]').textContent=h+':'+m+':'+s;
+  },1000);
+</script>
+</body>
+</html>

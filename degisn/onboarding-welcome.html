@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>无宠空状态 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .screen { background: linear-gradient(180deg, var(--illu-sky) 0%, var(--mint-soft) 55%, var(--illu-cream) 100%); }
+  .clouds { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .cloud { position: absolute; fill: #fff; opacity: 0.85; }
+  .cloud.c1 { top: 80px; left: -20px; animation: drift1 18s ease-in-out infinite; }
+  .cloud.c2 { top: 140px; right: -30px; animation: drift2 22s ease-in-out infinite; }
+  .cloud.c3 { top: 220px; left: 30px; animation: drift1 26s ease-in-out infinite; opacity: 0.6; }
+  @keyframes drift1 { 0%,100% { transform: translateX(0); } 50% { transform: translateX(40px); } }
+  @keyframes drift2 { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-50px); } }
+
+  .meadow {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 240px;
+    background: linear-gradient(180deg, transparent 0%, var(--mint-soft) 30%, var(--mint) 100%);
+    border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+  }
+  .grass { position: absolute; bottom: 0; width: 100%; }
+
+  .stage-area {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding-bottom: 90px;
+  }
+  .puppy-wrap { position: relative; width: 200px; height: 200px; cursor: pointer; animation: bob 3s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  .puppy-wrap.tap { animation: hop 0.6s ease; }
+  @keyframes hop { 0% { transform: translateY(0) rotate(0); } 30% { transform: translateY(-40px) rotate(-8deg); } 60% { transform: translateY(0) rotate(8deg); } 100% { transform: translateY(0) rotate(0); } }
+  .shadow-pup { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 110px; height: 18px; background: oklch(42% 0.05 145 / 0.25); border-radius: 50%; filter: blur(4px); }
+
+  .hint-text {
+    position: absolute; top: 200px; left: 50%; transform: translateX(-50%);
+    text-align: center; color: var(--muted); font-size: 13px; letter-spacing: 0.02em;
+    background: oklch(99% 0.006 80 / 0.7); padding: 6px 14px; border-radius: var(--r-pill);
+    backdrop-filter: blur(6px);
+  }
+
+  .brand-top { position: absolute; top: 70px; left: 0; right: 0; text-align: center; z-index: 2; }
+  .brand-top .name { font-family: var(--font-display); font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: var(--fg); }
+  .brand-top .tag { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: 0.06em; }
+
+  .cta-zone {
+    position: absolute; bottom: 110px; left: 0; right: 0;
+    display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 0 32px;
+  }
+  .welcome-cta {
+    width: 100%; min-height: 56px; border-radius: var(--r-pill);
+    background: var(--accent); color: #fff; border: 0;
+    font-size: 17px; font-weight: 600; letter-spacing: 0.02em;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 10px 30px oklch(58% 0.16 45 / 0.4);
+    cursor: pointer; transition: transform 0.12s;
+    text-decoration: none;
+  }
+  .welcome-cta:active { transform: scale(0.97); }
+  .skip { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.02em; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <!-- 云朵 -->
+    <div class="clouds">
+      <svg class="cloud c1" width="120" height="50" viewBox="0 0 120 50"><ellipse cx="30" cy="30" rx="22" ry="16"/><ellipse cx="55" cy="22" rx="26" ry="20"/><ellipse cx="85" cy="32" rx="20" ry="14"/></svg>
+      <svg class="cloud c2" width="140" height="55" viewBox="0 0 140 55"><ellipse cx="35" cy="32" rx="24" ry="17"/><ellipse cx="65" cy="24" rx="28" ry="21"/><ellipse cx="100" cy="34" rx="22" ry="15"/></svg>
+      <svg class="cloud c3" width="90" height="40" viewBox="0 0 90 40"><ellipse cx="22" cy="24" rx="18" ry="13"/><ellipse cx="45" cy="18" rx="20" ry="15"/><ellipse cx="68" cy="26" rx="16" ry="11"/></svg>
+    </div>
+
+    <!-- 品牌 -->
+    <div class="brand-top" data-od-id="brand-header">
+      <div class="name">小狗人生</div>
+      <div class="tag">PUPPY LIFE OS</div>
+    </div>
+
+    <div class="hint-text" data-od-id="tap-hint">轻触小狗，陪它玩一会儿</div>
+
+    <!-- 草坪 + 小狗 -->
+    <div class="meadow"></div>
+    <svg class="grass" viewBox="0 0 390 60" preserveAspectRatio="none" style="height:60px"><path d="M0 60 Q10 30 20 50 Q35 20 50 48 Q65 25 80 50 Q100 18 120 46 Q140 28 160 50 Q180 15 200 48 Q220 25 240 50 Q260 20 280 46 Q300 28 320 50 Q340 18 360 48 Q375 30 390 50 L390 60 Z" fill="var(--mint)"/></svg>
+
+    <div class="stage-area">
+      <div class="puppy-wrap" id="puppy" data-od-id="puppy-lottie" role="button" aria-label="点击小狗互动">
+        <div class="shadow-pup"></div>
+        <!-- 几何插画小狗（金毛色） -->
+        <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+          <!-- 尾巴 -->
+          <path d="M155 130 Q180 110 175 85" stroke="var(--illu-tan)" stroke-width="14" stroke-linecap="round"/>
+          <!-- 身体 -->
+          <ellipse cx="100" cy="135" rx="58" ry="42" fill="var(--illu-tan)"/>
+          <!-- 腿 -->
+          <rect x="58" y="150" width="16" height="30" rx="8" fill="var(--illu-brown)"/>
+          <rect x="126" y="150" width="16" height="30" rx="8" fill="var(--illu-brown)"/>
+          <!-- 头 -->
+          <circle cx="100" cy="90" r="42" fill="var(--illu-tan)"/>
+          <!-- 耳朵 -->
+          <ellipse cx="68" cy="70" rx="16" ry="24" fill="var(--illu-brown)" transform="rotate(-20 68 70)"/>
+          <ellipse cx="132" cy="70" rx="16" ry="24" fill="var(--illu-brown)" transform="rotate(20 132 70)"/>
+          <!-- 脸 -->
+          <ellipse cx="100" cy="105" rx="24" ry="20" fill="var(--illu-cream)"/>
+          <circle cx="88" cy="88" r="4" fill="#2a1a0a"/>
+          <circle cx="112" cy="88" r="4" fill="#2a1a0a"/>
+          <circle cx="89" cy="86" r="1.2" fill="#fff"/>
+          <circle cx="113" cy="86" r="1.2" fill="#fff"/>
+          <ellipse cx="100" cy="100" rx="5" ry="4" fill="#2a1a0a"/>
+          <path d="M100 104 Q100 112 95 112 M100 112 Q105 112 100 104" stroke="#2a1a0a" stroke-width="1.5" fill="none"/>
+          <!-- 舌头 -->
+          <ellipse cx="100" cy="116" rx="4" ry="6" fill="oklch(62% 0.13 25)"/>
+          <!-- 腮红 -->
+          <circle cx="78" cy="100" r="6" fill="oklch(72% 0.1 25 / 0.4)"/>
+          <circle cx="122" cy="100" r="6" fill="oklch(72% 0.1 25 / 0.4)"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-zone">
+      <a class="welcome-cta" href="onboarding-step1.html" data-od-id="welcome-cta">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
+        迎接新家人
+      </a>
+      <a class="skip" href="tab-briefing.html" data-od-id="skip-link">先随便看看 ›</a>
+    </div>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('puppy').addEventListener('click', function(){
+    this.classList.remove('tap'); void this.offsetWidth; this.classList.add('tap');
+  });
+</script>
+</body>
+</html>

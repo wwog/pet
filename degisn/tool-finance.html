@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>财务管家 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .nav-bar svg { color: var(--fg); }
+  .nav-bar .title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .nav-bar .action { color: var(--accent); font-size: 14px; font-weight: 600; text-decoration: none; width: auto; }
+
+  .screen-body { padding: 0 16px 100px; }
+
+  /* 月度总览 —— 惊艳一笔 */
+  .month-hero { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%); border-radius: var(--r-lg); padding: 20px; color: #fff; margin-bottom: 14px; position: relative; overflow: hidden; }
+  .month-hero::before { content:''; position:absolute; top:-30px; right:-20px; width:120px; height:120px; border-radius:50%; background: oklch(99% 0.01 80 / 0.12); }
+  .month-hero .m { font-size: 12px; opacity: 0.85; letter-spacing: 0.02em; }
+  .month-hero .amt { font-family: var(--font-display); font-size: 38px; font-weight: 700; letter-spacing: -0.02em; margin: 4px 0 2px; font-variant-numeric: tabular-nums; }
+  .month-hero .amt .cur { font-size: 18px; opacity: 0.7; }
+  .month-hero .delta { font-size: 12px; opacity: 0.9; }
+  .month-hero .delta b { font-weight: 700; }
+  .month-hero .delta.down { color: oklch(88% 0.08 145); }
+
+  /* 分类饼图 + 图例 */
+  .breakdown { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; margin-bottom: 14px; }
+  .breakdown .h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .breakdown .h .t { font-size: 14px; font-weight: 700; }
+  .breakdown .h .toggle { font-size: 11px; color: var(--muted); }
+  .pie-row { display: flex; align-items: center; gap: 18px; }
+  .pie { width: 110px; height: 110px; flex-shrink: 0; position: relative; }
+  .pie svg { transform: rotate(-90deg); }
+  .pie .center { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
+  .pie .center .v { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .pie .center .l { font-size: 9px; color: var(--muted); }
+  .legend { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .legend .item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .legend .item .dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+  .legend .item .n { flex: 1; }
+  .legend .item .v { font-family: var(--font-mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .legend .item .p { font-size: 11px; color: var(--muted); margin-left: 4px; }
+
+  /* 趋势条 */
+  .trend-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; margin-bottom: 14px; }
+  .trend-card .h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .trend-card .h .t { font-size: 14px; font-weight: 700; }
+  .trend-card .h .avg { font-size: 11px; color: var(--muted); font-family: var(--font-mono); }
+  .trend-bars { display: flex; align-items: flex-end; gap: 6px; height: 70px; }
+  .trend-bar { flex: 1; background: var(--accent-soft); border-radius: 3px 3px 0 0; min-height: 4px; position: relative; }
+  .trend-bar.cur { background: var(--accent); }
+  .trend-bar .lbl { position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 9px; color: var(--muted); font-family: var(--font-mono); }
+  .trend-axis { margin-top: 22px; }
+
+  /* 交易流水 */
+  .section-label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; margin: 4px 4px 10px; }
+  .tx-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .tx { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-bottom: 1px solid var(--border); }
+  .tx:last-child { border-bottom: 0; }
+  .tx .ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; }
+  .tx .ic.med { background: oklch(93% 0.05 25); color: var(--danger); }
+  .tx .ic.food { background: var(--accent-soft); color: var(--accent-deep); }
+  .tx .ic.toy { background: var(--mint-soft); color: oklch(42% 0.1 165); }
+  .tx .ic.ins { background: oklch(92% 0.02 240); color: var(--info); }
+  .tx .info { flex: 1; }
+  .tx .info .n { font-size: 14px; font-weight: 600; }
+  .tx .info .m { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .tx .amt { font-family: var(--font-mono); font-weight: 700; font-variant-numeric: tabular-nums; font-size: 14px; }
+  .tx .amt.neg { color: var(--fg); }
+  .tx .amt.pos { color: var(--success); }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="profile-me.html" data-od-id="back"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="title" data-od-id="page-title">财务管家</span>
+      <a class="action" href="#" data-od-id="add">记一笔</a>
+    </div>
+
+    <div class="screen-body">
+      <div class="month-hero" data-od-id="month-hero">
+        <div class="m">7月支出 · 豆豆</div>
+        <div class="amt"><span class="cur">¥</span>1,240</div>
+        <div class="delta down">↓ 比上月省 <b>¥180</b> · 预算 ¥1,500 · 剩余 ¥260</div>
+      </div>
+
+      <div class="breakdown" data-od-id="breakdown">
+        <div class="h"><span class="t">分类占比</span><span class="toggle">本月 ▾</span></div>
+        <div class="pie-row">
+          <div class="pie">
+            <svg width="110" height="110" viewBox="0 0 110 110">
+              <circle cx="55" cy="55" r="42" fill="none" stroke="var(--surface-2)" stroke-width="14"/>
+              <circle cx="55" cy="55" r="42" fill="none" stroke="var(--danger)" stroke-width="14" stroke-dasharray="137 264" stroke-linecap="butt"/>
+              <circle cx="55" cy="55" r="42" fill="none" stroke="var(--accent)" stroke-width="14" stroke-dasharray="79 264" stroke-dashoffset="-137"/>
+              <circle cx="55" cy="55" r="42" fill="none" stroke="var(--mint)" stroke-width="14" stroke-dasharray="32 264" stroke-dashoffset="-216"/>
+              <circle cx="55" cy="55" r="42" fill="none" stroke="var(--info)" stroke-width="14" stroke-dasharray="16 264" stroke-dashoffset="-248"/>
+            </svg>
+            <div class="center"><div><div class="v">¥1,240</div><div class="l">本月</div></div></div>
+          </div>
+          <div class="legend">
+            <div class="item"><span class="dot" style="background:var(--danger)"></span><span class="n">医疗</span><span class="v">¥645</span><span class="p">52%</span></div>
+            <div class="item"><span class="dot" style="background:var(--accent)"></span><span class="n">饮食</span><span class="v">¥372</span><span class="p">30%</span></div>
+            <div class="item"><span class="dot" style="background:var(--mint)"></span><span class="n">玩具</span><span class="v">¥150</span><span class="p">12%</span></div>
+            <div class="item"><span class="dot" style="background:var(--info)"></span><span class="n">保险</span><span class="v">¥73</span><span class="p">6%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trend-card" data-od-id="trend">
+        <div class="h"><span class="t">近 6 月趋势</span><span class="avg">均 ¥1,348</span></div>
+        <div class="trend-bars">
+          <div class="trend-bar" style="height:60%"></div>
+          <div class="trend-bar" style="height:75%"></div>
+          <div class="trend-bar" style="height:90%"></div>
+          <div class="trend-bar" style="height:70%"></div>
+          <div class="trend-bar" style="height:82%"></div>
+          <div class="trend-bar cur" style="height:68%"></div>
+        </div>
+        <div class="trend-axis" style="display:flex; justify-content:space-between; font-size:9px; color:var(--muted); font-family:var(--font-mono);"><span>2月</span><span>3月</span><span>4月</span><span>5月</span><span>6月</span><span>7月</span></div>
+      </div>
+
+      <div class="section-label">近期交易</div>
+      <div class="tx-list" data-od-id="tx-list">
+        <div class="tx" data-od-id="tx-1">
+          <div class="ic med"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 14L12 4M9 4h3v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="info"><div class="n">福来恩体外驱虫</div><div class="m">7.05 · 宠安诊所</div></div>
+          <span class="amt neg">−¥128</span>
+        </div>
+        <div class="tx" data-od-id="tx-2">
+          <div class="ic food"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6h10l-1 7c0 1-1 2-2 2H6c-1 0-2-1-2-2L3 6z" stroke="currentColor" stroke-width="1.5"/><path d="M4 6V4h8v2" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <div class="info"><div class="n">皇家成犬粮 12kg</div><div class="m">7.03 · 京东自营</div></div>
+          <span class="amt neg">−¥289</span>
+        </div>
+        <div class="tx" data-od-id="tx-3">
+          <div class="ic toy"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <div class="info"><div class="n">飞盘 + 啸叫球</div><div class="m">6.28 · 淘宝</div></div>
+          <span class="amt neg">−¥68</span>
+        </div>
+        <div class="tx" data-od-id="tx-4">
+          <div class="ic ins"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l5 2v4c0 3-2 5-5 6-3-1-5-3-5-6V4l5-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+          <div class="info"><div class="n">宠物医疗险 · 月供</div><div class="m">6.20 · 众安保险</div></div>
+          <span class="amt neg">−¥73</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="tab-bar" data-od-id="tab-bar">
+      <a href="tab-briefing.html" data-od-id="tab-briefing"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 3l9 7v10a2 2 0 0 1-2 2h-4v-7h-6v7H6a2 2 0 0 1-2-2V10l9-7z"/></svg>简报</a>
+      <a href="tab-ai-chat.html" data-od-id="tab-chat"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V8a2 2 0 0 1 1-2z"/></svg>AI</a>
+      <a class="active" href="profile-me.html" data-od-id="tab-me"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13" cy="9" r="4"/><path d="M5 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>我的</a>
+    </nav>
+    <div class="home-bar"></div>
+  </div>
+</div>
+</body>
+</html>

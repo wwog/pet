@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>今日 · AI 简报 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .top-row {
+    display: flex; align-items: center; gap: 12px; padding: 4px 20px 14px;
+  }
+  .family-switch { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  .family-switch .fname { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+  .family-switch .chev { color: var(--muted); }
+  .members-avatars { display: flex; margin-left: auto; }
+  .members-avatars .av { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--bg); margin-left: -8px; }
+
+  .pet-switch {
+    display: flex; align-items: center; gap: 10px; padding: 0 20px 14px;
+  }
+  .pet-av {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--accent);
+    display: grid; place-items: center; flex-shrink: 0;
+  }
+  .pet-info .pn { font-size: 15px; font-weight: 700; }
+  .pet-info .pm { font-size: 11px; color: var(--muted); }
+  .pet-tabs { margin-left: auto; display: flex; gap: 6px; }
+  .pet-tab { width: 28px; height: 28px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; font-size: 11px; font-weight: 600; color: var(--muted); }
+
+  .screen-body { padding: 0 16px 100px; }
+
+  /* AI 简报主卡 —— 惊艳一笔 */
+  .briefing-hero {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    border-radius: var(--r-lg); padding: 20px; color: #fff;
+    position: relative; overflow: hidden; margin-bottom: 16px;
+    box-shadow: 0 10px 30px oklch(58% 0.16 45 / 0.3);
+  }
+  .briefing-hero::before {
+    content: ''; position: absolute; top: -30px; right: -30px;
+    width: 140px; height: 140px; border-radius: 50%;
+    background: oklch(99% 0.01 80 / 0.12);
+  }
+  .briefing-hero .date-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; opacity: 0.85; letter-spacing: 0.02em; }
+  .briefing-hero .weather { display: inline-flex; align-items: center; gap: 4px; background: oklch(99% 0.01 80 / 0.18); padding: 3px 8px; border-radius: var(--r-pill); }
+  .briefing-hero h1 { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin: 12px 0 8px; line-height: 1.2; }
+  .briefing-hero .quote { font-size: 14px; line-height: 1.55; opacity: 0.95; max-width: 24ch; position: relative; }
+  .briefing-hero .quote::before { content: '“'; font-size: 28px; line-height: 0; vertical-align: -8px; margin-right: 2px; opacity: 0.5; }
+  .briefing-hero .ai-tag { position: absolute; bottom: 16px; right: 18px; font-size: 10px; letter-spacing: 0.08em; opacity: 0.6; font-family: var(--font-mono); }
+
+  /* 开始遛狗快捷入口 */
+  .walk-cta { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1.5px solid var(--mint); border-radius: var(--r-md); padding: 13px 14px; margin-bottom: 14px; text-decoration: none; color: var(--fg); transition: transform 0.12s; box-shadow: 0 4px 14px oklch(72% 0.1 165 / 0.18); }
+  .walk-cta:active { transform: scale(0.98); }
+  .walk-cta-ic { width: 40px; height: 40px; border-radius: 12px; background: var(--mint); display: grid; place-items: center; flex-shrink: 0; color: #fff; }
+  .walk-cta-txt { flex: 1; }
+  .walk-cta-txt .n { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+  .walk-cta-txt .d { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .walk-cta-arrow { color: oklch(50% 0.1 165); flex-shrink: 0; }
+
+  .walk-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+    padding: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 14px;
+  }
+  .walk-ring {
+    width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0; position: relative;
+    background: conic-gradient(var(--mint) 0 68%, var(--surface-2) 68% 100%);
+    display: grid; place-items: center;
+  }
+  .walk-ring .inner { width: 50px; height: 50px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; }
+  .walk-ring .inner .min { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .walk-ring .inner .unit { font-size: 9px; color: var(--muted); }
+  .walk-info .label { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+  .walk-info .val { font-size: 15px; font-weight: 600; margin-top: 2px; }
+  .walk-info .sub { font-size: 12px; color: var(--mint); margin-top: 2px; font-weight: 500; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .mini-stat {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px;
+  }
+  .mini-stat .top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .mini-stat .label { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+  .mini-stat .icon { color: var(--muted); }
+  .mini-stat .val { font-size: 22px; font-weight: 700; margin-top: 6px; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .mini-stat .val .u { font-size: 12px; font-weight: 500; color: var(--muted); }
+  .mini-stat .delta { font-size: 11px; margin-top: 4px; }
+  .mini-stat .delta.up { color: var(--success); }
+  .mini-stat .delta.down { color: var(--danger); }
+
+  .todo-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; margin-bottom: 12px; }
+  .todo-card .h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .todo-card .h .t { font-size: 14px; font-weight: 600; }
+  .todo-card .h .ct { font-size: 11px; color: var(--muted); }
+  .todo-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .todo-item:last-child { border-bottom: 0; }
+  .todo-pri { width: 4px; height: 24px; border-radius: 2px; }
+  .todo-pri.high { background: var(--danger); }
+  .todo-pri.mid { background: var(--warn); }
+  .todo-pri.low { background: var(--mint); }
+  .todo-text { flex: 1; font-size: 13px; }
+  .todo-text .who { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .todo-time { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .section-label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.06em; margin: 8px 0 10px; padding: 0 4px; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="top-row">
+      <div class="family-switch" data-od-id="family-switch">
+        <span class="fname">阿哲的家</span>
+        <svg class="chev" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="members-avatars" data-od-id="members">
+        <div class="av" style="background:var(--accent)"></div>
+        <div class="av" style="background:var(--mint)"></div>
+        <div class="av" style="background:var(--illu-tan)"></div>
+      </div>
+    </div>
+
+    <div class="pet-switch" data-od-id="pet-switch">
+      <div class="pet-av"><svg width="24" height="24" viewBox="0 0 26 26"><circle cx="13" cy="15" r="8" fill="#fff"/><circle cx="13" cy="11" r="6" fill="#fff"/><ellipse cx="8" cy="8" rx="2.5" ry="4" fill="#fff" transform="rotate(-20 8 8)"/><ellipse cx="18" cy="8" rx="2.5" ry="4" fill="#fff" transform="rotate(20 18 8)"/><circle cx="11" cy="11" r="1" fill="#3a2a1a"/><circle cx="15" cy="11" r="1" fill="#3a2a1a"/></svg></div>
+      <div class="pet-info"><div class="pn">豆豆</div><div class="pm">金毛 · 1岁2个月 · 男孩</div></div>
+      <div class="pet-tabs">
+        <div class="pet-tab" style="background:var(--accent);color:#fff">豆</div>
+        <div class="pet-tab">+</div>
+      </div>
+    </div>
+
+    <div class="screen-body">
+      <a class="walk-cta" href="walk-live.html" data-od-id="start-walk">
+        <span class="walk-cta-ic"><svg viewBox="0 0 22 22" fill="none"><circle cx="13" cy="5" r="2.2" stroke="currentColor" stroke-width="1.6"/><path d="M11 9l-3.5 3 2 2 2-2M10 12l-2 5.5M13 12l3.5-1M15 16.5l-1-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="walk-cta-txt"><span class="n">开始遛狗</span><span class="d">记录轨迹 · 速度 · 事件打卡</span></span>
+        <span class="walk-cta-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      <!-- AI 简报 Hero —— 惊艳一笔 -->
+      <div class="briefing-hero" data-od-id="briefing-hero">
+        <div class="date-row">
+          <span>7月7日 · 周二</span>
+          <span class="weather"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="3"/><path d="M6 1v1.5M6 9.5V11M1 6h1.5M9.5 6H11M2.5 2.5l1 1M8.5 8.5l1 1M9.5 2.5l-1 1M3.5 8.5l-1 1" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 28° 多云</span>
+        </div>
+        <h1 data-od-id="briefing-title">今天适合多陪豆豆散步</h1>
+        <div class="quote" data-od-id="briefing-quote">傍晚 18:00 气温回落到 24°，是金毛一天里最舒服的遛弯时段。它最近学会了"握手"，别忘了奖励它。</div>
+        <div class="ai-tag">AI · DAILY BRIEFING</div>
+      </div>
+
+      <div class="walk-card" data-od-id="walk-card">
+        <div class="walk-ring">
+          <div class="inner"><div><span class="min">41</span><span class="unit">min</span></div></div>
+        </div>
+        <div class="walk-info">
+          <div class="label">今日遛弯</div>
+          <div class="val">目标 60 分钟</div>
+          <div class="sub">还差 19 分钟 · 奶爸 阿哲 负责晚遛</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="mini-stat" data-od-id="stat-sleep">
+          <div class="top"><span class="label">昨日睡眠</span><svg class="icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 9a5 5 0 1 1-6-6 6 6 0 0 0 6 6z" stroke="currentColor" stroke-width="1.3"/></svg></div>
+          <div class="val">11.2<span class="u">小时</span></div>
+          <div class="delta up">↑ 比平均多 1.4h · 深睡充足</div>
+        </div>
+        <div class="mini-stat" data-od-id="stat-mood">
+          <div class="top"><span class="label">情绪指数</span><svg class="icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="7" r="0.8" fill="currentColor"/><circle cx="10" cy="7" r="0.8" fill="currentColor"/><path d="M5.5 10.5c1 1 4 1 5 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="val">92<span class="u">/100</span></div>
+          <div class="delta up">↑ 开心 · 活跃</div>
+        </div>
+      </div>
+
+      <div class="section-label">今日待办 · 按优先级</div>
+      <div class="todo-card" data-od-id="todo-card">
+        <div class="h"><span class="t">3 件待办</span><span class="ct">奶妈协助</span></div>
+        <div class="todo-item">
+          <div class="todo-pri high"></div>
+          <div class="todo-text">体外驱虫（福来恩）<div class="who">奶爸 阿哲 · 已逾期 2 天</div></div>
+          <div class="todo-time">今日</div>
+        </div>
+        <div class="todo-item">
+          <div class="todo-pri mid"></div>
+          <div class="todo-text">晚餐喂粮 320g<div class="who">奶妈 小棠</div></div>
+          <div class="todo-time">18:30</div>
+        </div>
+        <div class="todo-item">
+          <div class="todo-pri low"></div>
+          <div class="todo-text">刷牙训练 5 分钟<div class="who">爷爷 老张</div></div>
+          <div class="todo-time">21:00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部 Tab -->
+    <nav class="tab-bar" data-od-id="tab-bar">
+      <a class="active" href="tab-briefing.html" data-od-id="tab-briefing">
+        <svg viewBox="0 0 26 26" fill="none"><path d="M13 3l9 7v10a2 2 0 0 1-2 2h-4v-7h-6v7H6a2 2 0 0 1-2-2V10l9-7z" fill="currentColor"/></svg>
+        简报
+      </a>
+      <a href="tab-ai-chat.html" data-od-id="tab-chat">
+        <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V8a2 2 0 0 1 1-2z"/></svg>
+        AI
+      </a>
+      <a href="profile-me.html" data-od-id="tab-me">
+        <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13" cy="9" r="4"/><path d="M5 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+        我的
+      </a>
+    </nav>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+</body>
+</html>

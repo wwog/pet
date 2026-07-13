@@ -1,0 +1,280 @@
+/* ============================================================
+   小狗人生 (Puppy Life OS) — 共享设计系统 v2
+   调性：活泼 / 插画感 · iOS 应用
+   理念：用科技的温度，延伸爱的刻度
+   v2 反 AI 味：实色面优先、hairline 分组、克制阴影、
+   单一焦糖强调、几何插画而非渐变撑场
+   ============================================================ */
+
+:root {
+  /* —— 中性暖纸底（克制，不甜腻） —— */
+  --bg:        oklch(96.5% 0.008 75);   /* 暖纸，略偏冷一档避免甜 */
+  --surface:   oklch(99.2% 0.004 75);  /* 卡片白 */
+  --surface-2: oklch(93.5% 0.012 72);  /* 次级面板 */
+  --surface-3: oklch(90% 0.014 70);    /* 更深一档，分隔用 */
+  --fg:        oklch(26% 0.025 55);    /* 深咖墨 */
+  --fg-2:      oklch(38% 0.02 55);     /* 次级文字 */
+  --muted:     oklch(54% 0.016 60);    /* 灰咖 */
+  --border:    oklch(89% 0.01 72);     /* 浅咖线 */
+  --border-2:  oklch(94% 0.008 72);    /* 更浅分隔 */
+
+  /* —— 主色：焦糖橙（仅 CTA / 单屏最多两处强调） —— */
+  --accent:      oklch(66% 0.145 52);
+  --accent-deep: oklch(54% 0.15 42);
+  --accent-soft: oklch(95% 0.035 55);
+  --accent-ink:  oklch(46% 0.14 45);   /* 文字用深一档，保证对比 */
+
+  /* —— 次色：苔绿（健康/正向状态，不抢主色） —— */
+  --mint:      oklch(64% 0.085 158);
+  --mint-deep: oklch(42% 0.07 158);
+  --mint-soft: oklch(94% 0.028 158);
+
+  /* —— 语义色（克制饱和度） —— */
+  --success: oklch(58% 0.11 150);
+  --warn:    oklch(68% 0.12 68);
+  --warn-soft: oklch(93% 0.045 68);
+  --danger:  oklch(56% 0.17 27);
+  --danger-soft: oklch(93% 0.04 27);
+  --info:    oklch(52% 0.07 235);
+  --info-soft: oklch(93% 0.025 235);
+
+  /* —— 品牌插画色板（仅 SVG/插画用，不上 UI 面） —— */
+  --illu-cream: oklch(95% 0.022 80);
+  --illu-tan:   oklch(78% 0.055 60);
+  --illu-brown: oklch(46% 0.035 50);
+  --illu-sky:   oklch(86% 0.035 220);
+  --illu-rose:  oklch(82% 0.05 20);
+
+  /* —— 字体 —— */
+  --font-display: 'PingFang SC', 'Söhne', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-body:    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC', system-ui, sans-serif;
+  --font-mono:    ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+
+  /* —— 圆角（一套体系，不再混用） —— */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* —— 阴影（更克制，暖色染色） —— */
+  --shadow-card: 0 1px 2px oklch(26% 0.03 55 / 0.04), 0 2px 8px oklch(26% 0.03 55 / 0.05);
+  --shadow-float: 0 4px 16px oklch(26% 0.03 55 / 0.1), 0 1px 2px oklch(26% 0.03 55 / 0.06);
+  --shadow-soft: 0 1px 0 oklch(26% 0.03 55 / 0.03);
+
+  /* —— 间距节奏 —— */
+  --space-block: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: oklch(91% 0.008 72);
+  font-family: var(--font-body);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0;
+  font-size: 15px;
+}
+
+/* —— iOS 真机外框 —— */
+.device {
+  width: 390px;
+  height: 844px;
+  margin: 24px auto;
+  background: var(--bg);
+  border-radius: 52px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 11px oklch(22% 0.02 60),
+    0 0 0 13px oklch(38% 0.02 60),
+    0 24px 60px oklch(20% 0.04 60 / 0.28);
+  font-family: var(--font-body);
+}
+@media (max-width: 440px) {
+  body { background: var(--bg); }
+  .device { margin: 0; border-radius: 0; box-shadow: none; width: 100vw; height: 100vh; height: 100dvh; }
+}
+
+/* 状态栏 */
+.status-bar {
+  height: 54px;
+  padding: 16px 28px 0;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 15px; font-weight: 600;
+  letter-spacing: -0.01em;
+  position: relative; z-index: 5;
+  color: var(--fg);
+}
+.status-bar .right { display: flex; gap: 6px; align-items: center; }
+.status-bar svg { display: block; }
+
+/* Dynamic Island */
+.island {
+  position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+  width: 122px; height: 34px; background: #000; border-radius: 20px; z-index: 6;
+}
+
+/* Home indicator */
+.home-bar {
+  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+  width: 134px; height: 5px; background: var(--fg); border-radius: 3px; opacity: 0.32; z-index: 6;
+}
+
+/* —— 顶部导航栏 —— */
+.nav-bar {
+  padding: 6px 20px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-bar .title { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.nav-bar .back, .nav-bar .action { width: 32px; height: 32px; display: grid; place-items: center; color: var(--fg); }
+
+/* —— 底部 Tab 栏 —— */
+.tab-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 84px;
+  background: oklch(99.2% 0.004 75 / 0.88);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex; padding: 8px 8px 24px;
+  z-index: 8;
+}
+.tab-bar a {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  text-decoration: none; color: var(--muted);
+  font-size: 10px; font-weight: 500; letter-spacing: 0.02em;
+  min-height: 44px; justify-content: center;
+}
+.tab-bar a.active { color: var(--accent-ink); }
+.tab-bar a svg { width: 26px; height: 26px; }
+
+/* —— 滚动内容区 —— */
+.screen {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  background: var(--bg);
+}
+.screen-body {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 0 20px 100px;
+}
+.screen-body::-webkit-scrollbar { display: none; }
+
+/* ============================================================
+   通用组件 v2 —— 实色面优先，hairline 分组
+   ============================================================ */
+
+/* 卡片：去阴影渐变味，靠 hairline 边 + 微阴影立住 */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 16px;
+}
+.card.flat { box-shadow: none; }
+.card.soft { background: var(--surface-2); border-color: transparent; }
+
+/* inset 分组（iOS 列表风）—— 替代"左色边卡堆叠"的 AI 套路 */
+.inset {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.inset .inset-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--border-2);
+}
+.inset .inset-row:last-child { border-bottom: 0; }
+.inset .inset-row.tap { cursor: pointer; }
+.inset .inset-row.tap:active { background: var(--surface-2); }
+
+/* 段落分隔标签 —— 替代 uppercase mono eyebrow 滥用 */
+.section-label {
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  letter-spacing: 0.04em; margin: 18px 4px 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label:first-child { margin-top: 4px; }
+.section-label .count { margin-left: auto; font-family: var(--font-mono); font-weight: 600; color: var(--fg-2); letter-spacing: 0; font-size: 11px; }
+.section-label .rule { flex: 1; height: 1px; background: var(--border-2); }
+
+/* chip / pill */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 11px; border-radius: var(--r-pill);
+  background: var(--surface-2); color: var(--fg-2);
+  font-size: 12px; font-weight: 500; letter-spacing: 0.01em;
+}
+.chip.accent { background: var(--accent-soft); color: var(--accent-ink); }
+.chip.mint   { background: var(--mint-soft); color: var(--mint-deep); }
+.chip.warn   { background: var(--warn-soft); color: oklch(48% 0.12 68); }
+.chip.danger { background: var(--danger-soft); color: var(--danger); }
+.chip.info   { background: var(--info-soft); color: var(--info); }
+.chip svg { width: 13px; height: 13px; }
+
+/* 状态点（仅语义状态，不装饰） */
+.dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.dot.success { background: var(--success); }
+.dot.warn { background: var(--warn); }
+.dot.danger { background: var(--danger); }
+
+/* 按钮 */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 50px; padding: 0 22px; border-radius: var(--r-pill);
+  font-size: 15px; font-weight: 600; letter-spacing: 0.01em;
+  border: 0; cursor: pointer; text-decoration: none;
+  transition: transform 0.12s ease, background 0.18s ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:active { background: var(--accent-deep); }
+.btn-ghost { background: var(--surface-2); color: var(--fg); }
+.btn-outline { background: var(--surface); color: var(--fg); border: 1.5px solid var(--border); }
+.btn-block { width: 100%; }
+.btn svg { width: 18px; height: 18px; }
+
+/* 图标方块（统一语义图标容器，替代 emoji） */
+.icon-box {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: grid; place-items: center; flex-shrink: 0;
+  background: var(--surface-2); color: var(--fg-2);
+}
+.icon-box.sm { width: 28px; height: 28px; border-radius: 8px; }
+.icon-box.lg { width: 44px; height: 44px; border-radius: 12px; }
+.icon-box.accent { background: var(--accent-soft); color: var(--accent-ink); }
+.icon-box.mint { background: var(--mint-soft); color: var(--mint-deep); }
+.icon-box.warn { background: var(--warn-soft); color: oklch(48% 0.12 68); }
+.icon-box.danger { background: var(--danger-soft); color: var(--danger); }
+.icon-box svg { width: 18px; height: 18px; }
+.icon-box.sm svg { width: 15px; height: 15px; }
+.icon-box.lg svg { width: 22px; height: 22px; }
+
+/* 排版 */
+.h-display { font-family: var(--font-display); font-size: 32px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.12; }
+.h1 { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+.h2 { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+.h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.body { font-size: 15px; line-height: 1.55; color: var(--fg); }
+.body-2 { font-size: 14px; line-height: 1.5; color: var(--fg-2); }
+.small { font-size: 13px; line-height: 1.5; color: var(--muted); letter-spacing: 0.005em; }
+.caption { font-size: 11px; line-height: 1.4; color: var(--muted); letter-spacing: 0.02em; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.num { font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+
+/* 强调引语 —— 替代"左色边 slogan 卡"的套路 */
+.pull-quote {
+  font-family: var(--font-display);
+  font-size: 19px; line-height: 1.45; color: var(--fg);
+  letter-spacing: -0.01em;
+}
+.pull-quote .accent { color: var(--accent-ink); font-weight: 600; }
+
+/* —— 插画占位（几何小狗轮廓） —— */
+.illu-puppy { display: block; max-width: 100%; height: auto; }

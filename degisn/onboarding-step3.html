@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>性格与偏好 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .progress { display: flex; gap: 6px; padding: 4px 20px 0; }
+  .progress .seg { flex: 1; height: 4px; border-radius: 2px; background: var(--border); }
+  .progress .seg.on { background: var(--accent); }
+
+  .nav-bar { padding-top: 12px; }
+  .nav-bar svg { color: var(--fg); }
+
+  .head { padding: 8px 0 14px; }
+  .head .eyebrow { margin-bottom: 6px; }
+  .head .title { font-family: var(--font-display); font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+  .head .desc { color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+  .preview-bar {
+    display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+    background: var(--accent-soft); border-radius: var(--r-md); margin-bottom: 18px;
+  }
+  .preview-bar .av {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--accent);
+    display: grid; place-items: center; flex-shrink: 0;
+  }
+  .preview-bar .meta .n { font-size: 15px; font-weight: 700; }
+  .preview-bar .meta .s { font-size: 12px; color: var(--accent-deep); margin-top: 2px; }
+  .preview-bar .count { margin-left: auto; font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--accent-deep); }
+
+  .tag-cloud {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
+  }
+  .tag-item {
+    padding: 9px 14px; border-radius: var(--r-pill); border: 1.5px solid var(--border);
+    background: var(--surface); font-size: 13px; font-weight: 500; cursor: pointer;
+    transition: all 0.12s; display: inline-flex; align-items: center; gap: 5px;
+    color: var(--fg);
+  }
+  .tag-item.selected { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .tag-item.mint.selected { background: var(--mint); border-color: var(--mint); color: oklch(28% 0.05 145); }
+  .tag-item .ic { width: 14px; height: 14px; }
+
+  .section-mini-title { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.06em; margin: 14px 0 10px; text-transform: uppercase; }
+
+  .bottom-bar {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px 34px;
+    background: linear-gradient(180deg, transparent, var(--bg) 30%);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .ai-note { font-size: 12px; color: var(--muted); text-align: center; line-height: 1.4; }
+  .ai-note b { color: var(--accent-deep); }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="progress"><div class="seg on"></div><div class="seg on"></div><div class="seg on"></div></div>
+
+    <div class="nav-bar">
+      <a class="back" href="onboarding-step2.html" data-od-id="back-btn">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <span class="title">第 3 步 / 共 3 步</span>
+      <span class="action" style="width:32px"></span>
+    </div>
+
+    <div class="screen-body">
+      <div class="head" data-od-id="page-head">
+        <div class="eyebrow">性格与偏好</div>
+        <div class="title">它的脾气是？</div>
+        <div class="desc">点击标签勾选，构建初始性格画像。</div>
+      </div>
+
+      <div class="preview-bar" data-od-id="preview">
+        <div class="av"><svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="15" r="8" fill="#fff"/><circle cx="13" cy="11" r="6" fill="#fff"/><ellipse cx="8" cy="8" rx="2.5" ry="4" fill="#fff" transform="rotate(-20 8 8)"/><ellipse cx="18" cy="8" rx="2.5" ry="4" fill="#fff" transform="rotate(20 18 8)"/><circle cx="11" cy="11" r="1" fill="#3a2a1a"/><circle cx="15" cy="11" r="1" fill="#3a2a1a"/></svg></div>
+        <div class="meta"><div class="n">豆豆 · 金毛</div><div class="s">已选 5 个标签</div></div>
+        <div class="count" data-od-id="tag-count">5</div>
+      </div>
+
+      <div class="section-mini-title">社交性格</div>
+      <div class="tag-cloud" data-od-id="tag-social">
+        <span class="tag-item selected">社牛</span>
+        <span class="tag-item">社恐</span>
+        <span class="tag-item selected">粘人</span>
+        <span class="tag-item">独立</span>
+        <span class="tag-item selected">对人友好</span>
+        <span class="tag-item">怕生</span>
+        <span class="tag-item">护主</span>
+      </div>
+
+      <div class="section-mini-title">行为习惯</div>
+      <div class="tag-cloud" data-od-id="tag-behavior">
+        <span class="tag-item">护食</span>
+        <span class="tag-item mint selected">爱游泳</span>
+        <span class="tag-item">爱叫</span>
+        <span class="tag-item">拆家</span>
+        <span class="tag-item">扑人</span>
+        <span class="tag-item">挑食</span>
+        <span class="tag-item mint">爱接飞盘</span>
+        <span class="tag-item">追尾巴</span>
+      </div>
+
+      <div class="section-mini-title">情绪偏好</div>
+      <div class="tag-cloud" data-od-id="tag-emotion">
+        <span class="tag-item mint selected">爱被摸肚</span>
+        <span class="tag-item">怕雷声</span>
+        <span class="tag-item">怕鞭炮</span>
+        <span class="tag-item">怕吹风机</span>
+        <span class="tag-item">晕车</span>
+        <span class="tag-item">怕独处</span>
+      </div>
+
+      <div class="section-mini-title">更多 · 自定义</div>
+      <div class="tag-cloud" data-od-id="tag-more">
+        <span class="tag-item">+ 爱晒太阳</span>
+        <span class="tag-item">+ 爱追球</span>
+        <span class="tag-item">+ 贪吃</span>
+        <span class="tag-item" style="border-style:dashed">+ 自定义</span>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="ai-note">这些标签会让 <b>AI 对话</b> 更懂豆豆的脾气</div>
+      <div style="display:flex;gap:12px">
+        <a class="btn btn-ghost" href="onboarding-step2.html">上一步</a>
+        <a class="btn btn-primary" href="tab-briefing.html" data-od-id="btn-finish">完成，开始记录</a>
+      </div>
+    </div>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.tag-item').forEach(function(el){
+    el.addEventListener('click', function(){
+      el.classList.toggle('selected');
+      var n = document.querySelectorAll('.tag-item.selected').length;
+      var c = document.querySelector('[data-od-id="tag-count"]');
+      if (c) c.textContent = n;
+      var s = document.querySelector('.preview-bar .s');
+      if (s) s.textContent = '已选 ' + n + ' 个标签';
+    });
+  });
+</script>
+</body>
+</html>

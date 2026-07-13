@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>邀请家人 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .nav-bar svg { color: var(--fg); }
+  .nav-bar .title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .screen-body { padding: 0 16px 100px; }
+
+  /* 邀请码卡 —— 惊艳一笔 */
+  .invite-card { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%); border-radius: var(--r-lg); padding: 20px; color: #fff; margin-bottom: 14px; text-align: center; position: relative; overflow: hidden; }
+  .invite-card::before { content:''; position:absolute; top:-40px; right:-30px; width:130px; height:130px; border-radius:50%; background: oklch(99% 0.01 80 / 0.1); }
+  .invite-card .t { font-size: 13px; opacity: 0.9; }
+  .invite-card .code { font-family: var(--font-mono); font-size: 36px; font-weight: 700; letter-spacing: 0.12em; margin: 8px 0; font-variant-numeric: tabular-nums; }
+  .invite-card .code .dash { opacity: 0.4; }
+  .invite-card .d { font-size: 11px; opacity: 0.8; margin-bottom: 14px; }
+  .invite-card .actions { display: flex; gap: 10px; }
+  .invite-card .actions a { flex: 1; padding: 11px; border-radius: var(--r-pill); font-size: 13px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .invite-card .actions .copy { background: #fff; color: var(--accent-deep); }
+  .invite-card .actions .wx { background: oklch(99% 0.01 80 / 0.18); color: #fff; border: 1px solid oklch(99% 0.01 80 / 0.3); }
+
+  /* 加入流程说明 */
+  .flow-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; margin-bottom: 14px; }
+  .flow-card .h { font-size: 13px; font-weight: 700; margin-bottom: 14px; }
+  .flow-steps { display: flex; flex-direction: column; gap: 0; }
+  .flow-step { display: flex; gap: 12px; position: relative; padding-bottom: 16px; }
+  .flow-step:last-child { padding-bottom: 0; }
+  .flow-step::before { content:''; position: absolute; left: 11px; top: 24px; bottom: 0; width: 2px; background: var(--border); }
+  .flow-step:last-child::before { display: none; }
+  .flow-step .num { width: 24px; height: 24px; border-radius: 50%; background: var(--accent-soft); color: var(--accent-deep); display: grid; place-items: center; font-size: 11px; font-weight: 700; flex-shrink: 0; z-index: 1; font-family: var(--font-mono); }
+  .flow-step .info .n { font-size: 13px; font-weight: 600; }
+  .flow-step .info .d { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.45; }
+
+  /* 待审核 */
+  .section-label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; margin: 4px 4px 10px; display: flex; justify-content: space-between; }
+  .section-label .cnt { font-family: var(--font-mono); color: var(--danger); }
+  .review-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+  .review-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px; }
+  .review-card .top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .review-card .av { width: 42px; height: 42px; border-radius: 50%; background: var(--mint); display: grid; place-items: center; color: oklch(28% 0.05 145); font-weight: 700; flex-shrink: 0; }
+  .review-card .info { flex: 1; }
+  .review-card .info .n { font-size: 14px; font-weight: 700; }
+  .review-card .info .m { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .review-card .role-pick { font-size: 11px; color: var(--accent-deep); background: var(--accent-soft); padding: 3px 9px; border-radius: var(--r-pill); font-weight: 600; display: inline-block; margin-top: 4px; }
+  .review-card .perms { background: var(--surface-2); border-radius: var(--r-sm); padding: 10px 12px; margin-bottom: 12px; }
+  .review-card .perms .lab { font-size: 10px; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.04em; }
+  .review-card .perms .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .review-card .perms .tags .tag { font-size: 10px; padding: 2px 7px; border-radius: var(--r-pill); background: var(--surface); border: 1px solid var(--border); color: var(--fg); }
+  .review-card .acts { display: flex; gap: 8px; }
+  .review-card .acts button { flex: 1; min-height: 40px; border-radius: var(--r-pill); border: 0; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .review-card .acts .reject { background: var(--surface-2); color: var(--muted); }
+  .review-card .acts .approve { background: var(--accent); color: #fff; }
+
+  /* 已加入成员 */
+  .member-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .member { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .member:last-child { border-bottom: 0; }
+  .member .av { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 13px; }
+  .member .av.mint { background: var(--mint); color: oklch(28% 0.05 145); }
+  .member .av.accent { background: var(--accent); }
+  .member .av.tan { background: var(--illu-tan); }
+  .member .info .n { font-size: 13px; font-weight: 600; }
+  .member .info .r { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .member .badge { font-size: 10px; padding: 2px 7px; border-radius: var(--r-pill); background: var(--accent-soft); color: var(--accent-deep); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="profile-me.html" data-od-id="back"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="title" data-od-id="page-title">邀请家人</span>
+      <span class="back" style="opacity:0">·</span>
+    </div>
+
+    <div class="screen-body">
+      <div class="invite-card" data-od-id="invite-card">
+        <div class="t">家庭邀请码 · 7 天有效</div>
+        <div class="code">7<span class="dash">-</span>3<span class="dash">-</span>9<span class="dash">-</span>K<span class="dash">-</span>2<span class="dash">-</span>M</div>
+        <div class="d">被邀请人输入此码即可申请加入阿哲的家</div>
+        <div class="actions">
+          <a class="copy" href="#" data-od-id="copy-code">复制邀请码</a>
+          <a class="wx" href="#" data-od-id="share-wx"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 2C3 2 1 4 1 6.5c0 1.5.8 2.8 2 3.7L2.5 12l2-1c.5.1 1 .2 1.5.2" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="4" cy="6" r="0.8" fill="currentColor"/><circle cx="7" cy="6" r="0.8" fill="currentColor"/></svg> 微信分享</a>
+        </div>
+      </div>
+
+      <div class="flow-card" data-od-id="flow">
+        <div class="h">加入流程</div>
+        <div class="flow-steps">
+          <div class="flow-step"><div class="num">1</div><div class="info"><div class="n">分享邀请码或链接</div><div class="d">6 位数字码或微信一键分享</div></div></div>
+          <div class="flow-step"><div class="num">2</div><div class="info"><div class="n">对方自选角色并预览权限</div><div class="d">如选"奶妈"，预览将获得的 P1-P10 权限</div></div></div>
+          <div class="flow-step"><div class="num">3</div><div class="info"><div class="n">首席监护人审核</div><div class="d">可调整权限后通过，或拒绝申请</div></div></div>
+          <div class="flow-step"><div class="num">4</div><div class="info"><div class="n">正式生效 · 全家可见</div><div class="d">权限实时生效，动态墙自动记录</div></div></div>
+        </div>
+      </div>
+
+      <div class="section-label"><span>待审核申请</span><span class="cnt">1 人</span></div>
+      <div class="review-list" data-od-id="review-list">
+        <div class="review-card" data-od-id="review-1">
+          <div class="top">
+            <div class="av">小</div>
+            <div class="info"><div class="n">小棠 · 138****6629</div><div class="m">10 分钟前申请 · 伴侣</div><span class="role-pick">自选角色：奶妈</span></div>
+          </div>
+          <div class="perms"><div class="lab">预览权限 · 10 项</div><div class="tags"><span class="tag">查看档案</span><span class="tag">编辑事件</span><span class="tag">管理日程</span><span class="tag">查看相册</span><span class="tag">管理相册</span><span class="tag">+5</span></div></div>
+          <div class="acts"><button class="reject" data-od-id="reject">拒绝</button><button class="approve" data-od-id="approve">通过并调整</button></div>
+        </div>
+      </div>
+
+      <div class="section-label"><span>已加入成员 · 3 人</span></div>
+      <div class="member-list" data-od-id="member-list">
+        <div class="member"><div class="av accent">哲</div><div class="info"><div class="n">阿哲（你）</div><div class="r">首席监护人 · P1-P12</div></div><span class="badge">管理员</span></div>
+        <div class="member"><div class="av mint">棠</div><div class="info"><div class="n">小棠</div><div class="r">奶妈 · P1-P10</div></div></div>
+        <div class="member"><div class="av tan">张</div><div class="info"><div class="n">老张</div><div class="r">爷爷 · P1,P3,P5,P7,P9</div></div></div>
+      </div>
+    </div>
+
+    <nav class="tab-bar" data-od-id="tab-bar">
+      <a href="tab-briefing.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 3l9 7v10a2 2 0 0 1-2 2h-4v-7h-6v7H6a2 2 0 0 1-2-2V10l9-7z"/></svg>简报</a>
+      <a href="tab-ai-chat.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V8a2 2 0 0 1 1-2z"/></svg>AI</a>
+      <a class="active" href="profile-me.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13" cy="9" r="4"/><path d="M5 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>我的</a>
+    </nav>
+    <div class="home-bar"></div>
+  </div>
+</div>
+<script>
+  document.querySelector('[data-od-id="approve"]').addEventListener('click', function(){ window.location.href='family-permissions.html'; });
+  document.querySelector('[data-od-id="reject"]').addEventListener('click', function(){
+    var c=document.querySelector('[data-od-id="review-1"]'); c.style.opacity='0.4'; c.querySelector('.acts').innerHTML='<div style="flex:1;text-align:center;font-size:12px;color:var(--muted)">已拒绝 · 已通知对方</div>';
+  });
+</script>
+</body>
+</html>

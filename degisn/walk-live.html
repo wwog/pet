@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>遛狗中 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .screen { background: var(--bg); }
+  .nav-bar { padding: 6px 16px 8px; }
+  .nav-bar svg { color: var(--fg); }
+  .nav-bar .timer { font-family: var(--font-mono); font-size: 15px; font-weight: 700; letter-spacing: 0.02em; color: var(--mint); font-variant-numeric: tabular-nums; }
+  .nav-bar .timer .live-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--mint); margin-right: 6px; animation: pulse 1.5s infinite; vertical-align: middle; }
+  @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.3); } }
+
+  /* 地图区 —— 惊艳一笔：实时轨迹 */
+  .map-wrap { position: relative; height: 300px; margin: 0 16px; border-radius: var(--r-lg); overflow: hidden; background: var(--mint-soft); border: 1px solid var(--border); }
+  .map-bg { position: absolute; inset: 0; }
+  .map-bg path.road { fill: none; stroke: oklch(85% 0.02 165); stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; }
+  .map-bg path.road-sm { stroke: oklch(88% 0.015 165); stroke-width: 8; }
+  .map-bg path.block { fill: oklch(92% 0.015 80); stroke: oklch(85% 0.01 80); stroke-width: 0.5; }
+  .map-bg path.park { fill: oklch(84% 0.04 150); }
+  /* 已走轨迹 —— 焦糖橙描线 */
+  .track-done { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 2px oklch(58% 0.16 45 / 0.3)); }
+  /* 当前位置脉冲点 */
+  .track-head { fill: var(--accent); }
+  .track-head-pulse { fill: var(--accent); opacity: 0.3; animation: headpulse 1.8s infinite; transform-origin: center; }
+  @keyframes headpulse { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(3); opacity: 0; } }
+  .start-dot { fill: var(--mint); stroke: #fff; stroke-width: 2; }
+
+  .map-overlay-top { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; }
+  .map-chip { background: oklch(99% 0.006 80 / 0.92); backdrop-filter: blur(8px); padding: 6px 11px; border-radius: var(--r-pill); font-size: 11px; font-weight: 600; color: var(--fg); display: inline-flex; align-items: center; gap: 5px; box-shadow: var(--shadow-card); }
+  .map-chip .ic { width: 12px; height: 12px; color: var(--accent-deep); }
+
+  .screen-body { padding: 14px 16px 130px; }
+
+  /* 实时数据三联 */
+  .live-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .live-stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 12px 8px; text-align: center; }
+  .live-stat .val { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; color: var(--fg); }
+  .live-stat .val .u { font-size: 11px; font-weight: 500; color: var(--muted); }
+  .live-stat .lab { font-size: 10px; color: var(--muted); margin-top: 3px; letter-spacing: 0.04em; }
+  .live-stat.pace .val { color: var(--accent-deep); }
+
+  /* 速度曲线小图 */
+  .pace-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px; margin-bottom: 14px; }
+  .pace-card .h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .pace-card .h .t { font-size: 13px; font-weight: 700; }
+  .pace-card .h .avg { font-size: 11px; color: var(--muted); font-family: var(--font-mono); }
+  .pace-chart { width: 100%; height: 56px; }
+
+  /* 事件打卡 */
+  .event-label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; margin: 4px 2px 10px; }
+  .event-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .event-btn { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r-md); padding: 12px 4px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; transition: all 0.12s; min-height: 64px; justify-content: center; }
+  .event-btn:active { transform: scale(0.95); border-color: var(--accent); background: var(--accent-soft); }
+  .event-btn svg { width: 22px; height: 22px; color: var(--accent-deep); }
+  .event-btn .lbl { font-size: 11px; font-weight: 600; }
+
+  /* 事件时间线 */
+  .event-log { margin-top: 14px; }
+  .event-log .item { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .event-log .item:last-child { border-bottom: 0; }
+  .event-log .item .t { font-family: var(--font-mono); font-size: 11px; color: var(--muted); width: 40px; flex-shrink: 0; }
+  .event-log .item .ic { width: 26px; height: 26px; border-radius: 8px; background: var(--accent-soft); display: grid; place-items: center; flex-shrink: 0; }
+  .event-log .item .ic svg { width: 14px; height: 14px; color: var(--accent-deep); }
+  .event-log .item .txt { flex: 1; }
+  .event-log .item .txt .n { font-weight: 600; }
+  .event-log .item .txt .loc { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  /* 底部结束按钮 */
+  .bottom-bar { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 16px 34px; background: linear-gradient(180deg, transparent, var(--bg) 25%); display: flex; gap: 10px; }
+  .end-btn { flex: 1; min-height: 54px; border-radius: var(--r-pill); border: 0; font-size: 16px; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: transform 0.12s; }
+  .end-btn:active { transform: scale(0.97); }
+  .end-btn.pause { background: var(--surface-2); color: var(--fg); border: 1px solid var(--border); flex: 0 0 110px; }
+  .end-btn.stop { background: var(--accent); color: #fff; box-shadow: 0 8px 24px oklch(58% 0.16 45 / 0.35); }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="tab-calendar.html" data-od-id="back"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="timer" data-od-id="timer"><span class="live-dot"></span>00:18:42</span>
+      <a class="back" href="#" data-od-id="lock" style="opacity:0">·</a>
+    </div>
+
+    <!-- 实时轨迹地图 —— 惊艳一笔 -->
+    <div class="map-wrap" data-od-id="map">
+      <svg class="map-bg" viewBox="0 0 358 300" preserveAspectRatio="xMidYMid slice">
+        <!-- 街区底 -->
+        <path class="block" d="M20 20h100v80h-100z"/>
+        <path class="block" d="M140 20h90v60h-90z"/>
+        <path class="block" d="M250 20h88v90h-88z"/>
+        <path class="block" d="M20 120h70v80h-70z"/>
+        <path class="block" d="M250 130h88v70h-88z"/>
+        <path class="block" d="M20 220h100v60h-100z"/>
+        <path class="block" d="M140 220h198v60h-198z"/>
+        <!-- 公园绿地 -->
+        <path class="park" d="M110 100h120v110h-120z" rx="6"/>
+        <!-- 道路 -->
+        <path class="road" d="M0 105h358M0 215h358M130 0v300M248 0v300"/>
+        <path class="road-sm" d="M70 0v105M70 215v85M190 0v100M190 210v90M310 0v130M310 200v100M0 60h130M248 60h110M0 165h70M248 165h110M0 270h358"/>
+        <!-- 已走轨迹（焦糖橙） -->
+        <path class="track-done" d="M40 270 L40 165 Q40 135 70 135 L130 135 Q160 135 160 105 L160 60 Q160 35 190 35 L248 35 Q278 35 278 65 L278 135 Q278 165 248 165 L190 165 Q160 165 160 195 L160 250 Q160 270 130 270 Z" data-od-id="track"/>
+        <!-- 起点 -->
+        <circle class="start-dot" cx="40" cy="270" r="6"/>
+        <!-- 当前位置 -->
+        <circle class="track-head-pulse" cx="130" cy="270" r="6"/>
+        <circle class="track-head" cx="130" cy="270" r="6" stroke="#fff" stroke-width="2"/>
+      </svg>
+      <div class="map-overlay-top">
+        <span class="map-chip"><svg class="ic" viewBox="0 0 12 12" fill="none"><path d="M6 1l4 4-4 6-4-6 4-4z" stroke="currentColor" stroke-width="1.2"/></svg>滨江公园环线</span>
+        <span class="map-chip" data-od-id="gps"><svg class="ic" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2" fill="currentColor"/><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1" opacity="0.4"/></svg>GPS 强</span>
+      </div>
+    </div>
+
+    <div class="screen-body">
+      <!-- 实时三联 -->
+      <div class="live-stats" data-od-id="live-stats">
+        <div class="live-stat" data-od-id="stat-dist">
+          <div class="val">1.84<span class="u">km</span></div>
+          <div class="lab">距离</div>
+        </div>
+        <div class="live-stat pace" data-od-id="stat-speed">
+          <div class="val">5.9<span class="u">km/h</span></div>
+          <div class="lab">当前速度</div>
+        </div>
+        <div class="live-stat" data-od-id="stat-cal">
+          <div class="val">68<span class="u">kcal</span></div>
+          <div class="lab">豆豆消耗</div>
+        </div>
+      </div>
+
+      <!-- 速度曲线 -->
+      <div class="pace-card" data-od-id="pace-card">
+        <div class="h"><span class="t">速度曲线</span><span class="avg">均速 5.9 · 峰值 8.2 km/h</span></div>
+        <svg class="pace-chart" viewBox="0 0 320 56" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="pf" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="oklch(72% 0.1 165)" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="oklch(72% 0.1 165)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0 40 L40 32 L80 36 L120 22 L160 28 L200 14 L240 26 L280 20 L320 30 L320 56 L0 56 Z" fill="url(#pf)"/>
+          <path d="M0 40 L40 32 L80 36 L120 22 L160 28 L200 14 L240 26 L280 20 L320 30" fill="none" stroke="var(--mint)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="320" cy="30" r="3" fill="var(--mint)"/>
+        </svg>
+      </div>
+
+      <!-- 事件打卡 -->
+      <div class="event-label">一键打卡事件</div>
+      <div class="event-grid" data-od-id="event-grid">
+        <div class="event-btn" data-od-id="ev-poop"><svg viewBox="0 0 22 22" fill="none"><path d="M6 16c0-5 3-9 5-9s5 4 5 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M4 17h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="lbl">排便</span></div>
+        <div class="event-btn" data-od-id="ev-pee"><svg viewBox="0 0 22 22" fill="none"><path d="M8 5c0 4 6 5 6 9 0 2-1 3-3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M11 4v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="lbl">排尿</span></div>
+        <div class="event-btn" data-od-id="ev-sniff"><svg viewBox="0 0 22 22" fill="none"><circle cx="8" cy="10" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M11 10h6M17 10v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="lbl">嗅闻</span></div>
+        <div class="event-btn" data-od-id="ev-greet"><svg viewBox="0 0 22 22" fill="none"><circle cx="7" cy="11" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="15" cy="11" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M10 11h2" stroke="currentColor" stroke-width="1.6"/></svg><span class="lbl">社交</span></div>
+        <div class="event-btn" data-od-id="ev-run"><svg viewBox="0 0 22 22" fill="none"><circle cx="13" cy="5" r="2" stroke="currentColor" stroke-width="1.6"/><path d="M11 9l-3 3 2 2 2-2M10 12l-2 5M13 12l3-1M15 16l-1-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="lbl">奔跑</span></div>
+        <div class="event-btn" data-od-id="ev-rest"><svg viewBox="0 0 22 22" fill="none"><path d="M4 13c0-2 2-3 4-3h6c2 0 4 1 4 3v2H4v-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 10V7M14 10V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="lbl">休息</span></div>
+        <div class="event-btn" data-od-id="ev-drink"><svg viewBox="0 0 22 22" fill="none"><path d="M7 5h8l-1 12c0 1-1 2-2 2h-2c-1 0-2-1-2-2L7 5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 9h6" stroke="currentColor" stroke-width="1.6"/></svg><span class="lbl">喝水</span></div>
+        <div class="event-btn" data-od-id="ev-mark"><svg viewBox="0 0 22 22" fill="none"><path d="M11 3l4 8h-8l4-8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="11" cy="15" r="3" stroke="currentColor" stroke-width="1.6"/></svg><span class="lbl">标记</span></div>
+      </div>
+
+      <!-- 已记录事件 -->
+      <div class="event-log" data-od-id="event-log">
+        <div class="item">
+          <span class="t">09:32</span>
+          <span class="ic"><svg viewBox="0 0 14 14" fill="none"><path d="M4 10c0-3 2-5 3-5s3 2 3 5" stroke="currentColor" stroke-width="1.3"/><path d="M3 11h8" stroke="currentColor" stroke-width="1.3"/></svg></span>
+          <span class="txt"><span class="n">排便</span><span class="loc">滨江路 · 草坪东侧</span></span>
+        </div>
+        <div class="item">
+          <span class="t">09:28</span>
+          <span class="ic"><svg viewBox="0 0 14 14" fill="none"><circle cx="5" cy="6" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M7 6h4M11 6v2" stroke="currentColor" stroke-width="1.3"/></svg></span>
+          <span class="txt"><span class="n">嗅闻标记</span><span class="loc">公园北门 · 第 3 次标记</span></span>
+        </div>
+        <div class="item">
+          <span class="t">09:24</span>
+          <span class="ic"><svg viewBox="0 0 14 14" fill="none"><circle cx="4" cy="7" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="10" cy="7" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M6 7h2" stroke="currentColor" stroke-width="1.3"/></svg></span>
+          <span class="txt"><span class="n">与金毛社交</span><span class="loc">公园中央 · 持续 2 分钟</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部结束 -->
+    <div class="bottom-bar" data-od-id="bottom-bar">
+      <a class="end-btn pause" href="#" data-od-id="pause">暂停</a>
+      <a class="end-btn stop" href="walk-summary.html" data-od-id="end">结束遛狗</a>
+    </div>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+
+<script>
+  // 事件打卡 → 追加到时间线
+  var labels = { 'ev-poop':'排便','ev-pee':'排尿','ev-sniff':'嗅闻','ev-greet':'社交','ev-run':'奔跑','ev-rest':'休息','ev-drink':'喝水','ev-mark':'标记' };
+  var locs = ['滨江路 · 草坪','公园北门','中央广场','林荫道','湖边小径'];
+  document.querySelectorAll('.event-btn').forEach(function(el){
+    el.addEventListener('click', function(){
+      var id = el.getAttribute('data-od-id');
+      var log = document.querySelector('[data-od-id="event-log"]');
+      var now = new Date();
+      var hh = String(now.getHours()).padStart(2,'0');
+      var mm = String(now.getMinutes()).padStart(2,'0');
+      var item = document.createElement('div');
+      item.className = 'item';
+      item.innerHTML = '<span class="t">'+hh+':'+mm+'</span><span class="ic">'+el.querySelector('svg').outerHTML.replace(/width="22" height="22"/g,'width="14" height="14"')+'</span><span class="txt"><span class="n">'+labels[id]+'</span><span class="loc">'+locs[Math.floor(Math.random()*locs.length)]+'</span></span>';
+      log.insertBefore(item, log.firstChild);
+      el.style.transform = 'scale(0.9)'; setTimeout(function(){ el.style.transform=''; }, 120);
+    });
+  });
+  // 计时器累加
+  var sec = 18*60+42;
+  setInterval(function(){
+    sec++;
+    var h = String(Math.floor(sec/3600)).padStart(2,'0');
+    var m = String(Math.floor((sec%3600)/60)).padStart(2,'0');
+    var s = String(sec%60).padStart(2,'0');
+    var t = document.querySelector('[data-od-id="timer"]');
+    t.innerHTML = '<span class="live-dot"></span>'+h+':'+m+':'+s;
+  }, 1000);
+</script>
+</body>
+</html>

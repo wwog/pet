@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>品种与外貌 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .progress { display: flex; gap: 6px; padding: 4px 20px 0; }
+  .progress .seg { flex: 1; height: 4px; border-radius: 2px; background: var(--border); }
+  .progress .seg.on { background: var(--accent); }
+
+  .nav-bar { padding-top: 12px; }
+  .nav-bar svg { color: var(--fg); }
+
+  .head { padding: 8px 0 18px; }
+  .head .eyebrow { margin-bottom: 6px; }
+  .head .title { font-family: var(--font-display); font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+  .head .desc { color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+  .field-label { font-size: 13px; font-weight: 600; margin-bottom: 10px; display: flex; justify-content: space-between; }
+  .field-label .hint { font-weight: 400; color: var(--muted); font-size: 12px; }
+
+  .search-wrap {
+    background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r-pill);
+    display: flex; align-items: center; padding: 0 16px; gap: 8px; margin-bottom: 14px;
+  }
+  .search-wrap:focus-within { border-color: var(--accent); }
+  .search-wrap svg { color: var(--muted); flex-shrink: 0; }
+  .search-wrap input { border: 0; background: transparent; outline: none; min-height: 46px; font-size: 15px; flex: 1; color: var(--fg); }
+  .pinyin-chip { font-size: 11px; color: var(--muted); background: var(--surface-2); padding: 3px 8px; border-radius: var(--r-pill); }
+
+  .breed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+  .breed-card {
+    border: 1.5px solid var(--border); border-radius: var(--r-md); padding: 12px;
+    background: var(--surface); display: flex; gap: 10px; align-items: center;
+    cursor: pointer; transition: all 0.15s; min-height: 72px;
+  }
+  .breed-card.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .breed-card .icon { width: 44px; height: 44px; border-radius: 12px; background: var(--surface-2); display: grid; place-items: center; flex-shrink: 0; }
+  .breed-card .info .n { font-size: 14px; font-weight: 600; }
+  .breed-card .info .m { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .breed-spec {
+    background: var(--mint-soft); border-radius: var(--r-md); padding: 12px 14px; margin-bottom: 22px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .breed-spec .stat { flex: 1; }
+  .breed-spec .stat .k { font-size: 11px; color: oklch(42% 0.1 165); font-weight: 600; letter-spacing: 0.04em; }
+  .breed-spec .stat .v { font-size: 16px; font-weight: 700; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .breed-spec .stat .v .u { font-size: 12px; font-weight: 500; color: var(--muted); }
+
+  .color-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 14px; }
+  .color-swatch {
+    aspect-ratio: 1; border-radius: 50%; border: 2px solid transparent;
+    cursor: pointer; position: relative; transition: transform 0.1s;
+  }
+  .color-swatch.selected { border-color: var(--accent); transform: scale(1.1); }
+  .color-swatch.selected::after { content: ''; position: absolute; inset: -6px; border: 1.5px solid var(--accent); border-radius: 50%; }
+
+  .pattern-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+  .pattern-chip {
+    padding: 8px 12px; border-radius: var(--r-pill); border: 1px solid var(--border);
+    background: var(--surface); font-size: 12px; font-weight: 500; cursor: pointer;
+  }
+  .pattern-chip.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .neuter-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px; }
+  .tri-toggle { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; background: var(--surface-2); border-radius: var(--r-pill); padding: 4px; }
+  .tri-toggle button { border: 0; background: transparent; min-height: 40px; border-radius: var(--r-pill); font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; }
+  .tri-toggle button.on { background: var(--surface); color: var(--fg); box-shadow: var(--shadow-card); }
+
+  .bottom-bar {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px 34px;
+    background: linear-gradient(180deg, transparent, var(--bg) 30%);
+    display: flex; gap: 12px;
+  }
+  .bottom-bar .btn { flex: 1; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="progress"><div class="seg on"></div><div class="seg on"></div><div class="seg"></div></div>
+
+    <div class="nav-bar">
+      <a class="back" href="onboarding-step1.html" data-od-id="back-btn">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <span class="title">第 2 步 / 共 3 步</span>
+      <span class="action" style="width:32px"></span>
+    </div>
+
+    <div class="screen-body">
+      <div class="head">
+        <div class="eyebrow">品种与外貌</div>
+        <div class="title">它长什么样？</div>
+        <div class="desc">AKC + FCI 全犬种库，拼音首字母检索。</div>
+      </div>
+
+      <div class="field-label"><span>品种</span><span class="hint">输入"J"显示金毛、吉娃娃…</span></div>
+      <div class="search-wrap" data-od-id="breed-search">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <input type="text" value="金毛" data-od-id="breed-input" />
+        <span class="pinyin-chip">J · jm</span>
+      </div>
+
+      <div class="breed-grid" data-od-id="breed-list">
+        <div class="breed-card selected" data-od-id="breed-jinmao">
+          <div class="icon"><svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="17" rx="10" ry="7" fill="#e8c9a0"/><circle cx="14" cy="12" r="8" fill="#e8c9a0"/><ellipse cx="8" cy="9" rx="3" ry="5" fill="#a87850" transform="rotate(-20 8 9)"/><ellipse cx="20" cy="9" rx="3" ry="5" fill="#a87850" transform="rotate(20 20 9)"/></svg></div>
+          <div class="info"><div class="n">金毛寻回犬</div><div class="m">大型 · 长毛</div></div>
+        </div>
+        <div class="breed-card" data-od-id="breed-chihuahua">
+          <div class="icon"><svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="18" rx="7" ry="5" fill="#d8b89a"/><circle cx="14" cy="12" r="6" fill="#d8b89a"/><ellipse cx="9" cy="8" rx="2.5" ry="5" fill="#8a6a4a" transform="rotate(-30 9 8)"/><ellipse cx="19" cy="8" rx="2.5" ry="5" fill="#8a6a4a" transform="rotate(30 19 8)"/></svg></div>
+          <div class="info"><div class="n">吉娃娃</div><div class="m">小型 · 短毛</div></div>
+        </div>
+        <div class="breed-card" data-od-id="breed-corgi">
+          <div class="icon"><svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="19" rx="11" ry="5" fill="#e8a878"/><circle cx="14" cy="14" r="7" fill="#e8a878"/><ellipse cx="8" cy="11" rx="3" ry="4" fill="#fff"/><ellipse cx="20" cy="11" rx="3" ry="4" fill="#fff"/></svg></div>
+          <div class="info"><div class="n">柯基</div><div class="m">小型 · 短腿</div></div>
+        </div>
+        <div class="breed-card" data-od-id="breed-teddy">
+          <div class="icon"><svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="18" rx="8" ry="6" fill="#a87850"/><circle cx="14" cy="11" r="7" fill="#a87850"/><ellipse cx="8" cy="8" rx="3" ry="5" fill="#6a4a30" transform="rotate(-20 8 8)"/><ellipse cx="20" cy="8" rx="3" ry="5" fill="#6a4a30" transform="rotate(20 20 8)"/></svg></div>
+          <div class="info"><div class="n">贵宾 · 泰迪</div><div class="m">小型 · 卷毛</div></div>
+        </div>
+      </div>
+
+      <div class="breed-spec" data-od-id="breed-spec">
+        <div class="stat"><div class="k">标准体重</div><div class="v">25–34<span class="u">kg</span></div></div>
+        <div class="stat"><div class="k">寿命参考</div><div class="v">10–12<span class="u">年</span></div></div>
+        <div class="stat"><div class="k">运动需求</div><div class="v">高</div></div>
+      </div>
+
+      <div class="field-label" style="margin-top:4px"><span>毛色</span></div>
+      <div class="color-grid" data-od-id="color-grid">
+        <div class="color-swatch selected" style="background:#e8c9a0" data-od-id="color-cream"></div>
+        <div class="color-swatch" style="background:#a87850" data-od-id="color-tan"></div>
+        <div class="color-swatch" style="background:#3a2a1a" data-od-id="color-brown"></div>
+        <div class="color-swatch" style="background:#1a1a1a" data-od-id="color-black"></div>
+        <div class="color-swatch" style="background:#f5f5f0" data-od-id="color-white"></div>
+        <div class="color-swatch" style="background:#8a8a85" data-od-id="color-gray"></div>
+        <div class="color-swatch" style="background:#d8a060" data-od-id="color-gold"></div>
+        <div class="color-swatch" style="background:#b8704a" data-od-id="color-red"></div>
+        <div class="color-swatch" style="background:#5a4030" data-od-id="color-choco"></div>
+        <div class="color-swatch" style="background:#7a6a50" data-od-id="color-merle"></div>
+        <div class="color-swatch" style="background:#c9a878" data-od-id="color-fawn"></div>
+        <div class="color-swatch" style="background:#e8d8c0" data-od-id="color-pearl"></div>
+      </div>
+
+      <div class="pattern-row" data-od-id="pattern-row">
+        <div class="pattern-chip">纯色</div>
+        <div class="pattern-chip selected">虎斑</div>
+        <div class="pattern-chip">陨石</div>
+        <div class="pattern-chip">双色</div>
+        <div class="pattern-chip">三色</div>
+        <div class="pattern-chip">花斑</div>
+      </div>
+
+      <div class="field-label"><span>绝育状态</span></div>
+      <div class="neuter-card" data-od-id="neuter-card">
+        <div class="tri-toggle">
+          <button class="on">已绝育</button>
+          <button>未绝育</button>
+          <button>计划中</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <a class="btn btn-ghost" href="onboarding-step1.html">上一步</a>
+      <a class="btn btn-primary" href="onboarding-step3.html" data-od-id="btn-next">下一步</a>
+    </div>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.breed-card').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.breed-card').forEach(function(o){ o.classList.remove('selected'); });
+      el.classList.add('selected');
+    });
+  });
+  document.querySelectorAll('.color-swatch').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.color-swatch').forEach(function(o){ o.classList.remove('selected'); });
+      el.classList.add('selected');
+    });
+  });
+  document.querySelectorAll('.pattern-chip').forEach(function(el){
+    el.addEventListener('click', function(){ el.classList.toggle('selected'); });
+  });
+  document.querySelectorAll('.tri-toggle button').forEach(function(el){
+    el.addEventListener('click', function(){
+      el.parentElement.querySelectorAll('button').forEach(function(b){ b.classList.remove('on'); });
+      el.classList.add('on');
+    });
+  });
+</script>
+</body>
+</html>

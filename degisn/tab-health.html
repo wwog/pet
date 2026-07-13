@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>健康档案 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .nav-bar .title { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .nav-bar svg { color: var(--fg); }
+
+  .screen-body { padding: 0 16px 100px; }
+
+  /* 过敏警示条 —— 惊艳一笔 */
+  .allergy-banner {
+    background: oklch(94% 0.05 25); border: 1px solid oklch(80% 0.08 25);
+    border-radius: var(--r-md); padding: 12px 14px; margin-bottom: 14px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .allergy-banner .ic { width: 28px; height: 28px; border-radius: 8px; background: var(--danger); display: grid; place-items: center; flex-shrink: 0; }
+  .allergy-banner .ic svg { color: #fff; }
+  .allergy-banner .t { font-size: 13px; font-weight: 700; color: var(--danger); }
+  .allergy-banner .d { font-size: 12px; color: var(--fg); margin-top: 2px; line-height: 1.45; }
+  .allergy-banner .d b { color: var(--danger); }
+
+  /* 体重曲线卡 */
+  .weight-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; margin-bottom: 14px; }
+  .weight-card .h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .weight-card .h .now { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .weight-card .h .now .u { font-size: 14px; font-weight: 500; color: var(--muted); }
+  .weight-card .h .risk { font-size: 11px; font-weight: 600; padding: 4px 9px; border-radius: var(--r-pill); }
+  .weight-card .h .risk.warn { background: oklch(93% 0.06 70); color: oklch(50% 0.12 70); }
+  .weight-card .h .risk.ok { background: var(--mint-soft); color: oklch(42% 0.1 165); }
+
+  .chart { width: 100%; height: 90px; }
+  .chart-x { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 4px; font-family: var(--font-mono); }
+  .ai-tip { font-size: 12px; color: var(--accent-deep); margin-top: 12px; padding: 8px 10px; background: var(--accent-soft); border-radius: 10px; line-height: 1.45; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .stat-tile { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px; }
+  .stat-tile .lab { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+  .stat-tile .val { font-size: 18px; font-weight: 700; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .stat-tile .val .u { font-size: 11px; font-weight: 500; color: var(--muted); }
+  .stat-tile .countdown { font-size: 11px; color: var(--accent-deep); margin-top: 6px; font-weight: 600; }
+
+  .section-label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.06em; margin: 10px 4px 8px; }
+
+  .record-list { display: flex; flex-direction: column; gap: 8px; }
+  .record-item {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+    padding: 12px 14px; display: flex; align-items: center; gap: 12px;
+  }
+  .record-item .ic { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; }
+  .record-item .ic.vac { background: var(--mint-soft); color: oklch(42% 0.1 165); }
+  .record-item .ic.dew { background: var(--accent-soft); color: var(--accent-deep); }
+  .record-item .ic.gen { background: var(--surface-2); color: var(--muted); }
+  .record-item .info { flex: 1; }
+  .record-item .info .n { font-size: 13px; font-weight: 600; }
+  .record-item .info .m { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .record-item .tag { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: var(--r-pill); }
+  .record-item .tag.due { background: oklch(93% 0.04 25); color: var(--danger); }
+  .record-item .tag.ok { background: var(--mint-soft); color: oklch(42% 0.1 165); }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="tab-briefing.html" data-od-id="back"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="title" data-od-id="page-title">健康档案</span>
+      <a class="back" href="#" data-od-id="add"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 5v12M5 11h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
+    </div>
+
+    <div class="screen-body">
+      <!-- 过敏警示 —— 惊艳一笔 -->
+      <div class="allergy-banner" data-od-id="allergy-banner">
+        <div class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l6 11H2L8 2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 7v3M8 11.5v.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <div>
+          <div class="t">过敏与用药禁忌 · 全家可见</div>
+          <div class="d">豆豆对 <b>青霉素类</b> 过敏；禁用 <b>布洛芬</b>、<b>对乙酰氨基酚</b>。就医时请出示本档案。</div>
+        </div>
+      </div>
+
+      <!-- 体重曲线 -->
+      <div class="weight-card" data-od-id="weight-card">
+        <div class="h">
+          <div class="now">13.0<span class="u">kg</span></div>
+          <span class="risk warn">轻度超重 · +0.5kg</span>
+        </div>
+        <svg class="chart" viewBox="0 0 320 90" preserveAspectRatio="none" data-od-id="weight-chart">
+          <defs>
+            <linearGradient id="wfill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="oklch(68% 0.15 55)" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="oklch(68% 0.15 55)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0 70 L46 64 L92 56 L138 52 L184 46 L230 38 L276 34 L320 30 L320 90 L0 90 Z" fill="url(#wfill)"/>
+          <path d="M0 70 L46 64 L92 56 L138 52 L184 46 L230 38 L276 34 L320 30" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="320" cy="30" r="4" fill="var(--accent)"/>
+          <circle cx="320" cy="30" r="8" fill="var(--accent)" opacity="0.2"/>
+          <line x1="0" y1="50" x2="320" y2="50" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 3"/>
+        </svg>
+        <div class="chart-x"><span>1月</span><span>2月</span><span>3月</span><span>4月</span><span>5月</span><span>6月</span><span>7月</span></div>
+        <div class="ai-tip" data-od-id="ai-tip">AI 评估：近 2 月体重上升偏快，建议每日喂量从 320g 降至 300g，增加 10 分钟遛弯。</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="stat-tile" data-od-id="stat-vaccine">
+          <div class="lab">疫苗加强针</div>
+          <div class="val">186<span class="u">天</span></div>
+          <div class="countdown">狂犬 · 12月到期</div>
+        </div>
+        <div class="stat-tile" data-od-id="stat-deworm">
+          <div class="lab">体外驱虫</div>
+          <div class="val">逾期<span class="u">2天</span></div>
+          <div class="countdown" style="color:var(--danger)">福来恩 · 待补做</div>
+        </div>
+      </div>
+
+      <div class="section-label">病历记录</div>
+      <div class="record-list" data-od-id="record-list">
+        <div class="record-item" data-od-id="rec-1">
+          <div class="ic vac"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M11 4h3v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="info"><div class="n">狂犬疫苗 · 加强</div><div class="m">宠安诊所 · 批号 RV2024A · 1月10日</div></div>
+          <span class="tag ok">已完成</span>
+        </div>
+        <div class="record-item" data-od-id="rec-2">
+          <div class="ic dew"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.6"/><path d="M6 9h6M9 6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+          <div class="info"><div class="n">体外驱虫 · 福来恩</div><div class="m">已存外包装照片 · 上次 6月5日</div></div>
+          <span class="tag due">逾期</span>
+        </div>
+        <div class="record-item" data-od-id="rec-3">
+          <div class="ic gen"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="4" y="3" width="10" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M7 7h4M7 10h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+          <div class="info"><div class="n">基因检测报告</div><div class="m">PDF 已上传 · AI 已提取关键项</div></div>
+          <span class="tag ok">已解读</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="tab-bar" data-od-id="tab-bar">
+      <a href="tab-briefing.html" data-od-id="tab-briefing"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 3l9 7v10a2 2 0 0 1-2 2h-4v-7h-6v7H6a2 2 0 0 1-2-2V10l9-7z"/></svg>简报</a>
+      <a href="tab-ai-chat.html" data-od-id="tab-chat"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V8a2 2 0 0 1 1-2z"/></svg>AI</a>
+      <a class="active" href="profile-me.html" data-od-id="tab-me"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13" cy="9" r="4"/><path d="M5 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>我的</a>
+    </nav>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+</body>
+</html>

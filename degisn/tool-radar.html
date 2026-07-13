@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>遛狗社群雷达 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .nav-bar svg { color: var(--fg); }
+  .nav-bar .title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .nav-bar .action { color: var(--accent); font-size: 14px; font-weight: 600; text-decoration: none; width: auto; }
+
+  /* 雷达地图 —— 惊艳一笔 */
+  .radar-wrap { position: relative; height: 320px; margin: 0 16px; border-radius: var(--r-lg); overflow: hidden; background: var(--mint-soft); border: 1px solid var(--border); }
+  .radar-bg { position: absolute; inset: 0; }
+  .radar-bg path.block { fill: oklch(92% 0.015 80); }
+  .radar-bg path.park { fill: oklch(84% 0.04 150); }
+  .radar-bg path.road { fill: none; stroke: oklch(85% 0.02 165); stroke-width: 10; stroke-linecap: round; }
+  /* 雷达扫描圈 */
+  .radar-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 1.5px solid oklch(72% 0.1 165 / 0.4); border-radius: 50%; }
+  .radar-ring.r1 { width: 110px; height: 110px; }
+  .radar-ring.r2 { width: 200px; height: 200px; }
+  .radar-ring.r3 { width: 290px; height: 290px; border-style: dashed; }
+  .radar-sweep { position: absolute; top: 50%; left: 50%; width: 145px; height: 145px; transform-origin: top left; background: conic-gradient(from 0deg, oklch(72% 0.1 165 / 0.35), transparent 60deg); border-radius: 50%; animation: sweep 4s linear infinite; transform: translate(-50%, -50%); }
+  @keyframes sweep { to { transform: translate(-50%, -50%) rotate(360deg); } }
+  .me-dot { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; border-radius: 50%; background: var(--accent); border: 3px solid #fff; box-shadow: 0 0 0 4px oklch(68% 0.15 55 / 0.25); z-index: 3; }
+  .me-dot::after { content: '我'; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); font-size: 9px; color: var(--accent-deep); font-weight: 700; white-space: nowrap; margin-top: 3px; }
+
+  .pup-pin { position: absolute; width: 36px; height: 36px; border-radius: 50%; background: var(--accent); border: 2px solid #fff; box-shadow: var(--shadow-card); display: grid; place-items: center; z-index: 2; cursor: pointer; transition: transform 0.15s; }
+  .pup-pin:active { transform: scale(1.15); }
+  .pup-pin.same { background: var(--mint); }
+  .pup-pin svg { color: #fff; }
+  .pup-pin .dist { position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 9px; color: var(--fg); background: oklch(99% 0.006 80 / 0.9); padding: 1px 5px; border-radius: var(--r-pill); white-space: nowrap; font-family: var(--font-mono); }
+
+  .radar-overlay-top { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; z-index: 5; }
+  .r-chip { background: oklch(99% 0.006 80 / 0.92); backdrop-filter: blur(8px); padding: 6px 11px; border-radius: var(--r-pill); font-size: 11px; font-weight: 600; color: var(--fg); display: inline-flex; align-items: center; gap: 5px; box-shadow: var(--shadow-card); }
+  .r-chip .live { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .screen-body { padding: 14px 16px 100px; }
+
+  .filter-row { display: flex; gap: 8px; margin-bottom: 14px; overflow-x: auto; }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .f-chip { flex-shrink: 0; padding: 7px 13px; border-radius: var(--r-pill); background: var(--surface); border: 1px solid var(--border); font-size: 12px; font-weight: 500; color: var(--muted); white-space: nowrap; }
+  .f-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .section-label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; margin: 4px 4px 10px; }
+  .nearby-list { display: flex; flex-direction: column; gap: 10px; }
+  .nearby-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 13px 14px; display: flex; align-items: center; gap: 12px; }
+  .nearby-card .av { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 14px; }
+  .nearby-card .av.mint { background: var(--mint); color: oklch(28% 0.05 145); }
+  .nearby-card .av.accent { background: var(--accent); }
+  .nearby-card .av.tan { background: var(--illu-tan); }
+  .nearby-card .info { flex: 1; min-width: 0; }
+  .nearby-card .info .n { font-size: 14px; font-weight: 700; }
+  .nearby-card .info .n .same-tag { font-size: 9px; background: var(--mint-soft); color: oklch(42% 0.1 165); padding: 1px 6px; border-radius: var(--r-pill); margin-left: 6px; font-weight: 600; }
+  .nearby-card .info .m { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .nearby-card .info .m .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--success); display: inline-block; margin-right: 4px; vertical-align: middle; }
+  .nearby-card .act { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+  .nearby-card .dist { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--accent-deep); }
+  .nearby-card .btn-wave { font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: var(--r-pill); background: var(--accent); color: #fff; text-decoration: none; }
+  .nearby-card .btn-wave.ghost { background: var(--surface-2); color: var(--fg); }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="profile-me.html" data-od-id="back"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="title" data-od-id="page-title">社群雷达</span>
+      <a class="action" href="#" data-od-id="range">3km</a>
+    </div>
+
+    <div class="radar-wrap" data-od-id="radar">
+      <svg class="radar-bg" viewBox="0 0 358 320" preserveAspectRatio="xMidYMid slice">
+        <path class="block" d="M20 30h120v90h-120z"/>
+        <path class="block" d="M210 30h128v70h-128z"/>
+        <path class="block" d="M20 200h100v100h-100z"/>
+        <path class="block" d="M230 200h108v100h-108z"/>
+        <path class="park" d="M140 120h80v80h-80z"/>
+        <path class="road" d="M0 160h358M179 0v320M70 120V200M280 120V200M0 120h70M280 120h78M0 200h70M280 200h78"/>
+      </svg>
+      <div class="radar-ring r3"></div>
+      <div class="radar-ring r2"></div>
+      <div class="radar-ring r1"></div>
+      <div class="radar-sweep"></div>
+      <div class="me-dot"></div>
+      <div class="pup-pin same" style="top:42%; left:42%"><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="4" fill="currentColor"/></svg><span class="dist">0.4km</span></div>
+      <div class="pup-pin same" style="top:38%; left:60%"><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="4" fill="currentColor"/></svg><span class="dist">0.8km</span></div>
+      <div class="pup-pin" style="top:60%; left:35%"><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="4" fill="currentColor"/></svg><span class="dist">1.2km</span></div>
+      <div class="pup-pin" style="top:65%; left:68%"><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="4" fill="currentColor"/></svg><span class="dist">1.5km</span></div>
+      <div class="pup-pin same" style="top:30%; left:50%"><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="4" fill="currentColor"/></svg><span class="dist">2.1km</span></div>
+      <div class="radar-overlay-top">
+        <span class="r-chip"><span class="live"></span>5 只附近 · 3 只同品种</span>
+        <span class="r-chip">滨江公园</span>
+      </div>
+    </div>
+
+    <div class="screen-body">
+      <div class="filter-row" data-od-id="filter-row">
+        <span class="f-chip active">全部 · 5</span>
+        <span class="f-chip">同品种 · 3</span>
+        <span class="f-chip">在线 · 4</span>
+        <span class="f-chip">可约玩</span>
+      </div>
+
+      <div class="section-label">附近的狗狗</div>
+      <div class="nearby-list" data-od-id="nearby-list">
+        <div class="nearby-card" data-od-id="nb-1">
+          <div class="av mint">麦</div>
+          <div class="info"><div class="n">麦克斯<span class="same-tag">同品种</span></div><div class="m"><span class="dot"></span>在线 · 3岁 · 阿哲的邻居</div></div>
+          <div class="act"><span class="dist">0.4 km</span><a class="btn-wave" href="#">约玩</a></div>
+        </div>
+        <div class="nearby-card" data-od-id="nb-2">
+          <div class="av mint">奶</div>
+          <div class="info"><div class="n">奶昔<span class="same-tag">同品种</span></div><div class="m"><span class="dot"></span>5分钟前活跃 · 2岁</div></div>
+          <div class="act"><span class="dist">0.8 km</span><a class="btn-wave" href="#">约玩</a></div>
+        </div>
+        <div class="nearby-card" data-od-id="nb-3">
+          <div class="av tan">豆</div>
+          <div class="info"><div class="n">豆包 · 柯基</div><div class="m">30分钟前 · 爱接飞盘</div></div>
+          <div class="act"><span class="dist">1.2 km</span><a class="btn-wave ghost" href="#">打招呼</a></div>
+        </div>
+        <div class="nearby-card" data-od-id="nb-4">
+          <div class="av accent">大</div>
+          <div class="info"><div class="n">大福 · 拉布拉多</div><div class="m"><span class="dot"></span>在线 · 可互助遛狗</div></div>
+          <div class="act"><span class="dist">1.5 km</span><a class="btn-wave ghost" href="#">打招呼</a></div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="tab-bar" data-od-id="tab-bar">
+      <a href="tab-briefing.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 3l9 7v10a2 2 0 0 1-2 2h-4v-7h-6v7H6a2 2 0 0 1-2-2V10l9-7z"/></svg>简报</a>
+      <a href="tab-ai-chat.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V8a2 2 0 0 1 1-2z"/></svg>AI</a>
+      <a class="active" href="profile-me.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13" cy="9" r="4"/><path d="M5 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>我的</a>
+    </nav>
+    <div class="home-bar"></div>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.f-chip').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.f-chip').forEach(function(o){o.classList.remove('active');});
+      el.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

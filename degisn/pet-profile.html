@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>宠物主页·动态墙 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .nav-bar svg { color: var(--fg); }
+  .nav-bar .action { color: var(--accent); }
+
+  /* 头部封面 */
+  .hero {
+    position: relative; height: 200px; margin: 0 16px; border-radius: var(--r-lg);
+    background: linear-gradient(160deg, var(--accent) 0%, var(--accent-deep) 60%, oklch(48% 0.04 50) 100%);
+    overflow: hidden; display: flex; align-items: flex-end; padding: 16px;
+  }
+  .hero::before { content:''; position:absolute; top:-40px; right:-30px; width:160px; height:160px; border-radius:50%; background: oklch(99% 0.01 80 / 0.12); }
+  .hero .puppy-av { position: absolute; top: -34px; left: 16px; width: 84px; height: 84px; border-radius: 24px; background: var(--surface); display: grid; place-items: center; box-shadow: var(--shadow-float); border: 4px solid var(--bg); }
+  .hero .info { color: #fff; margin-top: auto; }
+  .hero .info .n { font-family: var(--font-display); font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+  .hero .info .m { font-size: 12px; opacity: 0.9; margin-top: 2px; }
+
+  .top-actions { position: absolute; top: 14px; right: 14px; display: flex; gap: 8px; }
+  .top-actions a { width: 34px; height: 34px; border-radius: 50%; background: oklch(99% 0.01 80 / 0.2); backdrop-filter: blur(8px); display: grid; place-items: center; }
+  .top-actions svg { color: #fff; }
+
+  /* 责任可视化 —— 惊艳一笔 */
+  .active-card {
+    margin: 0 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+    padding: 14px; margin-top: 14px;
+  }
+  .active-card .h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .active-card .h .t { font-size: 13px; font-weight: 700; }
+  .active-card .h .month { font-size: 11px; color: var(--muted); }
+  .champ-row { display: flex; align-items: center; gap: 12px; }
+  .champ-row .av { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .champ-row .av.mint { background: var(--mint); color: oklch(28% 0.05 145); }
+  .champ-row .av.tan { background: var(--illu-tan); }
+  .champ-row .info { flex: 1; }
+  .champ-row .info .name { font-size: 14px; font-weight: 600; }
+  .champ-row .info .title { font-size: 12px; color: var(--accent-deep); margin-top: 2px; font-weight: 600; }
+  .champ-row .count { text-align: right; }
+  .champ-row .count .n { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .champ-row .count .u { font-size: 10px; color: var(--muted); }
+
+  /* Tab 切换 */
+  .seg { display: flex; margin: 16px 16px 0; background: var(--surface-2); border-radius: var(--r-pill); padding: 4px; }
+  .seg button { flex: 1; border: 0; background: transparent; min-height: 36px; border-radius: var(--r-pill); font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; }
+  .seg button.on { background: var(--surface); color: var(--fg); box-shadow: var(--shadow-card); }
+
+  .screen-body { padding: 14px 16px 100px; }
+
+  /* 动态墙 */
+  .filter-line { display: flex; gap: 8px; margin-bottom: 14px; overflow-x: auto; }
+  .filter-line::-webkit-scrollbar { display: none; }
+  .filter-line .f { flex-shrink: 0; font-size: 11px; padding: 5px 11px; border-radius: var(--r-pill); background: var(--surface); border: 1px solid var(--border); color: var(--muted); cursor: pointer; white-space: nowrap; }
+  .filter-line .f.active { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+  .feed { display: flex; flex-direction: column; gap: 10px; }
+  .feed-item {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+    padding: 12px 14px; position: relative;
+  }
+  .feed-item.medical { border-left: 3px solid var(--danger); }
+  .feed-item .row { display: flex; align-items: center; gap: 10px; }
+  .feed-item .av { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; color: #fff; font-size: 11px; font-weight: 700; }
+  .feed-item .av.accent { background: var(--accent); }
+  .feed-item .av.mint { background: var(--mint); color: oklch(28% 0.05 145); }
+  .feed-item .av.tan { background: var(--illu-tan); }
+  .feed-item .av.brown { background: var(--illu-brown); }
+  .feed-item .role { font-size: 11px; color: var(--muted); }
+  .feed-item .role b { color: var(--fg); font-weight: 600; }
+  .feed-item .text { flex: 1; font-size: 13px; line-height: 1.45; }
+  .feed-item .text b { font-weight: 600; }
+  .feed-item .time { font-size: 10px; color: var(--muted); font-family: var(--font-mono); }
+  .feed-item .badge-med { position: absolute; top: 12px; right: 14px; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: var(--r-pill); background: oklch(93% 0.05 25); color: var(--danger); letter-spacing: 0.04em; }
+  .feed-item .expand { font-size: 11px; color: var(--accent-deep); margin-top: 8px; cursor: pointer; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="tab-briefing.html" data-od-id="back"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="title" style="font-size:17px;font-weight:600">豆豆的主页</span>
+      <a class="back" href="family-permissions.html" data-od-id="family"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="8" r="3.5"/><path d="M4 19c0-4 3-6 7-6s7 2 7 6"/></svg></a>
+    </div>
+
+    <div class="hero" data-od-id="hero">
+      <div class="top-actions">
+        <a href="#" data-od-id="share"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4l-7 5 7 5M11 4v10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="#" data-od-id="more"><svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><circle cx="4" cy="9" r="1.5"/><circle cx="9" cy="9" r="1.5"/><circle cx="14" cy="9" r="1.5"/></svg></a>
+      </div>
+      <div class="puppy-av"><svg width="50" height="50" viewBox="0 0 50 50"><ellipse cx="25" cy="32" rx="16" ry="11" fill="#e8c9a0"/><circle cx="25" cy="20" r="13" fill="#e8c9a0"/><ellipse cx="15" cy="14" rx="5" ry="8" fill="#a87850" transform="rotate(-20 15 14)"/><ellipse cx="35" cy="14" rx="5" ry="8" fill="#a87850" transform="rotate(20 35 14)"/><circle cx="21" cy="19" r="1.5" fill="#2a1a0a"/><circle cx="29" cy="19" r="1.5" fill="#2a1a0a"/><ellipse cx="25" cy="24" rx="2" ry="1.5" fill="#2a1a0a"/></svg></div>
+      <div class="info">
+        <div class="n" data-od-id="pet-name">豆豆</div>
+        <div class="m">金毛 · 1岁2个月 · 男孩 · 已绝育</div>
+      </div>
+    </div>
+
+    <!-- 责任可视化 —— 惊艳一笔 -->
+    <div class="active-card" data-od-id="active-card">
+      <div class="h"><span class="t">本月活跃成员</span><span class="month">7月 · 共记录 47 次</span></div>
+      <div class="champ-row" data-od-id="champ-1">
+        <div class="av">哲</div>
+        <div class="info"><div class="name">奶爸 阿哲</div><div class="title">🏆 最佳铲屎官</div></div>
+        <div class="count"><div class="n">21</div><div class="u">次</div></div>
+      </div>
+      <div class="champ-row" style="margin-top:10px" data-od-id="champ-2">
+        <div class="av mint">棠</div>
+        <div class="info"><div class="name">奶妈 小棠</div><div class="title">🦴 遛弯冠军</div></div>
+        <div class="count"><div class="n">16</div><div class="u">次</div></div>
+      </div>
+    </div>
+
+    <div class="seg" data-od-id="seg">
+      <button class="on">动态墙</button>
+      <button>档案</button>
+      <button>事件日记</button>
+    </div>
+
+    <div class="screen-body">
+      <div class="filter-line" data-od-id="filter-line">
+        <span class="f active">全部</span>
+        <span class="f">医疗</span>
+        <span class="f">喂养</span>
+        <span class="f">遛弯</span>
+        <span class="f">照片</span>
+        <span class="f">权限变更</span>
+      </div>
+
+      <div class="feed" data-od-id="feed">
+        <div class="feed-item medical" data-od-id="feed-1">
+          <span class="badge-med">医疗</span>
+          <div class="row">
+            <div class="av accent">哲</div>
+            <div class="text"><span class="role">奶爸 <b>阿哲</b> · 9:40</span><br>更新了豆豆的体重：<b>12.5kg → 13.0kg</b>，并咨询了呕吐问题，AI 建议观察至明日。</div>
+          </div>
+          <div class="expand">展开详情：药品品牌、AI对话 ›</div>
+        </div>
+
+        <div class="feed-item" data-od-id="feed-2">
+          <div class="row">
+            <div class="av mint">棠</div>
+            <div class="text"><span class="role">奶妈 <b>小棠</b> · 昨天 18:30</span><br>记录了豆豆今天在公园学会了<b>"握手"</b>。</div>
+          </div>
+        </div>
+
+        <div class="feed-item medical" data-od-id="feed-3">
+          <span class="badge-med">医疗</span>
+          <div class="row">
+            <div class="av tan">张</div>
+            <div class="text"><span class="role">爷爷 <b>老张</b> · 昨天 17:00</span><br>标记了<b>"体外驱虫"</b>任务为待补做（福来恩）。</div>
+          </div>
+        </div>
+
+        <div class="feed-item" data-od-id="feed-4">
+          <div class="row">
+            <div class="av brown">张</div>
+            <div class="text"><span class="role">爷爷 <b>老张</b> · 7.06</span><br>上传了 <b>3 张新照片</b>（公园散步）。</div>
+          </div>
+        </div>
+
+        <div class="feed-item" data-od-id="feed-5">
+          <div class="row">
+            <div class="av accent">哲</div>
+            <div class="text"><span class="role">首席监护人 <b>阿哲</b> · 7.05</span><br>调整了 <b>小棠</b> 的权限：新增"管理日程"。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.seg button').forEach(function(el){
+    el.addEventListener('click', function(){
+      el.parentElement.querySelectorAll('button').forEach(function(b){ b.classList.remove('on'); });
+      el.classList.add('on');
+    });
+  });
+  document.querySelectorAll('.filter-line .f').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.filter-line .f').forEach(function(o){ o.classList.remove('active'); });
+      el.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>家庭·权限管理 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .nav-bar svg { color: var(--fg); }
+  .nav-bar .title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+
+  /* 成员头部 */
+  .member-head { display: flex; align-items: center; gap: 14px; padding: 4px 20px 14px; }
+  .member-head .av { width: 56px; height: 56px; border-radius: 50%; background: var(--mint); display: grid; place-items: center; color: oklch(28% 0.05 145); font-weight: 700; font-size: 20px; flex-shrink: 0; }
+  .member-head .info .name { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+  .member-head .info .meta { font-size: 11px; color: var(--muted); margin-top: 2px; letter-spacing: 0.01em; }
+  .member-head .info .role-edit { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 12px; color: var(--accent-deep); background: var(--accent-soft); padding: 5px 11px; border-radius: var(--r-pill); cursor: pointer; font-weight: 600; }
+  .member-head .info .role-edit:active { transform: scale(0.96); }
+
+  /* 守护条 —— 薄荷绿实色 + 插画盾牌（去渐变 AI 味） */
+  .guardian-banner {
+    margin: 0 16px 6px; padding: 13px 14px; border-radius: var(--r-md);
+    background: var(--mint-soft); border: 1px solid oklch(84% 0.05 165);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .guardian-banner .shield { width: 36px; height: 36px; border-radius: 10px; background: var(--mint); display: grid; place-items: center; flex-shrink: 0; }
+  .guardian-banner .shield svg { color: #fff; }
+  .guardian-banner .t { font-size: 13px; font-weight: 700; color: oklch(35% 0.06 145); }
+  .guardian-banner .d { font-size: 11px; color: oklch(42% 0.05 145); margin-top: 2px; line-height: 1.45; }
+
+  .screen-body { padding: 6px 16px 110px; }
+
+  /* 实时状态条 */
+  .status-strip {
+    position: sticky; top: 0; z-index: 5; margin: 0 -16px 10px; padding: 9px 16px;
+    background: oklch(99% 0.006 80 / 0.94); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted);
+  }
+  .status-strip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
+  .status-strip .undo { margin-left: auto; color: var(--accent-deep); font-weight: 600; cursor: pointer; opacity: 0; transition: opacity 0.2s; }
+  .status-strip.dirty .undo { opacity: 1; }
+  .status-strip.dirty .dot { background: var(--warn); }
+
+  .section-label { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.08em; margin: 16px 4px 8px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+  .section-label .grp-ic { width: 14px; height: 14px; color: var(--accent-deep); }
+  .section-label .cnt { margin-left: auto; font-family: var(--font-mono); font-weight: 600; color: var(--accent-deep); letter-spacing: 0.02em; text-transform: none; }
+
+  /* 分组权限卡 —— iOS inset list 风格 */
+  .perm-group { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .perm-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .perm-row:last-child { border-bottom: 0; }
+  .perm-row.locked { background: var(--surface-2); }
+  .perm-row .pid { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--muted); width: 24px; flex-shrink: 0; letter-spacing: 0.02em; }
+  .perm-row .info { flex: 1; min-width: 0; }
+  .perm-row .info .n { font-size: 13px; font-weight: 600; line-height: 1.3; }
+  .perm-row .info .d { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+  .perm-row .info .impact { font-size: 10px; color: var(--accent-deep); margin-top: 3px; font-weight: 500; }
+  .perm-row.locked .info .impact { color: var(--danger); }
+  .perm-row .lock-badge { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: var(--r-pill); background: oklch(93% 0.05 25); color: var(--danger); letter-spacing: 0.04em; flex-shrink: 0; }
+
+  /* Toggle —— 弹簧动效 */
+  .toggle { width: 46px; height: 28px; border-radius: 14px; background: var(--border); position: relative; cursor: pointer; transition: background 0.25s cubic-bezier(0.34,1.56,0.64,1); flex-shrink: 0; }
+  .toggle::after { content:''; position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px oklch(24% 0.03 60 / 0.3); transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+  .toggle.on { background: var(--mint); }
+  .toggle.on::after { transform: translateX(18px); }
+  .toggle.disabled { cursor: not-allowed; opacity: 0.5; }
+
+  /* 模板栏 */
+  .template-bar { margin-top: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px; }
+  .template-bar .label { font-size: 11px; color: var(--muted); margin-bottom: 10px; font-weight: 600; letter-spacing: 0.04em; }
+  .template-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .template-chip { padding: 8px 13px; border-radius: var(--r-pill); background: var(--surface-2); font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; }
+  .template-chip.active { background: var(--accent-soft); color: var(--accent-deep); border-color: oklch(80% 0.06 55); }
+
+  .notify-note { font-size: 11px; color: var(--muted); margin-top: 12px; line-height: 1.5; padding: 11px 13px; background: var(--surface-2); border-radius: 10px; }
+  .notify-note b { color: var(--fg); }
+
+  /* 角色 sheet */
+  .sheet-mask { position: absolute; inset: 0; background: oklch(20% 0.02 60 / 0.4); z-index: 50; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  .sheet-mask.open { opacity: 1; pointer-events: auto; }
+  .role-sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--bg); border-radius: 22px 22px 0 0; padding: 8px 16px 34px; z-index: 51; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.34,1.2,0.64,1); max-height: 70%; overflow-y: auto; }
+  .role-sheet.open { transform: translateY(0); }
+  .role-sheet .grip { width: 38px; height: 4px; border-radius: 2px; background: var(--border); margin: 6px auto 14px; }
+  .role-sheet .h { font-size: 15px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.01em; }
+  .role-sheet .sub { font-size: 11px; color: var(--muted); margin-bottom: 14px; }
+  .role-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .role-opt { padding: 12px 6px; border-radius: var(--r-md); border: 1.5px solid var(--border); background: var(--surface); text-align: center; cursor: pointer; font-size: 12px; font-weight: 500; }
+  .role-opt.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-deep); }
+  .role-opt .emo { font-size: 18px; display: block; margin-bottom: 4px; }
+  .role-custom { margin-top: 10px; display: flex; gap: 8px; }
+  .role-custom input { flex: 1; border: 1.5px solid var(--border); border-radius: var(--r-md); padding: 0 14px; height: 44px; font-size: 14px; outline: none; background: var(--surface); }
+  .role-custom input:focus { border-color: var(--accent); }
+  .role-custom button { border: 0; background: var(--accent); color: #fff; border-radius: var(--r-md); padding: 0 16px; font-size: 13px; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="pet-profile.html" data-od-id="back"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="title" data-od-id="page-title">成员权限</span>
+      <a class="back" href="pet-profile.html" data-od-id="done" style="font-size:14px;color:var(--accent);font-weight:600;width:auto;text-decoration:none">完成</a>
+    </div>
+
+    <div class="member-head" data-od-id="member-head">
+      <div class="av">棠</div>
+      <div class="info">
+        <div class="name">小棠</div>
+        <div class="meta">加入于 2024.03 · 本月记录 16 次</div>
+        <span class="role-edit" data-od-id="role-edit">奶妈 <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M3 4l2.5 2.5L8 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+    </div>
+
+    <div class="guardian-banner" data-od-id="guardian-banner">
+      <div class="shield"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l6 2.5v5c0 3.8-2.6 6.5-6 8-3.4-1.5-6-4.2-6-8v-5L10 2z" fill="currentColor"/><path d="M7 10l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div>
+        <div class="t">柔性 RBAC · 角色与权限解耦</div>
+        <div class="d">角色仅作展示，权限逐项独立开关。P12 管理成员仅首席监护人专属。</div>
+      </div>
+    </div>
+
+    <div class="screen-body">
+      <div class="status-strip" id="status" data-od-id="status-strip">
+        <span class="dot"></span>
+        <span id="status-text">所有变更实时生效</span>
+        <span class="undo" id="undo" data-od-id="undo">撤销</span>
+      </div>
+
+      <!-- 分组 1：基础档案 -->
+      <div class="section-label"><svg class="grp-ic" viewBox="0 0 14 14" fill="none"><rect x="2" y="3" width="10" height="9" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M5 3v-1h4v1" stroke="currentColor" stroke-width="1.4"/></svg>基础档案<span class="cnt">1/2</span></div>
+      <div class="perm-group" data-od-id="grp-profile">
+        <div class="perm-row"><span class="pid">P1</span><div class="info"><div class="n">查看宠物基础档案</div><div class="d">姓名、品种、生日、性别、绝育状态</div></div><div class="toggle on" data-od-id="t1"></div></div>
+        <div class="perm-row"><span class="pid">P2</span><div class="info"><div class="n">编辑宠物基础档案</div><div class="d">修改基础信息</div></div><div class="toggle" data-od-id="t2"></div></div>
+      </div>
+
+      <!-- 分组 2：健康 -->
+      <div class="section-label"><svg class="grp-ic" viewBox="0 0 14 14" fill="none"><path d="M7 12s-4.5-3-4.5-6.5A2.5 2.5 0 0 1 7 4a2.5 2.5 0 0 1 4.5 1.5C11.5 9 7 12 7 12z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>健康记录<span class="cnt">1/2</span></div>
+      <div class="perm-group" data-od-id="grp-health">
+        <div class="perm-row"><span class="pid">P3</span><div class="info"><div class="n">查看健康记录</div><div class="d">疫苗、驱虫、体重、过敏史、病历</div></div><div class="toggle on" data-od-id="t3"></div></div>
+        <div class="perm-row"><span class="pid">P4</span><div class="info"><div class="n">编辑/新增健康记录</div><div class="d">添加或修改健康数据</div><div class="impact">关闭后小棠将无法录入体重与疫苗</div></div><div class="toggle" data-od-id="t4"></div></div>
+      </div>
+
+      <!-- 分组 3：事件日记 -->
+      <div class="section-label"><svg class="grp-ic" viewBox="0 0 14 14" fill="none"><path d="M3 2h8v10H3z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M5 5h4M5 8h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>事件日记<span class="cnt">2/2</span></div>
+      <div class="perm-group" data-od-id="grp-event">
+        <div class="perm-row"><span class="pid">P5</span><div class="info"><div class="n">查看每日事件/日记</div><div class="d">时间线动态与日记</div></div><div class="toggle on" data-od-id="t5"></div></div>
+        <div class="perm-row"><span class="pid">P6</span><div class="info"><div class="n">编辑/新增每日事件</div><div class="d">记录、编辑、删除事件</div></div><div class="toggle on" data-od-id="t6"></div></div>
+      </div>
+
+      <!-- 分组 4：日程 -->
+      <div class="section-label"><svg class="grp-ic" viewBox="0 0 14 14" fill="none"><rect x="2.5" y="3" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 6h9M5 2v2M9 2v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>日程管理<span class="cnt">2/2</span></div>
+      <div class="perm-group" data-od-id="grp-cal">
+        <div class="perm-row"><span class="pid">P7</span><div class="info"><div class="n">查看日程列表</div><div class="d">待办与周期性日程</div></div><div class="toggle on" data-od-id="t7"></div></div>
+        <div class="perm-row"><span class="pid">P8</span><div class="info"><div class="n">管理日程</div><div class="d">添加、修改、删除、标记完成</div></div><div class="toggle on" data-od-id="t8"></div></div>
+      </div>
+
+      <!-- 分组 5：相册 -->
+      <div class="section-label"><svg class="grp-ic" viewBox="0 0 14 14" fill="none"><rect x="2" y="3.5" width="10" height="8" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="5.5" cy="6.5" r="1.2" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 10l3-2.5 2.5 2 3-2.5 2.5 2" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>云相册<span class="cnt">2/2</span></div>
+      <div class="perm-group" data-od-id="grp-album">
+        <div class="perm-row"><span class="pid">P9</span><div class="info"><div class="n">查看相册</div><div class="d">浏览所有照片/视频</div></div><div class="toggle on" data-od-id="t9"></div></div>
+        <div class="perm-row"><span class="pid">P10</span><div class="info"><div class="n">管理相册</div><div class="d">上传、删除、编辑相册</div></div><div class="toggle on" data-od-id="t10"></div></div>
+      </div>
+
+      <!-- 分组 6：AI + 管理 -->
+      <div class="section-label"><svg class="grp-ic" viewBox="0 0 14 14" fill="none"><path d="M3 3h8a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H6l-3 2.5V4a1 1 0 0 1 0-1z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>AI 与成员<span class="cnt">0/2</span></div>
+      <div class="perm-group" data-od-id="grp-ai">
+        <div class="perm-row"><span class="pid">P11</span><div class="info"><div class="n">使用 AI 对话</div><div class="d">发起 AI 咨询、查看历史</div><div class="impact">关闭后小棠无法使用宠物翻译官</div></div><div class="toggle" data-od-id="t11"></div></div>
+        <div class="perm-row locked"><span class="pid">P12</span><div class="info"><div class="n">管理家庭成员</div><div class="d">邀请、移除、调整他人权限</div><div class="impact">仅首席监护人天生拥有，不可授予</div></div><span class="lock-badge">专属</span><div class="toggle disabled"></div></div>
+      </div>
+
+      <div class="template-bar" data-od-id="template-bar">
+        <div class="label">快速应用模板 · 套用后可继续微调</div>
+        <div class="template-chips">
+          <span class="template-chip" data-od-id="tpl-view">仅查看</span>
+          <span class="template-chip active" data-od-id="tpl-mom">奶妈全选</span>
+          <span class="template-chip" data-od-id="tpl-manager">管家模板</span>
+          <span class="template-chip" data-od-id="tpl-photo">摄影师</span>
+        </div>
+      </div>
+
+      <div class="notify-note" data-od-id="notify-note">
+        <b>实时生效</b>：权限变更后小棠将收到站内通知。若她正在执行被移除权限的操作，系统会强制中断并提示刷新。
+      </div>
+    </div>
+
+    <!-- 角色 sheet -->
+    <div class="sheet-mask" id="mask" data-od-id="sheet-mask"></div>
+    <div class="role-sheet" id="sheet" data-od-id="role-sheet">
+      <div class="grip"></div>
+      <div class="h">选择角色标签</div>
+      <div class="sub">仅用于操作留痕展示，与权限解耦</div>
+      <div class="role-grid" data-od-id="role-grid">
+        <div class="role-opt active"><span class="emo">🍼</span>奶妈</div>
+        <div class="role-opt"><span class="emo">👨</span>奶爸</div>
+        <div class="role-opt"><span class="emo">👴</span>爷爷</div>
+        <div class="role-opt"><span class="emo">👵</span>奶奶</div>
+        <div class="role-opt"><span class="emo">📋</span>管家</div>
+        <div class="role-opt"><span class="emo">🩺</span>健康顾问</div>
+        <div class="role-opt"><span class="emo">📷</span>摄影师</div>
+        <div class="role-opt"><span class="emo">👋</span>亲友</div>
+        <div class="role-opt"><span class="emo">⏳</span>临时照料</div>
+      </div>
+      <div class="role-custom" data-od-id="role-custom">
+        <input type="text" placeholder="自定义角色，如 御用铲屎官" data-od-id="role-input" />
+        <button data-od-id="role-save">保存</button>
+      </div>
+    </div>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+
+<script>
+  var status = document.getElementById('status');
+  var statusText = document.getElementById('status-text');
+  var undoBtn = document.getElementById('undo');
+  var lastChange = null;
+
+  function updateGroupCounts(){
+    document.querySelectorAll('.perm-group').forEach(function(g){
+      var on = g.querySelectorAll('.toggle.on').length;
+      var total = g.querySelectorAll('.toggle:not(.disabled)').length;
+      var label = g.previousElementSibling;
+      if (label && label.classList.contains('section-label')) {
+        label.querySelector('.cnt').textContent = on + '/' + total;
+      }
+    });
+  }
+  function markDirty(label){
+    status.classList.add('dirty');
+    statusText.textContent = label || '已修改 · 实时同步给小棠';
+    lastChange = label;
+  }
+  document.querySelectorAll('.perm-list, .perm-group').forEach(function(){
+    document.querySelectorAll('.toggle:not(.disabled)').forEach(function(el){
+      el.addEventListener('click', function(){
+        el.classList.toggle('on');
+        updateGroupCounts();
+        var row = el.closest('.perm-row');
+        var name = row.querySelector('.n').textContent;
+        markDirty((el.classList.contains('on') ? '已开启 ' : '已关闭 ') + name);
+      });
+    });
+  });
+  undoBtn.addEventListener('click', function(){
+    status.classList.remove('dirty');
+    statusText.textContent = '所有变更实时生效';
+  });
+  document.querySelectorAll('.template-chip').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.template-chip').forEach(function(o){ o.classList.remove('active'); });
+      el.classList.add('active');
+      markDirty('已套用「' + el.textContent + '」模板');
+    });
+  });
+
+  // 角色 sheet
+  var mask = document.getElementById('mask');
+  var sheet = document.getElementById('sheet');
+  document.querySelector('[data-od-id="role-edit"]').addEventListener('click', function(){
+    mask.classList.add('open'); sheet.classList.add('open');
+  });
+  mask.addEventListener('click', function(){
+    mask.classList.remove('open'); sheet.classList.remove('open');
+  });
+  document.querySelectorAll('.role-opt').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.role-opt').forEach(function(o){ o.classList.remove('active'); });
+      el.classList.add('active');
+      document.querySelector('[data-od-id="role-edit"]').childNodes[0].nodeValue = el.textContent.trim() + ' ';
+    });
+  });
+  document.querySelector('[data-od-id="role-save"]').addEventListener('click', function(){
+    var v = document.querySelector('[data-od-id="role-input"]').value.trim();
+    if (v) { document.querySelector('[data-od-id="role-edit"]').childNodes[0].nodeValue = v + ' '; }
+    mask.classList.remove('open'); sheet.classList.remove('open');
+  });
+
+  updateGroupCounts();
+</script>
+</body>
+</html>

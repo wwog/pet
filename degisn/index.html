@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>小狗人生 · 原型总览</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  body { background: oklch(91% 0.008 72); padding: 40px 20px 96px; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; }
+
+  /* —— 刊头：编辑式，不靠渐变 hero —— */
+  .masthead { margin-bottom: 36px; }
+  .masthead .kicker {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
+    color: var(--accent-ink); background: var(--accent-soft);
+    padding: 5px 12px; border-radius: var(--r-pill); margin-bottom: 18px;
+  }
+  .masthead .kicker svg { width: 14px; height: 14px; }
+  .masthead h1 {
+    font-family: var(--font-display); font-size: 44px; font-weight: 700;
+    letter-spacing: -0.025em; line-height: 1.08; color: var(--fg);
+  }
+  .masthead h1 .alt { color: var(--muted); font-weight: 400; font-size: 26px; letter-spacing: -0.01em; }
+  .masthead .lede {
+    font-size: 15px; line-height: 1.65; color: var(--fg-2);
+    max-width: 52ch; margin-top: 16px;
+  }
+  .masthead .lede .accent { color: var(--accent-ink); font-weight: 600; }
+
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px;
+  }
+  .meta-row .m {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12px; color: var(--fg-2); background: var(--surface);
+    border: 1px solid var(--border); padding: 6px 12px; border-radius: var(--r-pill);
+  }
+  .meta-row .m svg { width: 14px; height: 14px; color: var(--muted); }
+
+  /* —— 章节标题 —— */
+  .chapter {
+    display: flex; align-items: baseline; gap: 14px; margin: 44px 0 20px;
+  }
+  .chapter .no {
+    font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+    color: var(--accent-ink); letter-spacing: 0;
+  }
+  .chapter .t {
+    font-family: var(--font-display); font-size: 20px; font-weight: 700;
+    letter-spacing: -0.01em; color: var(--fg);
+  }
+  .chapter .desc { font-size: 13px; color: var(--muted); margin-left: auto; }
+
+  /* —— 屏卡网格：真实手机预览 —— */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(258px, 1fr)); gap: 18px; }
+
+  .screen-card {
+    display: flex; flex-direction: column; text-decoration: none; color: inherit;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+    overflow: hidden; transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+  .screen-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-float); border-color: var(--accent-soft); }
+
+  /* 迷你手机预览框 —— 替代假截图色块 */
+  .preview {
+    height: 188px; background: var(--bg); position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; padding: 14px;
+  }
+  .preview .phone {
+    width: 116px; height: 188px; background: var(--surface);
+    border-radius: 18px; border: 1px solid var(--border);
+    overflow: hidden; position: relative;
+    box-shadow: 0 4px 14px oklch(26% 0.03 55 / 0.1);
+    display: flex; flex-direction: column;
+  }
+  .preview .phone .pstatus {
+    height: 14px; display: flex; justify-content: space-between; align-items: center;
+    padding: 4px 10px 0; font-size: 7px; font-weight: 600; color: var(--fg);
+    flex-shrink: 0;
+  }
+  .preview .phone .pbody { flex: 1; padding: 6px 8px; display: flex; flex-direction: column; gap: 5px; overflow: hidden; }
+  .preview .phone .pnav {
+    height: 12px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2px 4px; flex-shrink: 0;
+  }
+  .preview .phone .pnav .pt { font-size: 7px; font-weight: 700; color: var(--fg); }
+  .preview .phone .pnav .pic { width: 8px; height: 8px; border-radius: 2px; background: var(--surface-3); }
+
+  /* 迷你内容块零件 */
+  .pblock { border-radius: 5px; }
+  .pbar { height: 5px; border-radius: 3px; background: var(--surface-3); }
+  .pbar.short { width: 60%; }
+  .pbar.mid { width: 80%; }
+  .ptxt { font-size: 6.5px; font-weight: 600; color: var(--fg); line-height: 1.3; }
+  .ptxt.muted { color: var(--muted); font-weight: 500; }
+  .ppill { display: inline-block; font-size: 5.5px; font-weight: 600; padding: 1px 4px; border-radius: 4px; background: var(--accent-soft); color: var(--accent-ink); }
+  .ppill.mint { background: var(--mint-soft); color: var(--mint-deep); }
+  .ppill.danger { background: var(--danger-soft); color: var(--danger); }
+  .prow { display: flex; align-items: center; gap: 4px; }
+  .pdot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .pdot.mint { background: var(--mint); }
+  .pdot.danger { background: var(--danger); }
+
+  /* 角标：序号 + 类型 */
+  .preview .badge {
+    position: absolute; top: 12px; left: 12px;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 10px; font-weight: 600; color: var(--fg-2);
+    background: oklch(99.2% 0.004 75 / 0.92); backdrop-filter: blur(8px);
+    padding: 4px 9px; border-radius: var(--r-pill); border: 1px solid var(--border);
+  }
+  .preview .badge .n { font-family: var(--font-mono); color: var(--accent-ink); }
+  .preview .type-dot {
+    position: absolute; top: 12px; right: 12px;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 10px; font-weight: 500; color: var(--muted);
+    background: oklch(99.2% 0.004 75 / 0.92); backdrop-filter: blur(8px);
+    padding: 4px 9px; border-radius: var(--r-pill); border: 1px solid var(--border);
+  }
+  .preview .type-dot i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+
+  .screen-card .meta { padding: 14px 16px 16px; }
+  .screen-card .meta .t { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; color: var(--fg); }
+  .screen-card .meta .d { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+
+  /* 图例 */
+  .legend { display: flex; gap: 18px; margin-top: 20px; font-size: 12px; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+  footer.foot {
+    margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--muted);
+  }
+  footer.foot .mark { display: inline-flex; align-items: center; gap: 8px; }
+  footer.foot .mark svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <span class="kicker" data-od-id="kicker">
+      <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="8" r="4.5" stroke="currentColor" stroke-width="1.4"/><ellipse cx="4" cy="5" rx="2" ry="3" stroke="currentColor" stroke-width="1.4" transform="rotate(-15 4 5)"/><ellipse cx="10" cy="5" rx="2" ry="3" stroke="currentColor" stroke-width="1.4" transform="rotate(15 10 5)"/></svg>
+      原型集 · 15 屏 · iOS
+    </span>
+    <h1 data-od-id="page-title">小狗人生 <span class="alt">Puppy Life OS</span></h1>
+    <p class="lede" data-od-id="lede">
+      面向养宠家庭的 AI 原生宠物生活管理平台。把零散的养宠信息整合成<span class="accent">可视化、可追溯、可协作</span>的全生命周期档案，让全家共同参与这件温暖的事。
+    </p>
+    <div class="meta-row">
+      <span class="m"><svg viewBox="0 0 14 14" fill="none"><rect x="2" y="4" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><circle cx="7" cy="7.5" r="1.3" fill="currentColor"/></svg>iOS 13+ · 390×844</span>
+      <span class="m"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M7 4v3l2 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>高保真交互原型</span>
+      <span class="m"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>真实文案 · 可点跳转</span>
+    </div>
+  </header>
+
+  <div class="legend" data-od-id="legend">
+    <span><i style="background:var(--accent)"></i>引导流程</span>
+    <span><i style="background:var(--mint)"></i>核心 Tab</span>
+    <span><i style="background:var(--info)"></i>家庭协作</span>
+    <span><i style="background:var(--warn)"></i>遛狗场景</span>
+  </div>
+
+  <!-- 第一章：引导 -->
+  <div class="chapter" data-od-id="ch-1">
+    <span class="no">01</span><span class="t">迎接新家人 · 引导与建档</span>
+    <span class="desc">无宠空状态到性格画像，能用选的绝不输</span>
+  </div>
+  <div class="grid">
+
+    <a class="screen-card" href="onboarding-welcome.html" data-od-id="screen-01">
+      <div class="preview">
+        <span class="badge"><span class="n">01</span></span>
+        <span class="type-dot"><i style="background:var(--accent)"></i>引导</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pbody" style="justify-content:flex-end;align-items:center;padding-bottom:18px;gap:8px">
+            <div style="width:34px;height:30px;background:var(--illu-tan);border-radius:14px 14px 12px 12px;position:relative">
+              <div style="position:absolute;top:-4px;left:-3px;width:7px;height:10px;background:var(--illu-brown);border-radius:4px;transform:rotate(-20deg)"></div>
+              <div style="position:absolute;top:-4px;right:-3px;width:7px;height:10px;background:var(--illu-brown);border-radius:4px;transform:rotate(20deg)"></div>
+            </div>
+            <div class="ptxt muted" style="text-align:center">轻触小狗，陪它玩</div>
+            <div class="pblock" style="width:80%;height:11px;background:var(--accent);border-radius:6px;display:grid;place-items:center"><span class="ptxt" style="color:#fff">+ 迎接新家人</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">无宠空状态</div><div class="d">云端草坪互动 · 唯一入口迎接新家人</div></div>
+    </a>
+
+    <a class="screen-card" href="onboarding-step1.html" data-od-id="screen-02">
+      <div class="preview">
+        <span class="badge"><span class="n">02</span></span>
+        <span class="type-dot"><i style="background:var(--accent)"></i>引导</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">基础身份</span><span class="pic"></span></div>
+          <div class="pbody">
+            <div class="pblock" style="height:18px;background:var(--surface-2);border-radius:5px;padding:3px 5px"><span class="ptxt">豆豆</span></div>
+            <span class="ppill">性别</span>
+            <div class="pbar mid"></div>
+            <div style="margin-top:auto" class="pblock" style="width:100%;height:11px;background:var(--accent);border-radius:6px;display:grid;place-items:center"><span class="ptxt" style="color:#fff">下一步</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">基础身份</div><div class="d">爱称 · 性别点选 · 出生日期滑动条</div></div>
+    </a>
+
+    <a class="screen-card" href="onboarding-step2.html" data-od-id="screen-03">
+      <div class="preview">
+        <span class="badge"><span class="n">03</span></span>
+        <span class="type-dot"><i style="background:var(--accent)"></i>引导</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">品种与外貌</span><span class="pic"></span></div>
+          <div class="pbody">
+            <div class="prow" style="gap:3px"><div class="pblock" style="width:16px;height:16px;background:var(--surface-2);border:1px solid var(--border);border-radius:4px"></div><div class="pblock" style="width:16px;height:16px;background:var(--accent-soft);border:1px solid var(--accent);border-radius:4px"></div><div class="pblock" style="width:16px;height:16px;background:var(--surface-2);border-radius:4px"></div></div>
+            <div class="prow" style="gap:2px"><span class="pdot" style="background:var(--illu-tan)"></span><span class="pdot"></span><span class="pdot" style="background:var(--illu-brown)"></span><span class="pdot mint"></span></div>
+            <div class="pbar short"></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">品种与外貌</div><div class="d">AKC+FCI 全犬种库 · 12 色毛色板 · 绝育三态</div></div>
+    </a>
+
+    <a class="screen-card" href="onboarding-step3.html" data-od-id="screen-04">
+      <div class="preview">
+        <span class="badge"><span class="n">04</span></span>
+        <span class="type-dot"><i style="background:var(--accent)"></i>引导</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">性格画像</span><span class="pic"></span></div>
+          <div class="pbody" style="flex-wrap:wrap;flex-direction:row;align-content:flex-start;gap:3px">
+            <span class="ppill">社牛</span><span class="ppill mint">爱游泳</span><span class="ppill">护食</span><span class="ppill mint">怕生</span><span class="ppill">粘人</span><span class="ppill mint">好奇</span>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">性格与偏好</div><div class="d">20+ 游戏化标签云，构建 AI 个性化基础</div></div>
+    </a>
+  </div>
+
+  <!-- 第二章：核心 Tab -->
+  <div class="chapter" data-od-id="ch-2">
+    <span class="no">02</span><span class="t">日常高频 · 核心 Tab</span>
+    <span class="desc">简报、相册、日历、AI、健康五个一级入口</span>
+  </div>
+  <div class="grid">
+
+    <a class="screen-card" href="tab-briefing.html" data-od-id="screen-05">
+      <div class="preview">
+        <span class="badge"><span class="n">05</span></span>
+        <span class="type-dot"><i style="background:var(--mint)"></i>Tab</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">阿哲的家</span><span class="pic"></span></div>
+          <div class="pbody">
+            <div class="pblock" style="height:34px;background:var(--accent);border-radius:7px;padding:5px 6px"><div class="ptxt" style="color:#fff">今天适合散步</div><div class="ptxt muted" style="color:rgba(255,255,255,.8)">傍晚 18:00 最舒服</div></div>
+            <div class="prow"><div style="width:20px;height:20px;border-radius:50%;background:var(--mint-soft);border:3px solid var(--mint);border-radius:50%"></div><div style="flex:1"><div class="ptxt">今日遛弯</div><div class="ptxt muted">还差 19 分钟</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">今日 · AI 简报</div><div class="d">遛弯建议 · 睡眠分析 · 待办排序 · 暖心寄语</div></div>
+    </a>
+
+    <a class="screen-card" href="tab-album.html" data-od-id="screen-06">
+      <div class="preview">
+        <span class="badge"><span class="n">06</span></span>
+        <span class="type-dot"><i style="background:var(--mint)"></i>Tab</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">时光机</span><span class="pic"></span></div>
+          <div class="pbody" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px">
+            <div class="pblock" style="height:20px;background:var(--illu-tan)"></div>
+            <div class="pblock" style="height:20px;background:var(--mint-soft)"></div>
+            <div class="pblock" style="height:20px;background:var(--illu-brown)"></div>
+            <div class="pblock" style="height:20px;background:var(--accent-soft)"></div>
+            <div class="pblock" style="height:20px;background:var(--surface-3)"></div>
+            <div class="pblock" style="height:20px;background:var(--illu-tan)"></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">云相册 · 时光机</div><div class="d">AI 标签检索 · 语义搜索 · 月度高光短视频</div></div>
+    </a>
+
+    <a class="screen-card" href="tab-calendar.html" data-od-id="screen-07">
+      <div class="preview">
+        <span class="badge"><span class="n">07</span></span>
+        <span class="type-dot"><i style="background:var(--mint)"></i>Tab</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">7月</span><span class="pic"></span></div>
+          <div class="pbody">
+            <div class="prow" style="justify-content:space-between"><span class="ptxt muted">一</span><span class="ptxt muted">二</span><span class="ptxt muted">三</span><span class="ptxt muted">四</span><span class="ptxt muted">五</span></div>
+            <div class="prow" style="justify-content:space-between"><span class="ptxt">6</span><span class="pblock" style="width:12px;height:12px;background:var(--accent);border-radius:50%;display:grid;place-items:center"><span class="ptxt" style="color:#fff">7</span></span><span class="ptxt">8</span><span class="ptxt">9</span><span class="ptxt">10</span></div>
+            <div class="pblock" style="height:20px;background:var(--accent-soft);border-radius:5px;padding:3px 4px;border-left:2px solid var(--danger)"><span class="ppill danger">逾期</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">日历 · 智能日程</div><div class="d">驱虫疫苗周期 · 智能提醒引擎 · 家庭协作</div></div>
+    </a>
+
+    <a class="screen-card" href="tab-ai-chat.html" data-od-id="screen-08">
+      <div class="preview">
+        <span class="badge"><span class="n">08</span></span>
+        <span class="type-dot"><i style="background:var(--mint)"></i>Tab</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">宠物翻译官</span><span class="pic"></span></div>
+          <div class="pbody">
+            <div class="pblock" style="width:70%;height:14px;background:var(--surface-2);border-radius:8px;padding:3px 4px"><span class="ptxt muted">描述症状...</span></div>
+            <div class="pblock" style="width:70%;height:18px;background:var(--danger-soft);border-radius:5px;padding:3px 4px;margin-left:auto;border-left:2px solid var(--danger)"><span class="ppill danger">紧急</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">AI 对话 · 宠物翻译官</div><div class="d">行为解读 · 紧急分诊 · 拟人化聊天</div></div>
+    </a>
+
+    <a class="screen-card" href="tab-health.html" data-od-id="screen-09">
+      <div class="preview">
+        <span class="badge"><span class="n">09</span></span>
+        <span class="type-dot"><i style="background:var(--mint)"></i>Tab</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">健康档案</span><span class="pic"></span></div>
+          <div class="pbody">
+            <div class="pblock" style="height:14px;background:var(--danger-soft);border-radius:5px;padding:3px 4px;border-left:2px solid var(--danger)"><span class="ptxt" style="color:var(--danger)">青霉素过敏</span></div>
+            <div class="prow"><span class="ptxt" style="font-size:9px;font-weight:700">13.0</span><span class="ptxt muted">kg</span><span class="ppill warn" style="margin-left:auto">超重</span></div>
+            <svg viewBox="0 0 80 18" style="width:100%;height:14px"><polyline points="2,14 14,11 26,9 38,7 50,5 62,3 78,2" fill="none" stroke="var(--accent)" stroke-width="1.2"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">健康档案 · 电子病历本</div><div class="d">免疫 · 驱虫 · 体重曲线 · 过敏警示</div></div>
+    </a>
+  </div>
+
+  <!-- 第三章：家庭协作与场景 -->
+  <div class="chapter" data-od-id="ch-3">
+    <span class="no">03</span><span class="t">家庭协作 · 宠物主页与场景</span>
+    <span class="desc">多角色留痕、柔性权限、遛狗与我的</span>
+  </div>
+  <div class="grid">
+
+    <a class="screen-card" href="pet-profile.html" data-od-id="screen-10">
+      <div class="preview">
+        <span class="badge"><span class="n">10</span></span>
+        <span class="type-dot"><i style="background:var(--info)"></i>协作</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pblock" style="height:40px;background:var(--accent);margin:0;padding:6px 8px;display:flex;align-items:flex-end"><span class="ptxt" style="color:#fff;font-size:8px;font-weight:700">豆豆</span></div>
+          <div class="pbody" style="gap:4px">
+            <div class="prow"><div style="width:10px;height:10px;border-radius:50%;background:var(--accent)"></div><span class="ptxt muted">奶爸 更新体重</span></div>
+            <div class="prow"><div style="width:10px;height:10px;border-radius:50%;background:var(--mint)"></div><span class="ptxt muted">奶妈 记录握手</span></div>
+            <div class="prow"><div style="width:10px;height:10px;border-radius:50%;background:var(--danger-soft)"></div><span class="ptxt muted">爷爷 驱虫待补</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">宠物主页 · 动态墙</div><div class="d">谁做了什么何时 · 筛选 · 责任可视化</div></div>
+    </a>
+
+    <a class="screen-card" href="family-permissions.html" data-od-id="screen-11">
+      <div class="preview">
+        <span class="badge"><span class="n">11</span></span>
+        <span class="type-dot"><i style="background:var(--info)"></i>协作</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">成员权限</span><span class="pic"></span></div>
+          <div class="pbody">
+            <div class="pblock" style="height:14px;background:var(--mint-soft);border-radius:5px;padding:3px 4px"><span class="ptxt" style="color:var(--mint-deep)">柔性 RBAC</span></div>
+            <div class="prow"><span class="ptxt muted">P1 查看档案</span><div style="margin-left:auto;width:14px;height:8px;background:var(--mint);border-radius:4px;position:relative"><div style="position:absolute;right:0;top:0;width:8px;height:8px;background:#fff;border-radius:50%"></div></div></div>
+            <div class="prow"><span class="ptxt muted">P4 编辑健康</span><div style="margin-left:auto;width:14px;height:8px;background:var(--surface-3);border-radius:4px;position:relative"><div style="position:absolute;left:0;top:0;width:8px;height:8px;background:#fff;border-radius:50%;border:1px solid var(--border)"></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">家庭 · 柔性 RBAC</div><div class="d">角色标签 · 12 项权限开关 · 模板套用</div></div>
+    </a>
+
+    <a class="screen-card" href="walk-live.html" data-od-id="screen-12">
+      <div class="preview">
+        <span class="badge"><span class="n">12</span></span>
+        <span class="type-dot"><i style="background:var(--warn)"></i>遛狗</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pblock" style="height:70px;background:var(--mint-soft);margin:0 4px;border-radius:6px;position:relative">
+            <svg viewBox="0 0 100 60" style="width:100%;height:100%"><path d="M10 50 Q30 40 40 25 Q55 10 80 15" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/><circle cx="10" cy="50" r="2.5" fill="var(--mint)"/><circle cx="80" cy="15" r="2.5" fill="var(--accent)"/></svg>
+          </div>
+          <div class="pbody" style="flex-direction:row;justify-content:space-around;gap:2px">
+            <div style="text-align:center"><div class="ptxt" style="font-size:8px;font-weight:700">1.84</div><div class="ptxt muted">km</div></div>
+            <div style="text-align:center"><div class="ptxt" style="font-size:8px;font-weight:700;color:var(--accent-ink)">5.9</div><div class="ptxt muted">km/h</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">遛狗中</div><div class="d">实时轨迹 · 速度曲线 · 事件打卡</div></div>
+    </a>
+
+    <a class="screen-card" href="walk-summary.html" data-od-id="screen-13">
+      <div class="preview">
+        <span class="badge"><span class="n">13</span></span>
+        <span class="type-dot"><i style="background:var(--warn)"></i>遛狗</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">遛狗回顾</span><span class="pic"></span></div>
+          <div class="pbody">
+            <div class="prow"><span class="ptxt" style="font-size:11px;font-weight:700">2.34</span><span class="ptxt muted">km · 38 min</span></div>
+            <div class="prow" style="gap:3px"><div class="pblock" style="flex:1;height:8px;background:var(--mint);border-radius:2px"></div><div class="pblock" style="flex:1;height:8px;background:var(--accent-soft);border-radius:2px"></div><div class="pblock" style="flex:1;height:8px;background:var(--surface-3);border-radius:2px"></div></div>
+            <div class="pblock" style="height:14px;background:var(--accent-soft);border-radius:4px;padding:2px 4px"><span class="ptxt" style="color:var(--accent-ink)">AI：今天很活跃</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">遛狗回顾</div><div class="d">轨迹回放 · 速度分段 · AI 点评</div></div>
+    </a>
+
+    <a class="screen-card" href="profile-me.html" data-od-id="screen-14">
+      <div class="preview">
+        <span class="badge"><span class="n">14</span></span>
+        <span class="type-dot"><i style="background:var(--info)"></i>导航</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">我的</span><span class="pic"></span></div>
+          <div class="pbody">
+            <div class="prow"><div style="width:16px;height:16px;border-radius:50%;background:var(--accent)"></div><div><div class="ptxt">阿哲</div><div class="ptxt muted">首席监护人</div></div></div>
+            <div class="pblock" style="height:12px;background:var(--surface-2);border-radius:4px;padding:2px 4px"><span class="ptxt muted">进阶功能 · 财务社群...</span></div>
+            <div class="pbar short"></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">我的</div><div class="d">聚合相册/日历/健康/进阶功能</div></div>
+    </a>
+
+    <a class="screen-card" href="profile-me.html#tools" data-od-id="screen-15">
+      <div class="preview">
+        <span class="badge"><span class="n">15</span></span>
+        <span class="type-dot"><i style="background:var(--info)"></i>进阶</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>●●</span></div>
+          <div class="pnav"><span class="pt">进阶工具</span><span class="pic"></span></div>
+          <div class="pbody" style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+            <div class="pblock" style="height:22px;background:var(--surface-2);border-radius:5px;padding:3px 4px;display:flex;flex-direction:column;justify-content:center"><div style="width:8px;height:8px;background:var(--accent-soft);border-radius:2px"></div><span class="ptxt muted" style="font-size:5.5px">财务</span></div>
+            <div class="pblock" style="height:22px;background:var(--surface-2);border-radius:5px;padding:3px 4px;display:flex;flex-direction:column;justify-content:center"><div style="width:8px;height:8px;background:var(--mint-soft);border-radius:2px"></div><span class="ptxt muted" style="font-size:5.5px">饮食</span></div>
+            <div class="pblock" style="height:22px;background:var(--surface-2);border-radius:5px;padding:3px 4px;display:flex;flex-direction:column;justify-content:center"><div style="width:8px;height:8px;background:var(--info-soft);border-radius:2px"></div><span class="ptxt muted" style="font-size:5.5px">社群</span></div>
+            <div class="pblock" style="height:22px;background:var(--surface-2);border-radius:5px;padding:3px 4px;display:flex;flex-direction:column;justify-content:center"><div style="width:8px;height:8px;background:var(--warn-soft);border-radius:2px"></div><span class="ptxt muted" style="font-size:5.5px">保险箱</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta"><div class="t">进阶工具集</div><div class="d">财务 · 饮食 · 社群 · 训练 · 保险箱 · 访客</div></div>
+    </a>
+  </div>
+
+  <footer class="foot" data-od-id="footer">
+    <span class="mark">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="14" r="7" fill="var(--accent)"/><ellipse cx="7" cy="9" rx="2.5" ry="3.5" fill="var(--accent)" transform="rotate(-15 7 9)"/><ellipse cx="17" cy="9" rx="2.5" ry="3.5" fill="var(--accent)" transform="rotate(15 17 9)"/><circle cx="10" cy="13" r="1" fill="#fff"/><circle cx="14" cy="13" r="1" fill="#fff"/></svg>
+      小狗人生 · 用科技的温度，延伸爱的刻度
+    </span>
+    <span>点击任一卡片进入对应屏 · 已实现跳转与交互</span>
+  </footer>
+
+</div>
+</body>
+</html>

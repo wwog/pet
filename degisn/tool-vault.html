@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>文件保险箱 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .nav-bar svg { color: var(--fg); }
+  .nav-bar .title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .nav-bar .action { color: var(--accent); font-size: 14px; font-weight: 600; text-decoration: none; width: auto; }
+  .screen-body { padding: 0 16px 100px; }
+
+  /* 加密状态条 —— 惊艳一笔 */
+  .vault-banner { background: linear-gradient(135deg, oklch(35% 0.04 240), oklch(28% 0.03 250)); border-radius: var(--r-lg); padding: 16px; color: #fff; margin-bottom: 14px; display: flex; align-items: center; gap: 14px; }
+  .vault-banner .lock-ic { width: 44px; height: 44px; border-radius: 12px; background: oklch(99% 0.01 80 / 0.15); display: grid; place-items: center; flex-shrink: 0; }
+  .vault-banner .info .t { font-size: 14px; font-weight: 700; }
+  .vault-banner .info .d { font-size: 11px; opacity: 0.8; margin-top: 3px; line-height: 1.45; }
+  .vault-banner .info .d b { color: oklch(85% 0.1 165); }
+
+  /* 分类卡 */
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .cat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px; text-decoration: none; color: var(--fg); display: flex; flex-direction: column; gap: 10px; min-height: 92px; }
+  .cat-card .ic { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; }
+  .cat-card .ic svg { width: 18px; height: 18px; }
+  .cat-card .ic.chip { background: oklch(92% 0.02 240); color: var(--info); }
+  .cat-card .ic.ped { background: var(--accent-soft); color: var(--accent-deep); }
+  .cat-card .ic.ins { background: var(--mint-soft); color: oklch(42% 0.1 165); }
+  .cat-card .ic.med { background: oklch(93% 0.05 25); color: var(--danger); }
+  .cat-card .t { font-size: 13px; font-weight: 700; }
+  .cat-card .d { font-size: 11px; color: var(--muted); }
+
+  /* 文件列表 */
+  .section-label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; margin: 4px 4px 10px; display: flex; justify-content: space-between; }
+  .section-label .cnt { font-family: var(--font-mono); color: var(--accent-deep); }
+  .doc-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .doc { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-bottom: 1px solid var(--border); }
+  .doc:last-child { border-bottom: 0; }
+  .doc .ic { width: 38px; height: 46px; border-radius: 6px; display: grid; place-items: center; flex-shrink: 0; position: relative; }
+  .doc .ic.pdf { background: oklch(93% 0.05 25); }
+  .doc .ic.img { background: var(--mint-soft); }
+  .doc .ic.pdf svg, .doc .ic.img svg { color: var(--danger); }
+  .doc .ic.img svg { color: oklch(42% 0.1 165); }
+  .doc .ic .ext { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); font-size: 8px; font-weight: 700; font-family: var(--font-mono); color: var(--fg); }
+  .doc .info { flex: 1; min-width: 0; }
+  .doc .info .n { font-size: 13px; font-weight: 600; }
+  .doc .info .m { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .doc .info .lock { font-size: 10px; color: var(--info); margin-top: 3px; display: inline-flex; align-items: center; gap: 3px; }
+  .doc .share { width: 32px; height: 32px; border-radius: 9px; background: var(--surface-2); display: grid; place-items: center; color: var(--accent-deep); flex-shrink: 0; text-decoration: none; }
+
+  .add-doc { display: flex; gap: 8px; margin-top: 12px; }
+  .add-doc a { flex: 1; min-height: 48px; border-radius: var(--r-md); border: 1.5px dashed var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--accent-deep); text-decoration: none; }
+  .add-doc a.solid { background: var(--accent); color: #fff; border-style: solid; flex: 0 0 120px; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="profile-me.html" data-od-id="back"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="title" data-od-id="page-title">文件保险箱</span>
+      <a class="action" href="#" data-od-id="add">上传</a>
+    </div>
+
+    <div class="screen-body">
+      <div class="vault-banner" data-od-id="vault-banner">
+        <div class="lock-ic"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="5" y="10" width="12" height="9" rx="2" stroke="#fff" stroke-width="1.6"/><path d="M8 10V7a3 3 0 0 1 6 0v3" stroke="#fff" stroke-width="1.6"/><circle cx="11" cy="14" r="1.3" fill="#fff"/></svg></div>
+        <div class="info">
+          <div class="t">端到端加密 · E2EE</div>
+          <div class="d">7 个文件 · 全部加密存储 · 一键分享给兽医 <b>无需解密下载</b></div>
+        </div>
+      </div>
+
+      <div class="cat-grid" data-od-id="cat-grid">
+        <a class="cat-card" href="#" data-od-id="cat-chip">
+          <div class="ic chip"><svg viewBox="0 0 18 18" fill="none"><rect x="4" y="5" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M6 5V3M9 5V3M12 5V3M6 13v2M9 13v2M12 13v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div><div class="t">芯片编号</div><div class="d">1 条 · 已登记</div></div>
+        </a>
+        <a class="cat-card" href="#" data-od-id="cat-ped">
+          <div class="ic ped"><svg viewBox="0 0 18 18" fill="none"><path d="M4 3h7l3 3v9H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M11 3v3h3M6 9h6M6 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div><div class="t">血统证书</div><div class="d">2 份 · CKU 认证</div></div>
+        </a>
+        <a class="cat-card" href="#" data-od-id="cat-ins">
+          <div class="ic ins"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2l5 2v4c0 3-2 5-5 6-3-1-5-3-5-6V4l5-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+          <div><div class="t">保险单</div><div class="d">1 份 · 众安医疗</div></div>
+        </a>
+        <a class="cat-card" href="#" data-od-id="cat-med">
+          <div class="ic med"><svg viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div><div class="t">病历</div><div class="d">3 份 · 含基因报告</div></div>
+        </a>
+      </div>
+
+      <div class="section-label"><span>全部文件</span><span class="cnt">7 个 · 加密</span></div>
+      <div class="doc-list" data-od-id="doc-list">
+        <div class="doc" data-od-id="doc-1">
+          <div class="ic pdf"><svg width="20" height="22" viewBox="0 0 20 22" fill="none"><path d="M5 2h7l4 4v14H5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" fill="oklch(96% 0.01 25)"/><path d="M12 2v4h4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+          <div class="info"><div class="n">CKU 血统证书.pdf</div><div class="m">2024.03 · 1.2 MB</div><div class="lock"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="2" y="4.5" width="6" height="4.5" rx="1" stroke="currentColor" stroke-width="1"/><path d="M3.5 4.5V3a1.5 1.5 0 0 1 3 0v1.5" stroke="currentColor" stroke-width="1"/></svg> 已加密</div></div>
+          <a class="share" href="#"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M9 3l-4 4 4 4M5 7h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="doc" data-od-id="doc-2">
+          <div class="ic pdf"><svg width="20" height="22" viewBox="0 0 20 22" fill="none"><path d="M5 2h7l4 4v14H5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" fill="oklch(96% 0.01 25)"/><path d="M12 2v4h4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+          <div class="info"><div class="n">基因检测报告.pdf</div><div class="m">2024.05 · 3.8 MB · AI 已解读</div><div class="lock"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="2" y="4.5" width="6" height="4.5" rx="1" stroke="currentColor" stroke-width="1"/><path d="M3.5 4.5V3a1.5 1.5 0 0 1 3 0v1.5" stroke="currentColor" stroke-width="1"/></svg> 已加密</div></div>
+          <a class="share" href="#"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M9 3l-4 4 4 4M5 7h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="doc" data-od-id="doc-3">
+          <div class="ic img"><svg width="20" height="22" viewBox="0 0 20 22" fill="none"><rect x="3" y="4" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.4" fill="oklch(96% 0.02 150)"/><circle cx="8" cy="9" r="1.5" fill="currentColor"/><path d="M3 15l4-3 3 2 3-3 4 3" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></div>
+          <div class="info"><div class="n">芯片登记照.jpg</div><div class="m">2024.03 · 0.8 MB · 编号 9821...</div><div class="lock"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="2" y="4.5" width="6" height="4.5" rx="1" stroke="currentColor" stroke-width="1"/><path d="M3.5 4.5V3a1.5 1.5 0 0 1 3 0v1.5" stroke="currentColor" stroke-width="1"/></svg> 已加密</div></div>
+          <a class="share" href="#"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M9 3l-4 4 4 4M5 7h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="doc" data-od-id="doc-4">
+          <div class="ic pdf"><svg width="20" height="22" viewBox="0 0 20 22" fill="none"><path d="M5 2h7l4 4v14H5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" fill="oklch(96% 0.01 25)"/><path d="M12 2v4h4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+          <div class="info"><div class="n">众安宠物医疗险.pdf</div><div class="m">2024.06 · 0.9 MB · 保至 2025.06</div><div class="lock"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="2" y="4.5" width="6" height="4.5" rx="1" stroke="currentColor" stroke-width="1"/><path d="M3.5 4.5V3a1.5 1.5 0 0 1 3 0v1.5" stroke="currentColor" stroke-width="1"/></svg> 已加密</div></div>
+          <a class="share" href="#"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M9 3l-4 4 4 4M5 7h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+
+      <div class="add-doc" data-od-id="add-doc">
+        <a href="#" data-od-id="scan"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M2 6h12M5 3v10" stroke="currentColor" stroke-width="1.5"/></svg> 扫描文件</a>
+        <a class="solid" href="#" data-od-id="upload">+ 上传</a>
+      </div>
+    </div>
+
+    <nav class="tab-bar" data-od-id="tab-bar">
+      <a href="tab-briefing.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 3l9 7v10a2 2 0 0 1-2 2h-4v-7h-6v7H6a2 2 0 0 1-2-2V10l9-7z"/></svg>简报</a>
+      <a href="tab-ai-chat.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V8a2 2 0 0 1 1-2z"/></svg>AI</a>
+      <a class="active" href="profile-me.html"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13" cy="9" r="4"/><path d="M5 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>我的</a>
+    </nav>
+    <div class="home-bar"></div>
+  </div>
+</div>
+</body>
+</html>

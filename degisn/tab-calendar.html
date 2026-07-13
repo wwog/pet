@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>智能日程 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .nav-bar .title { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .nav-bar .action { color: var(--accent); width: 32px; height: 32px; display: grid; place-items: center; }
+  .nav-bar .action svg { width: 24px; height: 24px; }
+
+  .screen-body { padding: 0 16px 100px; }
+
+  /* 周日历 */
+  .week-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 16px; }
+  .day-cell { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0; border-radius: 12px; cursor: pointer; }
+  .day-cell .w { font-size: 10px; color: var(--muted); }
+  .day-cell .d { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .day-cell .dot { width: 5px; height: 5px; border-radius: 50%; background: transparent; }
+  .day-cell.has { }
+  .day-cell.has .dot { background: var(--accent); }
+  .day-cell.today { background: var(--accent); color: #fff; }
+  .day-cell.today .w, .day-cell.today .d { color: #fff; }
+  .day-cell.today .dot { background: #fff; }
+  .day-cell.overdue .dot { background: var(--danger); }
+
+  .today-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; padding: 0 4px; }
+  .today-head .t { font-size: 16px; font-weight: 700; }
+  .today-head .c { font-size: 12px; color: var(--muted); }
+
+  /* 智能提醒卡 —— 惊艳一笔 */
+  .smart-remind {
+    background: var(--accent-soft); border-radius: var(--r-md); padding: 14px; margin-bottom: 16px;
+    border: 1px solid oklch(80% 0.06 55);
+  }
+  .smart-remind .head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .smart-remind .head .ic { width: 24px; height: 24px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+  .smart-remind .head .ic svg { color: #fff; }
+  .smart-remind .head .t { font-size: 13px; font-weight: 700; color: var(--accent-deep); }
+  .smart-remind .body { font-size: 13px; line-height: 1.5; color: var(--fg); }
+  .smart-remind .body b { color: var(--accent-deep); }
+  .smart-remind .actions { display: flex; gap: 8px; margin-top: 10px; }
+  .smart-remind .actions a { font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: var(--r-pill); text-decoration: none; }
+  .smart-remind .actions .a1 { background: var(--accent); color: #fff; }
+  .smart-remind .actions .a2 { background: var(--surface); color: var(--fg); border: 1px solid var(--border); }
+
+  .task-list { display: flex; flex-direction: column; gap: 10px; }
+  .task-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+    padding: 14px; display: flex; gap: 12px; align-items: flex-start;
+  }
+  .task-card.overdue { border-left: 3px solid var(--danger); }
+  .task-card.done { opacity: 0.55; }
+  .task-check {
+    width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border);
+    flex-shrink: 0; margin-top: 1px; cursor: pointer; display: grid; place-items: center;
+  }
+  .task-card.done .task-check { background: var(--mint); border-color: var(--mint); }
+  .task-card.done .task-check svg { color: #fff; }
+  .task-check svg { display: none; width: 12px; height: 12px; }
+  .task-card.done .task-check svg { display: block; }
+  .task-body { flex: 1; }
+  .task-body .title-row { display: flex; align-items: center; gap: 8px; }
+  .task-body .title-row .t { font-size: 14px; font-weight: 600; }
+  .task-card.done .task-body .t { text-decoration: line-through; color: var(--muted); }
+  .task-body .meta { font-size: 11px; color: var(--muted); margin-top: 4px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .task-body .meta .who { display: inline-flex; align-items: center; gap: 4px; }
+  .task-body .meta .av { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
+  .task-body .next { font-size: 11px; color: var(--accent-deep); margin-top: 6px; font-weight: 500; }
+  .task-pri { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: var(--r-pill); letter-spacing: 0.04em; }
+  .task-pri.high { background: oklch(93% 0.04 25); color: var(--danger); }
+  .task-pri.mid { background: oklch(93% 0.05 70); color: oklch(50% 0.12 70); }
+  .task-pri.cycle { background: var(--mint-soft); color: oklch(42% 0.1 165); }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="nav-bar">
+      <a class="action" href="tab-briefing.html" data-od-id="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="title" data-od-id="page-title">7月</span>
+      <a class="action" href="#" data-od-id="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></a>
+    </div>
+
+    <div class="screen-body">
+      <div class="week-cal" data-od-id="week-cal">
+        <div class="day-cell has"><span class="w">一</span><span class="d">6</span><span class="dot"></span></div>
+        <div class="day-cell today"><span class="w">二</span><span class="d">7</span><span class="dot"></span></div>
+        <div class="day-cell"><span class="w">三</span><span class="d">8</span><span class="dot"></span></div>
+        <div class="day-cell has"><span class="w">四</span><span class="d">9</span><span class="dot"></span></div>
+        <div class="day-cell"><span class="w">五</span><span class="d">10</span><span class="dot"></span></div>
+        <div class="day-cell has"><span class="w">六</span><span class="d">11</span><span class="dot"></span></div>
+        <div class="day-cell"><span class="w">日</span><span class="d">12</span><span class="dot"></span></div>
+      </div>
+
+      <div class="today-head"><span class="t">今天 · 7月7日</span><span class="c">3 件待办 · 1 件已逾期</span></div>
+
+      <!-- 智能提醒引擎 —— 惊艳一笔 -->
+      <div class="smart-remind" data-od-id="smart-remind">
+        <div class="head">
+          <div class="ic"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <span class="t">智能提醒引擎</span>
+        </div>
+        <div class="body">距上次体外驱虫已 <b>32 天</b>，建议今日补做。附近合作医院 <b>宠安诊所</b> 距你 1.2km，线上药房福来恩现货。</div>
+        <div class="actions">
+          <a class="a1" href="#">导航至医院</a>
+          <a class="a2" href="#">去线上药房</a>
+        </div>
+      </div>
+
+      <div class="task-list" data-od-id="task-list">
+        <div class="task-card overdue" data-od-id="task-1">
+          <div class="task-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-body">
+            <div class="title-row"><span class="t">体外驱虫 · 福来恩</span><span class="task-pri high">逾期</span></div>
+            <div class="meta"><span class="who"><span class="av" style="background:var(--accent)"></span> 奶爸 阿哲</span><span>周期 · 每月</span></div>
+            <div class="next">上次：6月5日 · 已逾期 2 天</div>
+          </div>
+        </div>
+
+        <div class="task-card" data-od-id="task-2">
+          <div class="task-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-body">
+            <div class="title-row"><span class="t">晚餐喂粮 320g</span><span class="task-pri mid">18:30</span></div>
+            <div class="meta"><span class="who"><span class="av" style="background:var(--mint)"></span> 奶妈 小棠</span><span>每日</span></div>
+          </div>
+        </div>
+
+        <div class="task-card" data-od-id="task-3">
+          <div class="task-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-body">
+            <div class="title-row"><span class="t">刷牙训练 5 分钟</span><span class="task-pri cycle">21:00</span></div>
+            <div class="meta"><span class="who"><span class="av" style="background:var(--illu-tan)"></span> 爷爷 老张</span><span>每日 · 14天计划 D7</span></div>
+          </div>
+        </div>
+
+        <div class="task-card done" data-od-id="task-4">
+          <div class="task-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-body">
+            <div class="title-row"><span class="t">晨遛 25 分钟</span><span class="task-pri cycle">已完成</span></div>
+            <div class="meta"><span class="who"><span class="av" style="background:var(--accent)"></span> 奶爸 阿哲 · 7:15</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="tab-bar" data-od-id="tab-bar">
+      <a href="tab-briefing.html" data-od-id="tab-briefing"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 3l9 7v10a2 2 0 0 1-2 2h-4v-7h-6v7H6a2 2 0 0 1-2-2V10l9-7z"/></svg>简报</a>
+      <a href="tab-ai-chat.html" data-od-id="tab-chat"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V8a2 2 0 0 1 1-2z"/></svg>AI</a>
+      <a class="active" href="profile-me.html" data-od-id="tab-me"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13" cy="9" r="4"/><path d="M5 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>我的</a>
+    </nav>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.task-check').forEach(function(el){
+    el.addEventListener('click', function(){
+      el.closest('.task-card').classList.toggle('done');
+    });
+  });
+</script>
+</body>
+</html>

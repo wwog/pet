@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>基础身份 · 小狗人生</title>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  .progress { display: flex; gap: 6px; padding: 4px 20px 0; }
+  .progress .seg { flex: 1; height: 4px; border-radius: 2px; background: var(--border); }
+  .progress .seg.on { background: var(--accent); }
+
+  .nav-bar { padding-top: 12px; }
+  .nav-bar .back svg, .nav-bar .action svg { color: var(--fg); }
+
+  .head { padding: 8px 0 20px; }
+  .head .eyebrow { margin-bottom: 6px; }
+  .head .title { font-family: var(--font-display); font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+  .head .desc { color: var(--muted); font-size: 14px; margin-top: 8px; line-height: 1.5; }
+
+  .field-group { margin-bottom: 26px; }
+  .field-label { font-size: 13px; font-weight: 600; color: var(--fg); margin-bottom: 10px; display: flex; justify-content: space-between; }
+  .field-label .hint { font-weight: 400; color: var(--muted); font-size: 12px; }
+
+  .name-input-wrap {
+    position: relative; display: flex; align-items: center;
+    background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r-md);
+    padding: 4px 4px 4px 16px; transition: border-color 0.15s;
+  }
+  .name-input-wrap:focus-within { border-color: var(--accent); }
+  .name-input { flex: 1; border: 0; background: transparent; font-size: 17px; font-weight: 500; outline: none; min-height: 48px; color: var(--fg); }
+  .name-input::placeholder { color: var(--muted); }
+  .emoji-suggest { display: flex; gap: 4px; padding-right: 4px; }
+  .emoji-suggest button {
+    width: 36px; height: 36px; border: 0; background: var(--surface-2); border-radius: 10px;
+    font-size: 18px; cursor: pointer; line-height: 1;
+  }
+
+  .gender-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .gender-opt {
+    border: 1.5px solid var(--border); background: var(--surface); border-radius: var(--r-md);
+    padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    cursor: pointer; transition: all 0.15s; min-height: 88px; justify-content: center;
+  }
+  .gender-opt.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .gender-opt svg { width: 36px; height: 36px; }
+  .gender-opt .lbl { font-size: 14px; font-weight: 600; }
+
+  .birth-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 18px;
+  }
+  .birth-card .mode-row { display: flex; justify-content: space-between; align-items: center; }
+  .birth-card .mode-row .val { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  .birth-card .mode-row .val .unit { font-size: 14px; font-weight: 500; color: var(--muted); margin-left: 2px; }
+  .birth-card .approx { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .slider-wrap { margin-top: 16px; }
+  .slider-track { position: relative; height: 6px; background: var(--surface-2); border-radius: 3px; }
+  .slider-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 3px; width: 35%; }
+  .slider-thumb { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 26px; height: 26px; background: #fff; border: 2px solid var(--accent); border-radius: 50%; box-shadow: 0 2px 8px oklch(24% 0.03 60 / 0.2); left: 35%; }
+  .slider-ticks { display: flex; justify-content: space-between; margin-top: 10px; font-size: 11px; color: var(--muted); letter-spacing: 0.02em; }
+
+  .bottom-bar {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px 34px;
+    background: linear-gradient(180deg, transparent, var(--bg) 30%);
+    display: flex; gap: 12px;
+  }
+  .bottom-bar .btn { flex: 1; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="island"></div>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="6" width="3" height="5" rx="1"/><rect x="4" y="4" width="3" height="7" rx="1"/><rect x="8" y="2" width="3" height="9" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 2.5c2 0 3.8.8 5.2 2L14 3.4C12.4 1.8 10.3 1 8 1S3.6 1.8 2 3.4l.8 1.1C4.2 3.3 6 2.5 8 2.5z"/><path d="M8 5.5c1.2 0 2.3.5 3.1 1.3l.8-1.1C11 4.6 9.5 4 8 4s-3 .6-3.9 1.7l.8 1.1C5.7 6 6.8 5.5 8 5.5z"/><circle cx="8" cy="9" r="1.5"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="currentColor"/><rect x="24" y="4" width="2" height="5" rx="1" fill="currentColor" opacity="0.4"/></svg>
+      </span>
+    </div>
+
+    <div class="progress" data-od-id="progress">
+      <div class="seg on"></div><div class="seg"></div><div class="seg"></div>
+    </div>
+
+    <div class="nav-bar">
+      <a class="back" href="onboarding-welcome.html" data-od-id="back-btn">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 5l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <span class="title">第 1 步 / 共 3 步</span>
+      <a class="action" href="onboarding-step2.html" data-od-id="skip-step" style="font-size:13px;color:var(--muted);text-decoration:none;width:auto">跳过</a>
+    </div>
+
+    <div class="screen-body">
+      <div class="head" data-od-id="page-head">
+        <div class="eyebrow">基础身份</div>
+        <div class="title">给毛孩子起个名字</div>
+        <div class="desc">这是整个流程里唯一需要打字的地方，其余都点选就好。</div>
+      </div>
+
+      <div class="field-group" data-od-id="field-name">
+        <div class="field-label"><span>爱称</span><span class="hint">必填</span></div>
+        <div class="name-input-wrap">
+          <input class="name-input" type="text" placeholder="输入爱称，比如 豆豆" value="豆豆" data-od-id="name-input" />
+          <div class="emoji-suggest">
+            <button type="button">🐾</button>
+            <button type="button">🦴</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group" data-od-id="field-gender">
+        <div class="field-label"><span>性别</span></div>
+        <div class="gender-row">
+          <div class="gender-opt selected" data-od-id="gender-male" role="button">
+            <svg viewBox="0 0 36 36" fill="none"><circle cx="14" cy="18" r="9" stroke="var(--accent-deep)" stroke-width="2.5"/><path d="M21 11h7v7" stroke="var(--accent-deep)" stroke-width="2.5" stroke-linecap="round"/><path d="M24 15l4-4" stroke="var(--accent-deep)" stroke-width="2.5" stroke-linecap="round"/></svg>
+            <span class="lbl">男孩</span>
+          </div>
+          <div class="gender-opt" data-od-id="gender-female" role="button">
+            <svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="13" r="9" stroke="var(--fg)" stroke-width="2.5"/><path d="M18 22v9M14 28h8" stroke="var(--fg)" stroke-width="2.5" stroke-linecap="round"/></svg>
+            <span class="lbl">女孩</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group" data-od-id="field-birth">
+        <div class="field-label"><span>出生日期</span><span class="hint">领养未知可选"大概"</span></div>
+        <div class="birth-card">
+          <div class="mode-row">
+            <div>
+              <div class="val" data-od-id="birth-val">2023<span class="unit">年</span> 5<span class="unit">月</span></div>
+              <div class="approx">已切换为"大概"模式 · 适配领养未知生日</div>
+            </div>
+            <div class="chip accent" data-od-id="approx-toggle">大概</div>
+          </div>
+          <div class="slider-wrap" data-od-id="year-slider">
+            <div class="slider-track"><div class="slider-fill"></div><div class="slider-thumb"></div></div>
+            <div class="slider-ticks"><span>2018</span><span>2020</span><span>2022</span><span>2024</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <a class="btn btn-ghost" href="onboarding-welcome.html" data-od-id="btn-prev">上一步</a>
+      <a class="btn btn-primary" href="onboarding-step2.html" data-od-id="btn-next">下一步</a>
+    </div>
+
+    <div class="home-bar"></div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.gender-opt').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.gender-opt').forEach(function(o){ o.classList.remove('selected'); });
+      el.classList.add('selected');
+    });
+  });
+</script>
+</body>
+</html>
