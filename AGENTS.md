@@ -38,7 +38,7 @@ Dependencies always point inward (api / db → domain); the domain layer stays p
   });
   ```
 - If you need to add new dependencies, please add them to the workspace.dependencies and import them from the child crates.
-- When installing dependencies, use the `node scripts/getCrateVersion.js [crate-name]` command to obtain the latest version.
+- Use the latest version whenever possible.When installing dependencies, use the `node scripts/getCrateVersion.js [crate-name]` command to obtain the latest version.
   Example:
   ```bash
   node scripts/getCrateVersion.js tokio
