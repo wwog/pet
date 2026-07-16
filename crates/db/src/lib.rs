@@ -25,11 +25,14 @@ use crate::pet::PetRepository;
 /// 注册模型后通过 factory 方法获取各域的 Repository 实例。
 pub struct Database {
     db: toasty::Db,
+    fresh: bool,
 }
 
 impl Database {
     /// 建立数据库连接并注册所有模型。
     pub async fn connect(url: &str) -> Result<Self, toasty::Error> {
+        // 在连接前判断是否为全新库：sqlite 连接会创建文件，必须先于 connect 采样
+        let fresh = is_fresh_sqlite(url);
         let db = toasty::Db::builder()
             .models(toasty::models!(
                 crate::user::User,
@@ -45,10 +48,22 @@ impl Database {
             ))
             .connect(url)
             .await?;
-        Ok(Self { db })
+        Ok(Self { db, fresh })
     }
 
-    /// 自动创建/迁移数据库 schema。
+    /// 幂等地初始化数据库 schema。
+    ///
+    /// toasty 的 `push_schema` 生成的是无条件 `CREATE TABLE`，对已存在表的库会报错，
+    /// 因此仅在检测到全新库时执行。返回是否实际创建了 schema。
+    pub async fn ensure_schema(&self) -> Result<bool, toasty::Error> {
+        if self.fresh {
+            self.db.push_schema().await?;
+            return Ok(true);
+        }
+        Ok(false)
+    }
+
+    /// 强制创建/迁移数据库 schema（仅应对空库使用，重复调用会报表已存在）。
     pub async fn push_schema(&self) -> Result<(), toasty::Error> {
         self.db.push_schema().await
     }
@@ -68,4 +83,19 @@ impl Database {
     pub fn pet_repository(&self) -> PetRepository<'_> {
         PetRepository::new(&self.db)
     }
+}
+
+/// 判断 sqlite 连接是否指向一个尚不存在的（全新）数据库。
+///
+/// - 内存库（`:memory:`）每次进程都是全新的，返回 `true`。
+/// - 文件库按文件是否已存在判断。
+/// - 非 sqlite / 无法识别的 URL 保守地返回 `true`（交由调用方决定是否 push）。
+fn is_fresh_sqlite(url: &str) -> bool {
+    let rest = url.strip_prefix("sqlite:").unwrap_or(url);
+    if rest.is_empty() || rest.contains(":memory:") {
+        return true;
+    }
+    let path = rest.trim_start_matches("//");
+    let path = path.split(['?', '#']).next().unwrap_or(path);
+    !std::path::Path::new(path).exists()
 }

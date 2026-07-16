@@ -20,3 +20,6 @@ uuid = { workspace = true }
 chrono = { workspace = true }
 rand_core = { version = "0.6", features = ["getrandom"] }
 dotenvy = { workspace = true }
+utoipa = { workspace = true }
+utoipa-axum = { workspace = true }
+utoipa-scalar = { workspace = true }

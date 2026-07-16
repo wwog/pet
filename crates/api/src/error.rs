@@ -1,15 +1,16 @@
 use axum::{http::StatusCode, response::IntoResponse, Json};
 use domain::app::AppError;
 use serde::Serialize;
+use utoipa::ToSchema;
 
-#[derive(Serialize)]
+#[derive(Serialize, ToSchema)]
 pub struct ErrorResponse {
     pub code: u16,
     pub message: String,
 }
 
-#[derive(Serialize)]
-pub struct ApiResponse<T: Serialize> {
+#[derive(Serialize, ToSchema)]
+pub struct ApiResponse<T: Serialize + ToSchema> {
     pub code: u16,
     pub message: String,
     pub data: T,

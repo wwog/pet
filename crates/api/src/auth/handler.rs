@@ -14,7 +14,7 @@ use super::dto::*;
 use super::jwt;
 use super::middleware::AuthenticatedUser;
 use crate::app_state::SharedState;
-use crate::error::{ApiError, ApiResponse};
+use crate::error::{ApiError, ApiResponse, ErrorResponse};
 
 fn validate_account(account: &str) -> Result<(), AppError> {
     if account.len() < 6 {
@@ -73,6 +73,17 @@ fn verify_password(password: &str, hash: &str) -> Result<bool, AppError> {
         .is_ok())
 }
 
+#[utoipa::path(
+    post,
+    path = "/auth/register",
+    tag = "auth",
+    request_body = RegisterRequest,
+    responses(
+        (status = 201, description = "注册成功", body = ApiResponse<RegisterResponse>),
+        (status = 400, description = "参数校验失败", body = ErrorResponse),
+        (status = 409, description = "账号已存在", body = ErrorResponse),
+    )
+)]
 pub async fn register(
     State(state): State<SharedState>,
     Json(body): Json<RegisterRequest>,
@@ -115,6 +126,17 @@ pub async fn register(
     ))
 }
 
+#[utoipa::path(
+    post,
+    path = "/auth/login",
+    tag = "auth",
+    request_body = LoginRequest,
+    responses(
+        (status = 200, description = "登录成功", body = ApiResponse<LoginResponse>),
+        (status = 401, description = "密码错误", body = ErrorResponse),
+        (status = 404, description = "账号不存在", body = ErrorResponse),
+    )
+)]
 pub async fn login(
     State(state): State<SharedState>,
     Json(body): Json<LoginRequest>,
@@ -163,6 +185,16 @@ pub async fn login(
     }))
 }
 
+#[utoipa::path(
+    post,
+    path = "/auth/token/refresh",
+    tag = "auth",
+    request_body = RefreshRequest,
+    responses(
+        (status = 200, description = "刷新成功", body = ApiResponse<RefreshResponse>),
+        (status = 401, description = "refresh token 无效或已过期", body = ErrorResponse),
+    )
+)]
 pub async fn refresh_token(
     State(state): State<SharedState>,
     Json(body): Json<RefreshRequest>,
@@ -206,6 +238,16 @@ pub async fn refresh_token(
     }))
 }
 
+#[utoipa::path(
+    get,
+    path = "/auth/me",
+    tag = "auth",
+    security(("bearer_auth" = [])),
+    responses(
+        (status = 200, description = "当前用户信息", body = ApiResponse<MeResponse>),
+        (status = 401, description = "未认证或 token 无效", body = ErrorResponse),
+    )
+)]
 pub async fn get_me(
     State(state): State<SharedState>,
     AuthenticatedUser { user_id }: AuthenticatedUser,
