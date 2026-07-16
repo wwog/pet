@@ -10,7 +10,7 @@ edition = "2024"
 dioxus = { version = "0.7.1", features = ["router"] }
 
 [features]
-default = ["web"]
+default = ["desktop"]
 web = ["dioxus/web"]
 desktop = ["dioxus/desktop"]
 mobile = ["dioxus/mobile"]
