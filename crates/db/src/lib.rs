@@ -16,7 +16,7 @@ pub mod user;
 pub mod family;
 pub mod pet;
 
-use crate::user::UserRepository;
+use crate::user::{UserRepository, SessionRepository};
 use crate::family::FamilyRepository;
 use crate::pet::PetRepository;
 
@@ -31,14 +31,13 @@ impl Database {
     /// 建立数据库连接并注册所有模型。
     pub async fn connect(url: &str) -> Result<Self, toasty::Error> {
         let db = toasty::Db::builder()
-            .models(toasty::models!(crate::user::User, crate::user::UserSession))
             .models(toasty::models!(
+                crate::user::User,
+                crate::user::UserSession,
                 crate::family::Family,
                 crate::family::FamilyMember,
                 crate::family::InviteCode,
-                crate::family::JoinRequest
-            ))
-            .models(toasty::models!(
+                crate::family::JoinRequest,
                 crate::pet::Pet,
                 crate::pet::Breed,
                 crate::pet::PersonalityTag,
@@ -56,6 +55,10 @@ impl Database {
 
     pub fn user_repository(&self) -> UserRepository<'_> {
         UserRepository::new(&self.db)
+    }
+
+    pub fn session_repository(&self) -> SessionRepository<'_> {
+        SessionRepository::new(&self.db)
     }
 
     pub fn family_repository(&self) -> FamilyRepository<'_> {

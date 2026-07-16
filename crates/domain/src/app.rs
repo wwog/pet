@@ -11,6 +11,8 @@ pub enum AppError {
     Conflict(String),
     #[error("validation: {0}")]
     Validation(String),
+    #[error("auth: {0}")]
+    Auth(String),
     #[error("database: {0}")]
     Database(String),
     #[error("agent: {0}")]

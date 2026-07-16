@@ -14,7 +14,9 @@ pub struct User {
     pub id: uuid::Uuid,
 
     #[unique]
-    pub phone: String,
+    pub account: String,
+
+    pub password_hash: String,
 
     pub nickname: Option<String>,
     pub avatar: Option<String>,
@@ -54,7 +56,8 @@ impl From<User> for domain_user::User {
     fn from(u: User) -> Self {
         domain_user::User {
             id: u.id,
-            phone: u.phone,
+            account: u.account,
+            password_hash: u.password_hash,
             nickname: u.nickname,
             avatar: u.avatar,
             wechat_open_id: u.wechat_open_id,
@@ -104,7 +107,8 @@ impl domain_user::UserRepository for UserRepository<'_> {
         let now = user.created_at.to_rfc3339();
         let created = toasty::create!(User {
             id: user.id,
-            phone: user.phone,
+            account: user.account,
+            password_hash: user.password_hash,
             nickname: user.nickname,
             avatar: user.avatar,
             wechat_open_id: user.wechat_open_id,
@@ -126,9 +130,9 @@ impl domain_user::UserRepository for UserRepository<'_> {
         Ok(user.map(Into::into))
     }
 
-    async fn find_by_phone(&self, phone: &str) -> AppResult<Option<domain_user::User>> {
+    async fn find_by_account(&self, account: &str) -> AppResult<Option<domain_user::User>> {
         let mut db = self.db.clone();
-        let user = User::filter_by_phone(phone)
+        let user = User::filter_by_account(account)
             .first()
             .exec(&mut db)
             .await

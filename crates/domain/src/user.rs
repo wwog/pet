@@ -9,11 +9,13 @@ use crate::app::AppResult;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct User {
     pub id: Uuid,
-    /// 手机号（唯一）
-    pub phone: String,
+    /// 账号（唯一，最小6位，字母/数字/下划线）
+    pub account: String,
+    /// argon2id 密码哈希
+    pub password_hash: String,
     pub nickname: Option<String>,
     pub avatar: Option<String>,
-    /// 微信 OpenID（唯一）
+    /// 微信 OpenID（唯一，预留）
     pub wechat_open_id: Option<String>,
     pub created_at: DateTime<Utc>,
 }
@@ -33,7 +35,7 @@ pub struct UserSession {
 pub trait UserRepository: Send + Sync {
     async fn create(&self, user: User) -> AppResult<User>;
     async fn find_by_id(&self, id: Uuid) -> AppResult<Option<User>>;
-    async fn find_by_phone(&self, phone: &str) -> AppResult<Option<User>>;
+    async fn find_by_account(&self, account: &str) -> AppResult<Option<User>>;
     async fn find_by_wechat_open_id(&self, open_id: &str) -> AppResult<Option<User>>;
     async fn update_nickname(&self, id: Uuid, nickname: &str) -> AppResult<()>;
     async fn update_avatar(&self, id: Uuid, avatar: &str) -> AppResult<()>;
