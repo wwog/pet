@@ -52,7 +52,7 @@ async fn main() {
 
     tracing::info!("listening on {} (env: {})", CONFIG.bind_addr, CONFIG.app_env);
     if CONFIG.enable_docs {
-        tracing::info!("API docs (Scalar): http://localhost::3000/scalar");
+        tracing::info!("API docs (Scalar): http://localhost:3000/scalar");
         tracing::info!("API docs (Scalar): http://{}/scalar", CONFIG.bind_addr);
     } else {
         tracing::info!("API docs disabled (set ENABLE_DOCS=true to enable)");
