@@ -1,3 +1,9 @@
 /target
 .env
 *.db
+
+# admin 前端
+node_modules/
+packages/admin/dist/
+packages/admin/openapi.json
+packages/admin/src/services/
