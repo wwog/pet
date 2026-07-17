@@ -59,6 +59,10 @@ async fn main() {
 
     let state = Arc::new(AppState { db: database });
 
+    auth::seed::ensure_super_admin(&state)
+        .await
+        .expect("failed to seed super admin");
+
     let (router, api) = OpenApiRouter::with_openapi(ApiDoc::openapi())
         .merge(auth::router())
         .split_for_parts();

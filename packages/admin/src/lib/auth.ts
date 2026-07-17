@@ -1,5 +1,4 @@
-// 临时 mock 认证：首版没有后台专属登录接口，本地用 localStorage 存一个开发 token。
-// 真实 admin 登录接口就绪后，替换此模块的实现即可，调用方接口保持不变。
+// 认证 token 管理：登录成功后由 login.tsx 写入，http/services 拦截器读取注入请求头。
 
 const TOKEN_KEY = 'pet_admin_dev_token';
 
@@ -19,5 +18,3 @@ export function clearAuthToken(): void {
 export function isAuthenticated(): boolean {
   return getAuthToken() !== null;
 }
-
-export const DEV_MOCK_TOKEN = 'dev-mock-token';

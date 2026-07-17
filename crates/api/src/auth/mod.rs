@@ -7,6 +7,7 @@ pub mod dto;
 pub mod handler;
 pub mod jwt;
 pub mod middleware;
+pub mod seed;
 
 pub fn router() -> OpenApiRouter<SharedState> {
     OpenApiRouter::new()

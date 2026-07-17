@@ -56,7 +56,7 @@ fn validate_nickname(nickname: &str) -> Result<(), AppError> {
     Ok(())
 }
 
-fn hash_password(password: &str) -> Result<String, AppError> {
+pub(crate) fn hash_password(password: &str) -> Result<String, AppError> {
     let salt = SaltString::generate(&mut OsRng);
     let hash = Argon2::default()
         .hash_password(password.as_bytes(), &salt)
@@ -279,4 +279,15 @@ pub async fn get_me(
             created_at: user.created_at.to_rfc3339(),
         },
     }))
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::auth::handler::hash_password;
+
+    #[test]
+    fn get_hash_password(){
+        let hash = hash_password("").unwrap();
+        println!("hash is {hash}")
+    }
 }
