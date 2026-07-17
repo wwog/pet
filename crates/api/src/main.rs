@@ -18,6 +18,29 @@ use openapi::ApiDoc;
 
 #[tokio::main]
 async fn main() {
+    // 支持 `--export-openapi [path]`：仅导出 OpenAPI JSON 到文件后退出，不启动服务器
+    let args: Vec<String> = std::env::args().collect();
+    if args.iter().any(|arg| arg == "--export-openapi") {
+        let out_path: String = args
+            .iter()
+            .position(|arg| arg == "--export-openapi")
+            .and_then(|idx| args.get(idx + 1))
+            .filter(|s| !s.starts_with("--"))
+            .cloned()
+            .unwrap_or_else(|| "packages/admin/openapi.json".into());
+        // 走完整 router 合并，才能收集各模块 #[utoipa::path] 注解
+        let (_, api) = OpenApiRouter::with_openapi(ApiDoc::openapi())
+            .merge(auth::router())
+            .split_for_parts();
+        let json = api
+            .to_pretty_json()
+            .unwrap_or_else(|e| panic!("failed to serialize openapi: {e}"));
+        std::fs::write(&out_path, json)
+            .unwrap_or_else(|e| panic!("failed to write {out_path}: {e}"));
+        eprintln!("info: openapi spec exported to {out_path}");
+        return;
+    }
+
     tracing_subscriber::fmt()
         .with_env_filter(
             EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info")),
