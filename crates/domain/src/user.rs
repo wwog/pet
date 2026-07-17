@@ -5,6 +5,36 @@ use uuid::Uuid;
 
 use crate::app::AppResult;
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+pub enum Role {
+    User,
+    Admin,
+    SuperAdmin,
+}
+
+impl Role {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Role::User => "user",
+            Role::Admin => "admin",
+            Role::SuperAdmin => "super_admin",
+        }
+    }
+
+    pub fn from_str(s: &str) -> Option<Self> {
+        match s {
+            "user" => Some(Role::User),
+            "admin" => Some(Role::Admin),
+            "super_admin" => Some(Role::SuperAdmin),
+            _ => None,
+        }
+    }
+
+    pub fn is_admin(&self) -> bool {
+        matches!(self, Role::Admin | Role::SuperAdmin)
+    }
+}
+
 /// 用户实体。
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct User {
@@ -17,6 +47,7 @@ pub struct User {
     pub avatar: Option<String>,
     /// 微信 OpenID（唯一，预留）
     pub wechat_open_id: Option<String>,
+    pub role: Role,
     pub created_at: DateTime<Utc>,
 }
 
@@ -37,6 +68,7 @@ pub trait UserRepository: Send + Sync {
     async fn find_by_id(&self, id: Uuid) -> AppResult<Option<User>>;
     async fn find_by_account(&self, account: &str) -> AppResult<Option<User>>;
     async fn find_by_wechat_open_id(&self, open_id: &str) -> AppResult<Option<User>>;
+    async fn find_by_role(&self, role: Role) -> AppResult<Vec<User>>;
     async fn update_nickname(&self, id: Uuid, nickname: &str) -> AppResult<()>;
     async fn update_avatar(&self, id: Uuid, avatar: &str) -> AppResult<()>;
     async fn delete(&self, id: Uuid) -> AppResult<()>;

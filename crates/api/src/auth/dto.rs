@@ -14,6 +14,7 @@ pub struct RegisterResponse {
     pub user_id: Uuid,
     pub account: String,
     pub nickname: String,
+    pub role: String,
     pub created_at: String,
 }
 
@@ -29,6 +30,7 @@ pub struct UserInfo {
     pub account: String,
     pub nickname: Option<String>,
     pub avatar: Option<String>,
+    pub role: String,
 }
 
 #[derive(Debug, Serialize, ToSchema)]
@@ -56,5 +58,6 @@ pub struct MeResponse {
     pub account: String,
     pub nickname: Option<String>,
     pub avatar: Option<String>,
+    pub role: String,
     pub created_at: String,
 }

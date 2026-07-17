@@ -23,6 +23,9 @@ pub struct User {
     #[unique]
     pub wechat_open_id: Option<String>,
 
+    #[index]
+    pub role: String,
+
     pub created_at: String,
 }
 
@@ -61,6 +64,7 @@ impl From<User> for domain_user::User {
             nickname: u.nickname,
             avatar: u.avatar,
             wechat_open_id: u.wechat_open_id,
+            role: domain_user::Role::from_str(&u.role).unwrap_or(domain_user::Role::User),
             created_at: parse_datetime(&u.created_at),
         }
     }
@@ -112,6 +116,7 @@ impl domain_user::UserRepository for UserRepository<'_> {
             nickname: user.nickname,
             avatar: user.avatar,
             wechat_open_id: user.wechat_open_id,
+            role: user.role.as_str().to_owned(),
             created_at: now,
         })
         .exec(&mut db)
@@ -148,6 +153,15 @@ impl domain_user::UserRepository for UserRepository<'_> {
             .await
             .map_err(|e| AppError::Database(e.to_string()))?;
         Ok(user.map(Into::into))
+    }
+
+    async fn find_by_role(&self, role: domain_user::Role) -> AppResult<Vec<domain_user::User>> {
+        let mut db = self.db.clone();
+        let users = User::filter_by_role(role.as_str())
+            .exec(&mut db)
+            .await
+            .map_err(|e| AppError::Database(e.to_string()))?;
+        Ok(users.into_iter().map(Into::into).collect())
     }
 
     async fn update_nickname(&self, id: Uuid, nickname: &str) -> AppResult<()> {

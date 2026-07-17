@@ -2,6 +2,7 @@ use axum::{
     extract::FromRequestParts,
     http::{request::Parts, StatusCode},
 };
+use domain::user::Role;
 use uuid::Uuid;
 
 use super::jwt;
@@ -9,6 +10,7 @@ use crate::error::ErrorResponse;
 
 pub struct AuthenticatedUser {
     pub user_id: Uuid,
+    pub role: Role,
 }
 
 impl<S> FromRequestParts<S> for AuthenticatedUser
@@ -65,6 +67,8 @@ where
             )
         })?;
 
-        Ok(AuthenticatedUser { user_id })
+        let role = Role::from_str(&claims.role).unwrap_or(Role::User);
+
+        Ok(AuthenticatedUser { user_id, role })
     }
 }

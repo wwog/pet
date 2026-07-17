@@ -107,6 +107,7 @@ pub async fn register(
         nickname: Some(body.nickname.clone()),
         avatar: None,
         wechat_open_id: None,
+        role: domain::user::Role::User,
         created_at: now,
     };
     let saved = user_repo.create(user).await?;
@@ -120,6 +121,7 @@ pub async fn register(
                 user_id: saved.id,
                 account: saved.account,
                 nickname: saved.nickname.unwrap_or_default(),
+                role: saved.role.as_str().to_owned(),
                 created_at: saved.created_at.to_rfc3339(),
             },
         }),
@@ -151,7 +153,7 @@ pub async fn login(
         return Err(AppError::Auth("invalid password".into()).into());
     }
 
-    let access_token = jwt::create_jwt(user.id)
+    let access_token = jwt::create_jwt(user.id, user.role)
         .map_err(|e| AppError::Internal(format!("jwt creation failed: {e}")))?;
     let refresh_token = Uuid::new_v4().to_string();
     let expires_at = Utc::now() + chrono::Duration::days(30);
@@ -180,6 +182,7 @@ pub async fn login(
                 account: user.account,
                 nickname: user.nickname,
                 avatar: user.avatar,
+                role: user.role.as_str().to_owned(),
             },
         },
     }))
@@ -212,7 +215,13 @@ pub async fn refresh_token(
 
     session_repo.delete(session.id).await?;
 
-    let access_token = jwt::create_jwt(session.user_id)
+    let user_repo = state.db.user_repository();
+    let user = user_repo
+        .find_by_id(session.user_id)
+        .await?
+        .ok_or_else(|| AppError::NotFound("user not found".into()))?;
+
+    let access_token = jwt::create_jwt(session.user_id, user.role)
         .map_err(|e| AppError::Internal(format!("jwt creation failed: {e}")))?;
     let refresh_token = Uuid::new_v4().to_string();
     let expires_at = Utc::now() + chrono::Duration::days(30);
@@ -250,7 +259,7 @@ pub async fn refresh_token(
 )]
 pub async fn get_me(
     State(state): State<SharedState>,
-    AuthenticatedUser { user_id }: AuthenticatedUser,
+    AuthenticatedUser { user_id, .. }: AuthenticatedUser,
 ) -> Result<Json<ApiResponse<MeResponse>>, ApiError> {
     let user_repo = state.db.user_repository();
     let user = user_repo
@@ -266,6 +275,7 @@ pub async fn get_me(
             account: user.account,
             nickname: user.nickname,
             avatar: user.avatar,
+            role: user.role.as_str().to_owned(),
             created_at: user.created_at.to_rfc3339(),
         },
     }))
