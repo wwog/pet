@@ -14,8 +14,8 @@
 - `packages/admin` 脚手架：React 18 + TS + Vite + ProComponents
 - 后端 `crates/api` 增加 `--export-openapi` 导出能力（一次性改造）
 - OpenAPI → TanStack Query hooks 自动生成链路（@hey-api/openapi-ts）
-- 登录页（auth 模块：手机号验证码）+ 权限路由守卫 + ProLayout 动态菜单
-- 一个示例业务模块：pet 宠物档案 ProTable，走通"列表 → 详情 → 增删改"全链路
+- 登录页（account + password）+ 权限路由守卫 + ProLayout 动态菜单
+- 一个示例业务模块：账号管理（注册新账号 ProForm + 当前用户信息卡片），走通"表单提交 + 数据展示 + 鉴权"全链路
 - 根 `package.json` 代理脚本：`admin:dev`、`admin:build`、`gen:openapi`、`gen:api`
 
 ### 本期不包含
@@ -95,7 +95,7 @@ ProTable → useListPetsQuery() → TanStack Query → client-fetch 拦截器注
 
 ## 权限与登录
 
-- 登录页调用 `POST /auth/sms/send` + `POST /auth/sms/login`，返回 `access_token` + `refresh_token`
+- 登录页调用 `POST /auth/login`（account + password），返回 `access_token` + `refresh_token` + `UserInfo`
 - token 存于 zustand store，持久化到 localStorage
 - `request.ts`（client-fetch 配置）：每个请求自动注入 `Authorization: Bearer <token>`
 - `GET /auth/me` 获取当前用户 + 家庭列表，存入 store
@@ -122,8 +122,16 @@ ProTable → useListPetsQuery() → TanStack Query → client-fetch 拦截器注
 - `pnpm --filter admin build` 构建通过
 - `cargo run -p api -- --export-openapi` 成功写出 openapi.json
 - `pnpm run gen:api` 成功生成 services
-- 登录页可走通验证码登录 → 跳转首页
-- Pet List 页面可展示后端真实数据
+- 登录页可走通 account+password 登录 → 跳转首页
+- 账号管理页：ProForm 注册新账号成功；当前用户信息卡片展示 `/auth/me` 真实数据
+
+## 后端真实接口（写作时依据）
+
+当前 `crates/api` 仅有 auth 模块，4 个接口（以 utoipa 注解为准，非 api_doc Markdown）：
+- `POST /auth/register` — body: `{account, password, nickname}`
+- `POST /auth/login` — body: `{account, password}` → `{access_token, refresh_token, expires_in, user}`
+- `POST /auth/token/refresh` — body: `{refresh_token}`
+- `GET /auth/me` — Bearer 鉴权 → `{user_id, account, nickname, avatar, role, created_at}`
 
 ## 关键约束
 
