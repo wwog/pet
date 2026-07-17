@@ -1,0 +1,12 @@
+{
+  "name": "puppy-life-os",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:admin": "pnpm -F @pet/admin run dev",
+    "build:admin": "pnpm -F @pet/admin run build",
+    "gen:api": "cargo run -p api -- --export-openapi && pnpm -F @pet/admin run gen:api"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

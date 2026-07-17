@@ -1,0 +1,39 @@
+{
+  "name": "@pet/admin",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -n vite,gen -c blue,green \"vite\" \"pnpm run watch:api\"",
+    "gen:api": "openapi-ts -i openapi.json -o src/services/gen",
+    "watch:api": "node -e \"const fs=require('fs');const f='openapi.json';let t=0;if(!fs.existsSync(f)){process.exit(0)}fs.watch(f,()=>{clearTimeout(t);t=setTimeout(()=>{console.log('[gen] openapi.json changed, regenerating...');require('child_process').execSync('pnpm run gen:api',{stdio:'inherit'})},300)})\"",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hey-api/client-fetch": "^0.13.1",
+    "@tanstack/react-query": "^5.101.2",
+    "@tanstack/react-router": "^1.170.18",
+    "@tanstack/react-store": "^0.11.0",
+    "@tanstack/react-table": "^8.21.3",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.99.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/router-devtools": "^1.167.0",
+    "@tanstack/router-plugin": "^1.168.20",
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "concurrently": "^10.0.3",
+    "postcss": "^8.5.19",
+    "autoprefixer": "^10.5.4",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
+    "vite": "^8.1.5"
+  }
+}
