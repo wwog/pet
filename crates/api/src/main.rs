@@ -10,6 +10,7 @@ mod auth;
 mod config;
 mod error;
 mod openapi;
+mod utils;
 
 use app_state::AppState;
 use config::CONFIG;
@@ -45,15 +46,22 @@ async fn main() {
         router
     }
     .with_state(state);
- 
-    let listener = tokio::net::TcpListener::bind(&CONFIG.bind_addr)
+
+    let port = CONFIG.port;
+    let addr = utils::url::bind_addr(port);
+
+    let listener = tokio::net::TcpListener::bind(&addr)
         .await
         .expect("failed to bind address");
 
-    tracing::info!("listening on {} (env: {})", CONFIG.bind_addr, CONFIG.app_env);
+    let lan_addr = utils::url::local_addr(port);
+    tracing::info!("listening on http://{} (env: {})", lan_addr.as_deref().unwrap_or("unknown"), CONFIG.app_env);
+    tracing::info!("listening on http://localhost:{port}");
     if CONFIG.enable_docs {
-        tracing::info!("API docs (Scalar): http://localhost:3000/scalar");
-        tracing::info!("API docs (Scalar): http://{}/scalar", CONFIG.bind_addr);
+        tracing::info!("API docs (Scalar): http://localhost:{port}/scalar");
+        if let Some(ref addr) = lan_addr {
+            tracing::info!("API docs (Scalar): http://{addr}/scalar");
+        }
     } else {
         tracing::info!("API docs disabled (set ENABLE_DOCS=true to enable)");
     }
