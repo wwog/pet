@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
-import { login } from '@/services';
-import { setAuthToken } from '@/lib/auth';
+import { request } from '@/lib/http';
+import { setAuthToken, setUserRole } from '@/lib/auth';
 
 export const Route = createFileRoute('/login')({
   component: LoginPage,
@@ -11,6 +11,23 @@ interface FieldError {
   account?: string;
   password?: string;
   form?: string;
+}
+
+interface LoginResponse {
+  code: number;
+  message: string;
+  data: {
+    access_token: string;
+    refresh_token: string;
+    expires_in: number;
+    user: {
+      user_id: string;
+      account: string;
+      nickname: string | null;
+      avatar: string | null;
+      role: string;
+    };
+  };
 }
 
 function LoginPage() {
@@ -39,20 +56,21 @@ function LoginPage() {
     setSubmitting(true);
     setErrors({});
 
-    const result = await login({
-      body: { account: account.trim(), password },
-    });
+    try {
+      const result = await request<LoginResponse>('/admin/login', {
+        method: 'POST',
+        body: { account: account.trim(), password },
+      });
 
-    if (result.error || !result.data) {
+      setAuthToken(result.data.data.access_token);
+      setUserRole(result.data.data.user.role);
+      void navigate({ to: '/dashboard' });
+    } catch (err: unknown) {
       const message =
-        result.error?.message ?? '登录失败，请稍后重试';
+        err instanceof Error ? err.message : '登录失败，请稍后重试';
       setErrors({ form: message });
       setSubmitting(false);
-      return;
     }
-
-    setAuthToken(result.data.data.access_token);
-    void navigate({ to: '/dashboard' });
   }
 
   return (

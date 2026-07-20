@@ -1,4 +1,4 @@
-import { getAuthToken, clearAuthToken } from './auth';
+import { getAuthToken, clearAuth } from './auth';
 
 export class ApiError extends Error {
   constructor(
@@ -44,7 +44,7 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
   });
 
   if (res.status === 401) {
-    clearAuthToken();
+    clearAuth();
     if (typeof window !== 'undefined' && window.location.pathname !== '/login') {
       window.location.assign('/login');
     }

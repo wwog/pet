@@ -7,6 +7,8 @@ pub enum AppError {
     NotFound(String),
     #[error("unauthorized: {0}")]
     Unauthorized(String),
+    #[error("forbidden: {0}")]
+    Forbidden(String),
     #[error("conflict: {0}")]
     Conflict(String),
     #[error("validation: {0}")]

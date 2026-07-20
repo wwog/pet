@@ -42,16 +42,9 @@ pub struct Breed {
 
     pub species: String,
     pub name: String,
-    pub pinyin: String,
-    pub initial: String,
+    pub name_cn: String,
     pub size_category: Option<String>,
     pub coat_type: Option<String>,
-    pub standard_weight_min: Option<f64>,
-    pub standard_weight_max: Option<f64>,
-    pub life_span_min: Option<i32>,
-    pub life_span_max: Option<i32>,
-    pub exercise_needs: Option<String>,
-    pub icon: Option<String>,
     pub origin: Option<String>,
 }
 
@@ -129,16 +122,9 @@ impl From<Breed> for domain_pet::Breed {
             id: b.id,
             species: Species::from_str(&b.species).unwrap_or(Species::Dog),
             name: b.name,
-            pinyin: b.pinyin,
-            initial: b.initial.chars().next().unwrap_or('?').to_string(),
+            name_cn: b.name_cn,
             size_category: b.size_category,
             coat_type: b.coat_type,
-            standard_weight_min: b.standard_weight_min,
-            standard_weight_max: b.standard_weight_max,
-            life_span_min: b.life_span_min,
-            life_span_max: b.life_span_max,
-            exercise_needs: b.exercise_needs,
-            icon: b.icon,
             origin: b.origin,
         }
     }
@@ -324,8 +310,7 @@ impl domain_pet::BreedRepository for BreedRepository<'_> {
                 Breed::fields()
                     .name()
                     .like(like_pat.clone())
-                    .or(Breed::fields().pinyin().like(like_pat.clone()))
-                    .or(Breed::fields().initial().eq(lower.clone())),
+                    .or(Breed::fields().name_cn().like(like_pat)),
             );
         }
 
@@ -378,16 +363,9 @@ impl domain_pet::BreedRepository for BreedRepository<'_> {
                 id: breed.id.clone(),
                 species: breed.species.as_str().to_owned(),
                 name: breed.name.clone(),
-                pinyin: breed.pinyin.clone(),
-                initial: breed.initial.clone(),
+                name_cn: breed.name_cn.clone(),
                 size_category: breed.size_category.clone(),
                 coat_type: breed.coat_type.clone(),
-                standard_weight_min: breed.standard_weight_min,
-                standard_weight_max: breed.standard_weight_max,
-                life_span_min: breed.life_span_min,
-                life_span_max: breed.life_span_max,
-                exercise_needs: breed.exercise_needs.clone(),
-                icon: breed.icon.clone(),
                 origin: breed.origin.clone(),
             })
             .exec(&mut db)

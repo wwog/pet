@@ -6,7 +6,7 @@
 //! 复用 db crate 的 `build_db` 注册全部模型，先应用待执行迁移确保 schema 就绪，
 //! 再调用 `seed::breeds::seed_breeds` 写入。数据库 URL 与 server 保持一致。
 //!
-//! 幂等：已存在的 id 跳过，不会覆盖运营期补充的 `pinyin` / `initial` / 数值字段。
+//! 幂等：已存在的 id 跳过，不会重复写入。
 
 use toasty_cli::{Config, ToastyCli};
 

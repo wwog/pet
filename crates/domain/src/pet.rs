@@ -168,23 +168,16 @@ pub struct Pet {
 
 /// 宠物品种库。多物种共用一张表,通过 `species` 区分。
 ///
-/// 犬种通常具备标准体重、寿命、运动需求等数据;猫/兔/鸟等物种多数无标准化数据,
-/// 这些字段统一为 `Option`,允许为空。
+/// 数据来自 AKC (狗) / CFA (猫) 官方品种列表,仅包含核心字段。
+/// 前端展示用 `name` (英文) 或 `name_cn` (中文)。
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Breed {
     pub id: String,
     pub species: Species,
     pub name: String,
-    pub pinyin: String,
-    pub initial: String,
+    pub name_cn: String,
     pub size_category: Option<String>,
     pub coat_type: Option<String>,
-    pub standard_weight_min: Option<f64>,
-    pub standard_weight_max: Option<f64>,
-    pub life_span_min: Option<i32>,
-    pub life_span_max: Option<i32>,
-    pub exercise_needs: Option<String>,
-    pub icon: Option<String>,
     pub origin: Option<String>,
 }
 
@@ -226,8 +219,7 @@ pub trait BreedRepository: Send + Sync {
 
     /// 幂等地批量写入品种 seed 数据。
     ///
-    /// 已存在的 id 跳过，避免覆盖运营期后续补充的 `pinyin`/`initial`/数值字段；
-    /// 不存在的则插入。返回 (inserted, skipped) 计数。
+    /// 已存在的 id 跳过；不存在的则插入。返回 (inserted, skipped) 计数。
     async fn upsert_many(&self, breeds: Vec<Breed>) -> AppResult<(usize, usize)>;
 }
 

@@ -190,6 +190,72 @@ pub async fn login(
 
 #[utoipa::path(
     post,
+    path = "/login",
+    tag = "auth",
+    request_body = LoginRequest,
+    responses(
+        (status = 200, description = "管理员登录成功", body = ApiResponse<LoginResponse>),
+        (status = 401, description = "密码错误", body = ErrorResponse),
+        (status = 403, description = "非超级管理员", body = ErrorResponse),
+        (status = 404, description = "账号不存在", body = ErrorResponse),
+    )
+)]
+pub async fn admin_login(
+    State(state): State<SharedState>,
+    Json(body): Json<LoginRequest>,
+) -> Result<Json<ApiResponse<LoginResponse>>, ApiError> {
+    let user_repo = state.db.user_repository();
+    let user = user_repo
+        .find_by_account(&body.account)
+        .await?
+        .ok_or_else(|| AppError::NotFound("account not found".into()))?;
+
+    if !verify_password(&body.password, &user.password_hash)? {
+        return Err(AppError::Auth("invalid password".into()).into());
+    }
+
+    // 仅超级管理员可登录管理后台
+    if user.role != domain::user::Role::SuperAdmin {
+        return Err(AppError::Forbidden("仅超级管理员可登录后台".into()).into());
+    }
+
+    let access_token = jwt::create_jwt(user.id, user.role)
+        .map_err(|e| AppError::Internal(format!("jwt creation failed: {e}")))?;
+    let refresh_token = Uuid::new_v4().to_string();
+    let expires_at = Utc::now() + chrono::Duration::days(30);
+
+    let session_repo = state.db.session_repository();
+    session_repo
+        .create(domain::user::UserSession {
+            id: Uuid::new_v4(),
+            user_id: user.id,
+            access_token: access_token.clone(),
+            refresh_token: refresh_token.clone(),
+            expires_at,
+            device_id: None,
+        })
+        .await?;
+
+    Ok(Json(ApiResponse {
+        code: 0,
+        message: "success".into(),
+        data: LoginResponse {
+            access_token,
+            refresh_token,
+            expires_in: 7200,
+            user: UserInfo {
+                user_id: user.id,
+                account: user.account,
+                nickname: user.nickname,
+                avatar: user.avatar,
+                role: user.role.as_str().to_owned(),
+            },
+        },
+    }))
+}
+
+#[utoipa::path(
+    post,
     path = "/auth/token/refresh",
     tag = "auth",
     request_body = RefreshRequest,

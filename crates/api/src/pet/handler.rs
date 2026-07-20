@@ -190,13 +190,9 @@ async fn build_pet_detail(
         birth_month: pet.birth_month,
         breed_id: pet.breed_id,
         breed_name: breed.as_ref().map(|b| b.name.clone()),
+        breed_name_cn: breed.as_ref().map(|b| b.name_cn.clone()),
         breed_size: breed.as_ref().and_then(|b| b.size_category.clone()),
         breed_coat_type: breed.as_ref().and_then(|b| b.coat_type.clone()),
-        standard_weight_min: breed.as_ref().and_then(|b| b.standard_weight_min),
-        standard_weight_max: breed.as_ref().and_then(|b| b.standard_weight_max),
-        life_span_min: breed.as_ref().and_then(|b| b.life_span_min),
-        life_span_max: breed.as_ref().and_then(|b| b.life_span_max),
-        exercise_needs: breed.as_ref().and_then(|b| b.exercise_needs.clone()),
         coat_color: pet.coat_color,
         coat_pattern: pet.coat_pattern,
         neuter_status: pet.neuter_status.as_str().to_owned(),
@@ -664,24 +660,17 @@ pub async fn list_pet_breeds(
         )
         .await?;
 
-    let list = breeds
-        .into_iter()
-        .map(|breed| BreedDto {
-            breed_id: breed.id,
-            name: breed.name,
-            pinyin: breed.pinyin,
-            initial: breed.initial,
-            size_category: breed.size_category,
-            coat_type: breed.coat_type,
-            standard_weight_min: breed.standard_weight_min,
-            standard_weight_max: breed.standard_weight_max,
-            life_span_min: breed.life_span_min,
-            life_span_max: breed.life_span_max,
-            exercise_needs: breed.exercise_needs,
-            icon: breed.icon,
-            origin: breed.origin,
-        })
-        .collect::<Vec<_>>();
+	    let list = breeds
+	        .into_iter()
+	        .map(|breed| BreedDto {
+	            breed_id: breed.id,
+	            name: breed.name,
+	            name_cn: breed.name_cn,
+	            size_category: breed.size_category,
+	            coat_type: breed.coat_type,
+	            origin: breed.origin,
+	        })
+	        .collect::<Vec<_>>();
 
     let has_more = (page as u64) * (page_size as u64) < total;
 

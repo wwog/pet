@@ -72,3 +72,36 @@ where
         Ok(AuthenticatedUser { user_id, role })
     }
 }
+
+/// 超级管理员提取器 — 验证 JWT 并确保角色为 SuperAdmin。
+///
+/// 用于管理后台专属 API 端点，返回 403 如果用户不是超级管理员。
+pub struct SuperAdminUser {
+    pub user_id: Uuid,
+}
+
+impl<S> FromRequestParts<S> for SuperAdminUser
+where
+    S: Send + Sync,
+{
+    type Rejection = (StatusCode, axum::Json<ErrorResponse>);
+
+    async fn from_request_parts(parts: &mut Parts, _state: &S) -> Result<Self, Self::Rejection> {
+        // 先复用 AuthenticatedUser 的 JWT 验证逻辑
+        let authed = AuthenticatedUser::from_request_parts(parts, _state).await?;
+
+        if authed.role != Role::SuperAdmin {
+            return Err((
+                StatusCode::FORBIDDEN,
+                axum::Json(ErrorResponse {
+                    code: 1008,
+                    message: "仅超级管理员可执行此操作".into(),
+                }),
+            ));
+        }
+
+        Ok(SuperAdminUser {
+            user_id: authed.user_id,
+        })
+    }
+}

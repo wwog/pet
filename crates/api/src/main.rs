@@ -11,6 +11,7 @@ mod config;
 mod error;
 mod openapi;
 mod pet;
+mod routes;
 mod seed;
 mod utils;
 
@@ -32,8 +33,9 @@ async fn main() {
             .unwrap_or_else(|| "packages/admin/openapi.json".into());
         // 走完整 router 合并，才能收集各模块 #[utoipa::path] 注解
         let (_, api) = OpenApiRouter::with_openapi(ApiDoc::openapi())
-            .merge(auth::router())
-            .merge(pet::router())
+            .nest("/admin", routes::admin_router())
+            .nest("/app", routes::app_router())
+            .nest("/common", routes::common_router())
             .split_for_parts();
         let json = api
             .to_pretty_json()
@@ -81,8 +83,9 @@ async fn main() {
         .expect("failed to seed breeds");
 
     let (router, api) = OpenApiRouter::with_openapi(ApiDoc::openapi())
-        .merge(auth::router())
-        .merge(pet::router())
+        .nest("/admin", routes::admin_router())
+        .nest("/app", routes::app_router())
+        .nest("/common", routes::common_router())
         .split_for_parts();
 
     let app = if CONFIG.enable_docs {

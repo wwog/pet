@@ -49,6 +49,13 @@ impl IntoResponse for ApiError {
                     message: msg.clone(),
                 },
             ),
+            AppError::Forbidden(msg) => (
+                StatusCode::FORBIDDEN,
+                ErrorResponse {
+                    code: 1008,
+                    message: msg.clone(),
+                },
+            ),
             AppError::Auth(msg) => (
                 StatusCode::UNAUTHORIZED,
                 ErrorResponse {
