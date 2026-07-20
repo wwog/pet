@@ -3,7 +3,6 @@
     "id": "dog.affenpinscher",
     "species": "dog",
     "name": "Affenpinscher",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "wire",
@@ -13,13 +12,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "艾芬笃宾犬"
   },
   {
     "id": "dog.afghan-hound",
     "species": "dog",
     "name": "Afghan Hound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "long",
@@ -29,13 +28,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Afghanistan"
+    "origin": "Afghanistan",
+    "name_cn": "阿富汗猎犬"
   },
   {
     "id": "dog.airedale-terrier",
     "species": "dog",
     "name": "Airedale Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "wire",
@@ -45,13 +44,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "万能梗"
   },
   {
     "id": "dog.akita",
     "species": "dog",
     "name": "Akita",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -61,13 +60,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "秋田犬"
   },
   {
     "id": "dog.alaskan-klee-kai",
     "species": "dog",
     "name": "Alaskan Klee Kai",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -77,13 +76,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "阿拉斯加克利凯犬"
   },
   {
     "id": "dog.alaskan-malamute",
     "species": "dog",
     "name": "Alaskan Malamute",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -93,13 +92,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Alaska"
+    "origin": "Alaska",
+    "name_cn": "阿拉斯加雪橇犬"
   },
   {
     "id": "dog.american-bulldog",
     "species": "dog",
     "name": "American Bulldog",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -109,13 +108,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "美国斗牛犬"
   },
   {
     "id": "dog.american-english-coonhound",
     "species": "dog",
     "name": "American English Coonhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -125,13 +124,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "美国英国猎浣熊犬"
   },
   {
     "id": "dog.american-eskimo-dog",
     "species": "dog",
     "name": "American Eskimo Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -141,13 +140,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "美国爱斯基摩犬"
   },
   {
     "id": "dog.american-foxhound",
     "species": "dog",
     "name": "American Foxhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -157,13 +156,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "美国猎狐犬"
   },
   {
     "id": "dog.american-hairless-terrier",
     "species": "dog",
     "name": "American Hairless Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "hairless",
@@ -173,13 +172,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "美国无毛梗"
   },
   {
     "id": "dog.american-leopard-hound",
     "species": "dog",
     "name": "American Leopard Hound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -189,13 +188,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Mexico"
+    "origin": "Mexico",
+    "name_cn": "美国豹猎犬"
   },
   {
     "id": "dog.american-staffordshire-terrier",
     "species": "dog",
     "name": "American Staffordshire Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -205,13 +204,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "美国斯塔福德郡梗"
   },
   {
     "id": "dog.american-water-spaniel",
     "species": "dog",
     "name": "American Water Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "curly",
@@ -221,13 +220,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "美国水猎犬"
   },
   {
     "id": "dog.anatolian-shepherd-dog",
     "species": "dog",
     "name": "Anatolian Shepherd Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -237,13 +236,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Turkey"
+    "origin": "Turkey",
+    "name_cn": "安纳托利亚牧羊犬"
   },
   {
     "id": "dog.appenzeller-sennenhund",
     "species": "dog",
     "name": "Appenzeller Sennenhund",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -253,13 +252,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Switzerland"
+    "origin": "Switzerland",
+    "name_cn": "阿彭策尔山地犬"
   },
   {
     "id": "dog.australian-cattle-dog",
     "species": "dog",
     "name": "Australian Cattle Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -269,13 +268,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Australia"
+    "origin": "Australia",
+    "name_cn": "澳大利亚牧牛犬"
   },
   {
     "id": "dog.australian-kelpie",
     "species": "dog",
     "name": "Australian Kelpie",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -285,13 +284,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "澳大利亚卡尔比犬"
   },
   {
     "id": "dog.australian-shepherd",
     "species": "dog",
     "name": "Australian Shepherd",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -301,13 +300,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Australia"
+    "origin": "Australia",
+    "name_cn": "澳大利亚牧羊犬"
   },
   {
     "id": "dog.australian-stumpy-tail-cattle-dog",
     "species": "dog",
     "name": "Australian Stumpy Tail Cattle Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -317,13 +316,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Australia"
+    "origin": "Australia",
+    "name_cn": "澳大利亚短尾牧牛犬"
   },
   {
     "id": "dog.australian-terrier",
     "species": "dog",
     "name": "Australian Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -333,13 +332,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Australia"
+    "origin": "Australia",
+    "name_cn": "澳大利亚梗"
   },
   {
     "id": "dog.azawakh",
     "species": "dog",
     "name": "Azawakh",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -349,13 +348,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Sahel Region"
+    "origin": "Sahel Region",
+    "name_cn": "阿扎瓦克犬"
   },
   {
     "id": "dog.barbado-da-terceira",
     "species": "dog",
     "name": "Barbado da Terceira",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "medium",
@@ -365,13 +364,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Portugal"
+    "origin": "Portugal",
+    "name_cn": "特塞拉岛波达多犬"
   },
   {
     "id": "dog.barbet",
     "species": "dog",
     "name": "Barbet",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "curly",
@@ -381,13 +380,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "法国水犬"
   },
   {
     "id": "dog.basenji",
     "species": "dog",
     "name": "Basenji",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -397,13 +396,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Central Africa"
+    "origin": "Central Africa",
+    "name_cn": "巴辛吉犬"
   },
   {
     "id": "dog.basset-fauve-de-bretagne",
     "species": "dog",
     "name": "Basset Fauve de Bretagne",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "wire",
@@ -413,13 +412,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "布列塔尼黄褐矮腿猎犬"
   },
   {
     "id": "dog.basset-hound",
     "species": "dog",
     "name": "Basset Hound",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -429,13 +428,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "巴吉度猎犬"
   },
   {
     "id": "dog.bavarian-mountain-scent-hound",
     "species": "dog",
     "name": "Bavarian Mountain Scent Hound",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -445,13 +444,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "巴伐利亚山地嗅觉猎犬"
   },
   {
     "id": "dog.beagle",
     "species": "dog",
     "name": "Beagle",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -461,13 +460,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "比格犬"
   },
   {
     "id": "dog.bearded-collie",
     "species": "dog",
     "name": "Bearded Collie",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "long",
@@ -477,13 +476,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Scotland"
+    "origin": "Scotland",
+    "name_cn": "古代长须牧羊犬"
   },
   {
     "id": "dog.beauceron",
     "species": "dog",
     "name": "Beauceron",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -493,13 +492,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "波色龙犬"
   },
   {
     "id": "dog.bedlington-terrier",
     "species": "dog",
     "name": "Bedlington Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "curly",
@@ -509,13 +508,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "贝灵顿梗"
   },
   {
     "id": "dog.belgian-laekenois",
     "species": "dog",
     "name": "Belgian Laekenois",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "wire",
@@ -525,13 +524,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Belgium"
+    "origin": "Belgium",
+    "name_cn": "比利时拉克诺斯犬"
   },
   {
     "id": "dog.belgian-malinois",
     "species": "dog",
     "name": "Belgian Malinois",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -541,13 +540,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Belgium"
+    "origin": "Belgium",
+    "name_cn": "比利时马林诺斯犬"
   },
   {
     "id": "dog.belgian-sheepdog",
     "species": "dog",
     "name": "Belgian Sheepdog",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -557,13 +556,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Belgium"
+    "origin": "Belgium",
+    "name_cn": "比利时牧羊犬"
   },
   {
     "id": "dog.belgian-tervuren",
     "species": "dog",
     "name": "Belgian Tervuren",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -573,13 +572,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Belgium"
+    "origin": "Belgium",
+    "name_cn": "比利时特伏丹犬"
   },
   {
     "id": "dog.bergamasco-sheepdog",
     "species": "dog",
     "name": "Bergamasco Sheepdog",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "curly",
@@ -589,13 +588,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Italy"
+    "origin": "Italy",
+    "name_cn": "贝加马斯科牧羊犬"
   },
   {
     "id": "dog.berger-picard",
     "species": "dog",
     "name": "Berger Picard",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "wire",
@@ -605,13 +604,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "匹卡德牧羊犬"
   },
   {
     "id": "dog.bernese-mountain-dog",
     "species": "dog",
     "name": "Bernese Mountain Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -621,13 +620,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Switzerland"
+    "origin": "Switzerland",
+    "name_cn": "伯恩山犬"
   },
   {
     "id": "dog.bichon-frise",
     "species": "dog",
     "name": "Bichon Frise",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "curly",
@@ -637,13 +636,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "The Mediterranean"
+    "origin": "The Mediterranean",
+    "name_cn": "比熊犬"
   },
   {
     "id": "dog.biewer-terrier",
     "species": "dog",
     "name": "Biewer Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "long",
@@ -653,13 +652,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "比弗梗"
   },
   {
     "id": "dog.black-and-tan-coonhound",
     "species": "dog",
     "name": "Black and Tan Coonhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -669,13 +668,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "黑褐猎浣熊犬"
   },
   {
     "id": "dog.black-russian-terrier",
     "species": "dog",
     "name": "Black Russian Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "curly",
@@ -685,13 +684,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Russia"
+    "origin": "Russia",
+    "name_cn": "黑俄罗斯梗"
   },
   {
     "id": "dog.bloodhound",
     "species": "dog",
     "name": "Bloodhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -701,13 +700,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Western Europe"
+    "origin": "Western Europe",
+    "name_cn": "寻血猎犬"
   },
   {
     "id": "dog.blue-picardy-spaniel",
     "species": "dog",
     "name": "Blue Picardy Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": null,
@@ -717,13 +716,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "蓝色皮卡第猎犬"
   },
   {
     "id": "dog.bluetick-coonhound",
     "species": "dog",
     "name": "Bluetick Coonhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -733,13 +732,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "蓝斑猎浣熊犬"
   },
   {
     "id": "dog.boerboel",
     "species": "dog",
     "name": "Boerboel",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -749,13 +748,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "South Africa"
+    "origin": "South Africa",
+    "name_cn": "南非獒犬"
   },
   {
     "id": "dog.bohemian-shepherd",
     "species": "dog",
     "name": "Bohemian Shepherd",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -765,13 +764,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Czech Republic"
+    "origin": "Czech Republic",
+    "name_cn": "波西米亚牧羊犬"
   },
   {
     "id": "dog.bolognese",
     "species": "dog",
     "name": "Bolognese",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "medium",
@@ -781,13 +780,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Italy"
+    "origin": "Italy",
+    "name_cn": "波洛尼亚犬"
   },
   {
     "id": "dog.border-collie",
     "species": "dog",
     "name": "Border Collie",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "medium",
@@ -797,13 +796,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England/Scotland"
+    "origin": "England/Scotland",
+    "name_cn": "边境牧羊犬"
   },
   {
     "id": "dog.border-terrier",
     "species": "dog",
     "name": "Border Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "wire",
@@ -813,13 +812,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England/Scotland"
+    "origin": "England/Scotland",
+    "name_cn": "边境梗"
   },
   {
     "id": "dog.borzoi",
     "species": "dog",
     "name": "Borzoi",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "curly",
@@ -829,13 +828,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Russia"
+    "origin": "Russia",
+    "name_cn": "俄罗斯猎狼犬"
   },
   {
     "id": "dog.boston-terrier",
     "species": "dog",
     "name": "Boston Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "short",
@@ -845,13 +844,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "波士顿梗"
   },
   {
     "id": "dog.bouvier-de-ardennes",
     "species": "dog",
     "name": "Bouvier des Ardennes",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": null,
@@ -861,13 +860,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": null
+    "origin": null,
+    "name_cn": "阿登牧牛犬"
   },
   {
     "id": "dog.bouvier-des-flandres",
     "species": "dog",
     "name": "Bouvier des Flandres",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -877,13 +876,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Flanders (France, Belgium, Netherlands)"
+    "origin": "Flanders (France, Belgium, Netherlands)",
+    "name_cn": "法兰德斯牧牛犬"
   },
   {
     "id": "dog.boxer",
     "species": "dog",
     "name": "Boxer",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -893,13 +892,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "拳师犬"
   },
   {
     "id": "dog.boykin-spaniel",
     "species": "dog",
     "name": "Boykin Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -909,13 +908,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "博伊金猎犬"
   },
   {
     "id": "dog.bracco-italiano",
     "species": "dog",
     "name": "Bracco Italiano",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -925,13 +924,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Italy"
+    "origin": "Italy",
+    "name_cn": "意大利布拉可犬"
   },
   {
     "id": "dog.braque-du-bourbonnais",
     "species": "dog",
     "name": "Braque du Bourbonnais",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -941,13 +940,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "波旁指示犬"
   },
   {
     "id": "dog.braque-francais-pyrenean",
     "species": "dog",
     "name": "Braque Francais Pyrenean",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -957,13 +956,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "比利牛斯法国指示犬"
   },
   {
     "id": "dog.braque-saint-germain",
     "species": "dog",
     "name": "Braque Saint-Germain",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": null,
@@ -973,13 +972,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "圣日耳曼指示犬"
   },
   {
     "id": "dog.brazilian-terrier",
     "species": "dog",
     "name": "Brazilian Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": null,
@@ -989,13 +988,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Brazil"
+    "origin": "Brazil",
+    "name_cn": "巴西梗"
   },
   {
     "id": "dog.briard",
     "species": "dog",
     "name": "Briard",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "medium",
@@ -1005,13 +1004,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "布里犬"
   },
   {
     "id": "dog.brittany",
     "species": "dog",
     "name": "Brittany",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -1021,13 +1020,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "布列塔尼犬"
   },
   {
     "id": "dog.broholmer",
     "species": "dog",
     "name": "Broholmer",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -1037,13 +1036,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Denmark"
+    "origin": "Denmark",
+    "name_cn": "布罗霍尔默犬"
   },
   {
     "id": "dog.brussels-griffon",
     "species": "dog",
     "name": "Brussels Griffon",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "wire",
@@ -1053,13 +1052,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Belgium"
+    "origin": "Belgium",
+    "name_cn": "布鲁塞尔格里芬犬"
   },
   {
     "id": "dog.bull-terrier",
     "species": "dog",
     "name": "Bull Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -1069,13 +1068,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "牛头梗"
   },
   {
     "id": "dog.bulldog",
     "species": "dog",
     "name": "Bulldog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -1085,13 +1084,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "斗牛犬"
   },
   {
     "id": "dog.bullmastiff",
     "species": "dog",
     "name": "Bullmastiff",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -1101,13 +1100,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "斗牛獒犬"
   },
   {
     "id": "dog.cairn-terrier",
     "species": "dog",
     "name": "Cairn Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "wire",
@@ -1117,13 +1116,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Scotland"
+    "origin": "Scotland",
+    "name_cn": "凯恩梗"
   },
   {
     "id": "dog.calupoh",
     "species": "dog",
     "name": "Calupoh",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": null,
@@ -1133,13 +1132,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Mexico"
+    "origin": "Mexico",
+    "name_cn": "卡卢波犬"
   },
   {
     "id": "dog.canaan-dog",
     "species": "dog",
     "name": "Canaan Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -1149,13 +1148,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Israel"
+    "origin": "Israel",
+    "name_cn": "迦南犬"
   },
   {
     "id": "dog.canadian-eskimo-dog",
     "species": "dog",
     "name": "Canadian Eskimo Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": null,
@@ -1165,13 +1164,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Canada"
+    "origin": "Canada",
+    "name_cn": "加拿大爱斯基摩犬"
   },
   {
     "id": "dog.cane-corso",
     "species": "dog",
     "name": "Cane Corso",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -1181,13 +1180,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Italy"
+    "origin": "Italy",
+    "name_cn": "卡斯罗犬"
   },
   {
     "id": "dog.cardigan-welsh-corgi",
     "species": "dog",
     "name": "Cardigan Welsh Corgi",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -1197,13 +1196,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Wales"
+    "origin": "Wales",
+    "name_cn": "卡迪根威尔士柯基犬"
   },
   {
     "id": "dog.carolina-dog",
     "species": "dog",
     "name": "Carolina Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -1213,13 +1212,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "卡罗莱纳犬"
   },
   {
     "id": "dog.catahoula-leopard-dog",
     "species": "dog",
     "name": "Catahoula Leopard Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -1229,13 +1228,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "卡塔霍拉豹纹犬"
   },
   {
     "id": "dog.caucasian-shepherd-dog",
     "species": "dog",
     "name": "Caucasian Shepherd Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -1245,13 +1244,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Georgia"
+    "origin": "Georgia",
+    "name_cn": "高加索牧羊犬"
   },
   {
     "id": "dog.cavalier-king-charles-spaniel",
     "species": "dog",
     "name": "Cavalier King Charles Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "long",
@@ -1261,13 +1260,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "骑士查理王小猎犬"
   },
   {
     "id": "dog.central-asian-shepherd-dog",
     "species": "dog",
     "name": "Central Asian Shepherd Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -1277,13 +1276,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Russia"
+    "origin": "Russia",
+    "name_cn": "中亚牧羊犬"
   },
   {
     "id": "dog.cesky-terrier",
     "species": "dog",
     "name": "Cesky Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "long",
@@ -1293,13 +1292,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Czech Republic"
+    "origin": "Czech Republic",
+    "name_cn": "捷克梗"
   },
   {
     "id": "dog.chesapeake-bay-retriever",
     "species": "dog",
     "name": "Chesapeake Bay Retriever",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "wire",
@@ -1309,13 +1308,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "切萨皮克湾寻回犬"
   },
   {
     "id": "dog.chihuahua",
     "species": "dog",
     "name": "Chihuahua",
-    "pinyin": "",
     "initial": "",
     "size_category": "toy",
     "coat_type": "short",
@@ -1325,13 +1324,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Mexican State of Chihuahua"
+    "origin": "Mexican State of Chihuahua",
+    "name_cn": "吉娃娃"
   },
   {
     "id": "dog.chinese-crested",
     "species": "dog",
     "name": "Chinese Crested",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "hairless",
@@ -1341,13 +1340,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Africa/China"
+    "origin": "Africa/China",
+    "name_cn": "中国冠毛犬"
   },
   {
     "id": "dog.chinese-shar-pei",
     "species": "dog",
     "name": "Chinese Shar-Pei",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -1357,13 +1356,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "China"
+    "origin": "China",
+    "name_cn": "中国沙皮犬"
   },
   {
     "id": "dog.chinook",
     "species": "dog",
     "name": "Chinook",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -1373,13 +1372,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "奇努克犬"
   },
   {
     "id": "dog.chow-chow",
     "species": "dog",
     "name": "Chow Chow",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -1389,13 +1388,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "China"
+    "origin": "China",
+    "name_cn": "松狮犬"
   },
   {
     "id": "dog.cirneco-delletna",
     "species": "dog",
     "name": "Cirneco dell'Etna",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -1405,13 +1404,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Sicily"
+    "origin": "Sicily",
+    "name_cn": "埃特纳火山犬"
   },
   {
     "id": "dog.clumber-spaniel",
     "species": "dog",
     "name": "Clumber Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "long",
@@ -1421,13 +1420,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "克伦伯猎犬"
   },
   {
     "id": "dog.cocker-spaniel",
     "species": "dog",
     "name": "Cocker Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "long",
@@ -1437,13 +1436,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "可卡犬"
   },
   {
     "id": "dog.collie",
     "species": "dog",
     "name": "Collie",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "medium",
@@ -1453,13 +1452,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Scotland and Northern England"
+    "origin": "Scotland and Northern England",
+    "name_cn": "柯利牧羊犬"
   },
   {
     "id": "dog.coton-de-tulear",
     "species": "dog",
     "name": "Coton de Tulear",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "medium",
@@ -1469,13 +1468,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Madagascar"
+    "origin": "Madagascar",
+    "name_cn": "图莱亚尔棉毛犬"
   },
   {
     "id": "dog.croatian-sheepdog",
     "species": "dog",
     "name": "Croatian Sheepdog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -1485,13 +1484,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Croatia"
+    "origin": "Croatia",
+    "name_cn": "克罗地亚牧羊犬"
   },
   {
     "id": "dog.curly-coated-retriever",
     "species": "dog",
     "name": "Curly-Coated Retriever",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "curly",
@@ -1501,13 +1500,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "卷毛寻回犬"
   },
   {
     "id": "dog.czechoslovakian-vlciak",
     "species": "dog",
     "name": "Czechoslovakian Vlciak",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "medium",
@@ -1517,13 +1516,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Czechoslovakia"
+    "origin": "Czechoslovakia",
+    "name_cn": "捷克斯洛伐克狼犬"
   },
   {
     "id": "dog.dachshund",
     "species": "dog",
     "name": "Dachshund",
-    "pinyin": "",
     "initial": "",
     "size_category": "toy",
     "coat_type": "short",
@@ -1533,13 +1532,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "腊肠犬"
   },
   {
     "id": "dog.dalmatian",
     "species": "dog",
     "name": "Dalmatian",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -1549,13 +1548,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Dalmatia (today, Croatia)"
+    "origin": "Dalmatia (today, Croatia)",
+    "name_cn": "斑点犬"
   },
   {
     "id": "dog.dandie-dinmont-terrier",
     "species": "dog",
     "name": "Dandie Dinmont Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -1565,13 +1564,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "English-Scottish border"
+    "origin": "English-Scottish border",
+    "name_cn": "丹迪丁蒙梗"
   },
   {
     "id": "dog.danish-swedish-farmdog",
     "species": "dog",
     "name": "Danish-Swedish Farmdog",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "short",
@@ -1581,13 +1580,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Denmark/Sweden"
+    "origin": "Denmark/Sweden",
+    "name_cn": "丹麦瑞典农场犬"
   },
   {
     "id": "dog.deutscher-wachtelhund",
     "species": "dog",
     "name": "Deutscher Wachtelhund",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -1597,13 +1596,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "德国鹌鹑犬"
   },
   {
     "id": "dog.doberman-pinscher",
     "species": "dog",
     "name": "Doberman Pinscher",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -1613,13 +1612,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "杜宾犬"
   },
   {
     "id": "dog.dogo-argentino",
     "species": "dog",
     "name": "Dogo Argentino",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -1629,13 +1628,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Argentina"
+    "origin": "Argentina",
+    "name_cn": "阿根廷杜高犬"
   },
   {
     "id": "dog.dogue-de-bordeaux",
     "species": "dog",
     "name": "Dogue de Bordeaux",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -1645,13 +1644,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "波尔多犬"
   },
   {
     "id": "dog.drentsche-patrijshond",
     "species": "dog",
     "name": "Drentsche Patrijshond",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "medium",
@@ -1661,13 +1660,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "The Netherlands"
+    "origin": "The Netherlands",
+    "name_cn": "荷兰海鸥犬"
   },
   {
     "id": "dog.drever",
     "species": "dog",
     "name": "Drever",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -1677,13 +1676,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Sweden"
+    "origin": "Sweden",
+    "name_cn": "瑞士猎犬"
   },
   {
     "id": "dog.dutch-shepherd",
     "species": "dog",
     "name": "Dutch Shepherd",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -1693,13 +1692,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "The Netherlands"
+    "origin": "The Netherlands",
+    "name_cn": "荷兰牧羊犬"
   },
   {
     "id": "dog.english-cocker-spaniel",
     "species": "dog",
     "name": "English Cocker Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -1709,13 +1708,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "英国可卡犬"
   },
   {
     "id": "dog.english-foxhound",
     "species": "dog",
     "name": "English Foxhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -1725,13 +1724,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "英国猎狐犬"
   },
   {
     "id": "dog.english-setter",
     "species": "dog",
     "name": "English Setter",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "long",
@@ -1741,13 +1740,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "英国雪达犬"
   },
   {
     "id": "dog.english-springer-spaniel",
     "species": "dog",
     "name": "English Springer Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -1757,13 +1756,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "英国史宾格犬"
   },
   {
     "id": "dog.english-toy-spaniel",
     "species": "dog",
     "name": "English Toy Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "long",
@@ -1773,13 +1772,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "英国玩具猎犬"
   },
   {
     "id": "dog.entlebucher-mountain-dog",
     "species": "dog",
     "name": "Entlebucher Mountain Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -1789,13 +1788,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Switzerland"
+    "origin": "Switzerland",
+    "name_cn": "恩特莱布赫山地犬"
   },
   {
     "id": "dog.estrela-mountain-dog",
     "species": "dog",
     "name": "Estrela Mountain Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "medium",
@@ -1805,13 +1804,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "埃什特雷拉山地犬"
   },
   {
     "id": "dog.eurasier",
     "species": "dog",
     "name": "Eurasier",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -1821,13 +1820,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "欧亚犬"
   },
   {
     "id": "dog.field-spaniel",
     "species": "dog",
     "name": "Field Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -1837,13 +1836,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "田野猎犬"
   },
   {
     "id": "dog.finnish-lapphund",
     "species": "dog",
     "name": "Finnish Lapphund",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -1853,13 +1852,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Finland"
+    "origin": "Finland",
+    "name_cn": "芬兰拉普猎犬"
   },
   {
     "id": "dog.finnish-spitz",
     "species": "dog",
     "name": "Finnish Spitz",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -1869,13 +1868,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Finland"
+    "origin": "Finland",
+    "name_cn": "芬兰尖嘴犬"
   },
   {
     "id": "dog.flat-coated-retriever",
     "species": "dog",
     "name": "Flat-Coated Retriever",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -1885,13 +1884,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "平毛寻回犬"
   },
   {
     "id": "dog.french-bulldog",
     "species": "dog",
     "name": "French Bulldog",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "short",
@@ -1901,13 +1900,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "法国斗牛犬"
   },
   {
     "id": "dog.french-spaniel",
     "species": "dog",
     "name": "French Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -1917,13 +1916,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "法国猎犬"
   },
   {
     "id": "dog.german-longhaired-pointer",
     "species": "dog",
     "name": "German Longhaired Pointer",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -1933,13 +1932,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "德国长毛指示犬"
   },
   {
     "id": "dog.german-pinscher",
     "species": "dog",
     "name": "German Pinscher",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -1949,13 +1948,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "德国平犬"
   },
   {
     "id": "dog.german-shepherd-dog",
     "species": "dog",
     "name": "German Shepherd Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -1965,13 +1964,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "德国牧羊犬"
   },
   {
     "id": "dog.german-shorthaired-pointer",
     "species": "dog",
     "name": "German Shorthaired Pointer",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -1981,13 +1980,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "德国短毛指示犬"
   },
   {
     "id": "dog.german-spitz",
     "species": "dog",
     "name": "German Spitz",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": null,
@@ -1997,13 +1996,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "德国尖嘴犬"
   },
   {
     "id": "dog.german-wirehaired-pointer",
     "species": "dog",
     "name": "German Wirehaired Pointer",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "wire",
@@ -2013,13 +2012,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "德国硬毛指示犬"
   },
   {
     "id": "dog.giant-schnauzer",
     "species": "dog",
     "name": "Giant Schnauzer",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "wire",
@@ -2029,13 +2028,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "巨型雪纳瑞"
   },
   {
     "id": "dog.glen-of-imaal-terrier",
     "species": "dog",
     "name": "Glen of Imaal Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "wire",
@@ -2045,13 +2044,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Ireland"
+    "origin": "Ireland",
+    "name_cn": "伊马谷梗"
   },
   {
     "id": "dog.golden-retriever",
     "species": "dog",
     "name": "Golden Retriever",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -2061,13 +2060,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Scotland"
+    "origin": "Scotland",
+    "name_cn": "金毛寻回犬"
   },
   {
     "id": "dog.gordon-setter",
     "species": "dog",
     "name": "Gordon Setter",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -2077,13 +2076,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Scotland"
+    "origin": "Scotland",
+    "name_cn": "戈登雪达犬"
   },
   {
     "id": "dog.grand-basset-griffon-vendeen",
     "species": "dog",
-    "name": "Grand Basset Griffon Vend\\u00e9en",
-    "pinyin": "",
+    "name": "Grand Basset Griffon Vendéen",
     "initial": "",
     "size_category": "medium",
     "coat_type": "wire",
@@ -2093,13 +2092,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "大格里芬旺代犬"
   },
   {
     "id": "dog.great-dane",
     "species": "dog",
     "name": "Great Dane",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -2109,13 +2108,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "大丹犬"
   },
   {
     "id": "dog.great-pyrenees",
     "species": "dog",
     "name": "Great Pyrenees",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -2125,13 +2124,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "大白熊犬"
   },
   {
     "id": "dog.greater-swiss-mountain-dog",
     "species": "dog",
     "name": "Greater Swiss Mountain Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -2141,13 +2140,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Switzerland"
+    "origin": "Switzerland",
+    "name_cn": "大瑞士山地犬"
   },
   {
     "id": "dog.greyhound",
     "species": "dog",
     "name": "Greyhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -2157,13 +2156,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Egypt"
+    "origin": "Egypt",
+    "name_cn": "灵缇犬"
   },
   {
     "id": "dog.hamiltonstovare",
     "species": "dog",
     "name": "Hamiltonstovare",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -2173,13 +2172,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Sweden"
+    "origin": "Sweden",
+    "name_cn": "汉密尔顿斯道弗犬"
   },
   {
     "id": "dog.hanoverian-scenthound",
     "species": "dog",
     "name": "Hanoverian Scenthound",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -2189,13 +2188,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "汉诺威嗅觉猎犬"
   },
   {
     "id": "dog.harrier",
     "species": "dog",
     "name": "Harrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -2205,13 +2204,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "哈里犬"
   },
   {
     "id": "dog.havanese",
     "species": "dog",
     "name": "Havanese",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "long",
@@ -2221,13 +2220,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Cuba"
+    "origin": "Cuba",
+    "name_cn": "哈瓦那犬"
   },
   {
     "id": "dog.hokkaido",
     "species": "dog",
     "name": "Hokkaido",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -2237,13 +2236,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "北海道犬"
   },
   {
     "id": "dog.hovawart",
     "species": "dog",
     "name": "Hovawart",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -2253,13 +2252,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "霍瓦瓦特犬"
   },
   {
     "id": "dog.ibizan-hound",
     "species": "dog",
     "name": "Ibizan Hound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "wire",
@@ -2269,13 +2268,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Spain"
+    "origin": "Spain",
+    "name_cn": "伊比赞猎犬"
   },
   {
     "id": "dog.icelandic-sheepdog",
     "species": "dog",
     "name": "Icelandic Sheepdog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -2285,13 +2284,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Iceland"
+    "origin": "Iceland",
+    "name_cn": "冰岛牧羊犬"
   },
   {
     "id": "dog.irish-red-and-white-setter",
     "species": "dog",
     "name": "Irish Red and White Setter",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "long",
@@ -2301,13 +2300,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Ireland"
+    "origin": "Ireland",
+    "name_cn": "爱尔兰红白雪达犬"
   },
   {
     "id": "dog.irish-setter",
     "species": "dog",
     "name": "Irish Setter",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "long",
@@ -2317,13 +2316,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Ireland"
+    "origin": "Ireland",
+    "name_cn": "爱尔兰雪达犬"
   },
   {
     "id": "dog.irish-terrier",
     "species": "dog",
     "name": "Irish Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "wire",
@@ -2333,13 +2332,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Ireland"
+    "origin": "Ireland",
+    "name_cn": "爱尔兰梗"
   },
   {
     "id": "dog.irish-water-spaniel",
     "species": "dog",
     "name": "Irish Water Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "curly",
@@ -2349,13 +2348,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Ireland"
+    "origin": "Ireland",
+    "name_cn": "爱尔兰水猎犬"
   },
   {
     "id": "dog.irish-wolfhound",
     "species": "dog",
     "name": "Irish Wolfhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "wire",
@@ -2365,13 +2364,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Ireland"
+    "origin": "Ireland",
+    "name_cn": "爱尔兰猎狼犬"
   },
   {
     "id": "dog.italian-greyhound",
     "species": "dog",
     "name": "Italian Greyhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -2381,13 +2380,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "The Mediterranean basin"
+    "origin": "The Mediterranean basin",
+    "name_cn": "意大利灵缇犬"
   },
   {
     "id": "dog.jagdterrier",
     "species": "dog",
     "name": "Jagdterrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "wire",
@@ -2397,13 +2396,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "猎梗"
   },
   {
     "id": "dog.japanese-akitainu",
     "species": "dog",
     "name": "Japanese Akitainu",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -2413,13 +2412,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "日本秋田犬"
   },
   {
     "id": "dog.japanese-chin",
     "species": "dog",
     "name": "Japanese Chin",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "long",
@@ -2429,13 +2428,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "日本狆"
   },
   {
     "id": "dog.japanese-spitz",
     "species": "dog",
     "name": "Japanese Spitz",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -2445,13 +2444,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "日本尖嘴犬"
   },
   {
     "id": "dog.japanese-terrier",
     "species": "dog",
     "name": "Japanese Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": null,
@@ -2461,13 +2460,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "日本梗"
   },
   {
     "id": "dog.kai-ken",
     "species": "dog",
     "name": "Kai Ken",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -2477,13 +2476,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "甲斐犬"
   },
   {
     "id": "dog.karelian-bear-dog",
     "species": "dog",
     "name": "Karelian Bear Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -2493,13 +2492,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Finland"
+    "origin": "Finland",
+    "name_cn": "卡累利阿熊犬"
   },
   {
     "id": "dog.keeshond",
     "species": "dog",
     "name": "Keeshond",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -2509,13 +2508,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "The Netherlands"
+    "origin": "The Netherlands",
+    "name_cn": "荷兰毛狮犬"
   },
   {
     "id": "dog.kerry-blue-terrier",
     "species": "dog",
     "name": "Kerry Blue Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -2525,13 +2524,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Ireland"
+    "origin": "Ireland",
+    "name_cn": "凯利蓝梗"
   },
   {
     "id": "dog.kishu-ken",
     "species": "dog",
     "name": "Kishu Ken",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -2541,13 +2540,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "纪州犬"
   },
   {
     "id": "dog.komondor",
     "species": "dog",
     "name": "Komondor",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "curly",
@@ -2557,13 +2556,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Hungary"
+    "origin": "Hungary",
+    "name_cn": "可蒙犬"
   },
   {
     "id": "dog.korean-jindo-dog",
     "species": "dog",
     "name": "Korean Jindo Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -2573,13 +2572,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "South Korea"
+    "origin": "South Korea",
+    "name_cn": "韩国珍岛犬"
   },
   {
     "id": "dog.kromfohrlander",
     "species": "dog",
     "name": "Kromfohrlander",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "wire",
@@ -2589,13 +2588,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "克龙福尔兰德犬"
   },
   {
     "id": "dog.kuvasz",
     "species": "dog",
     "name": "Kuvasz",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -2605,13 +2604,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Hungary"
+    "origin": "Hungary",
+    "name_cn": "库瓦兹犬"
   },
   {
     "id": "dog.labrador-retriever",
     "species": "dog",
     "name": "Labrador Retriever",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -2621,13 +2620,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Canada"
+    "origin": "Canada",
+    "name_cn": "拉布拉多寻回犬"
   },
   {
     "id": "dog.lagotto-romagnolo",
     "species": "dog",
     "name": "Lagotto Romagnolo",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "curly",
@@ -2637,13 +2636,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Italy"
+    "origin": "Italy",
+    "name_cn": "拉戈托罗马阁挪露犬"
   },
   {
     "id": "dog.lakeland-terrier",
     "species": "dog",
     "name": "Lakeland Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "wire",
@@ -2653,13 +2652,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "湖畔梗"
   },
   {
     "id": "dog.lancashire-heeler",
     "species": "dog",
     "name": "Lancashire Heeler",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -2669,13 +2668,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Unknown"
+    "origin": "Unknown",
+    "name_cn": "兰开夏赫勒犬"
   },
   {
     "id": "dog.lapponian-herder",
     "species": "dog",
     "name": "Lapponian Herder",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -2685,13 +2684,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Finland"
+    "origin": "Finland",
+    "name_cn": "拉普兰牧犬"
   },
   {
     "id": "dog.large-munsterlander",
     "species": "dog",
     "name": "Large Munsterlander",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": null,
@@ -2701,13 +2700,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "大蒙斯特兰德犬"
   },
   {
     "id": "dog.leonberger",
     "species": "dog",
     "name": "Leonberger",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -2717,13 +2716,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "莱昂伯格犬"
   },
   {
     "id": "dog.lhasa-apso",
     "species": "dog",
     "name": "Lhasa Apso",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "long",
@@ -2733,13 +2732,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Tibet"
+    "origin": "Tibet",
+    "name_cn": "拉萨犬"
   },
   {
     "id": "dog.lowchen",
     "species": "dog",
-    "name": "L\\u00f6wchen",
-    "pinyin": "",
+    "name": "Löwchen",
     "initial": "",
     "size_category": "small",
     "coat_type": "medium",
@@ -2749,13 +2748,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Unknown"
+    "origin": "Unknown",
+    "name_cn": "罗秦犬"
   },
   {
     "id": "dog.maltese",
     "species": "dog",
     "name": "Maltese",
-    "pinyin": "",
     "initial": "",
     "size_category": "toy",
     "coat_type": "long",
@@ -2765,13 +2764,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Malta"
+    "origin": "Malta",
+    "name_cn": "马尔济斯犬"
   },
   {
     "id": "dog.manchester-terrier-standard",
     "species": "dog",
     "name": "Manchester Terrier (Standard)",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -2781,13 +2780,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "标准曼彻斯特梗"
   },
   {
     "id": "dog.manchester-terrier-toy",
     "species": "dog",
     "name": "Manchester Terrier (Toy)",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "short",
@@ -2797,13 +2796,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "玩具曼彻斯特梗"
   },
   {
     "id": "dog.mastiff",
     "species": "dog",
     "name": "Mastiff",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -2813,13 +2812,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "獒犬"
   },
   {
     "id": "dog.miniature-american-shepherd",
     "species": "dog",
     "name": "Miniature American Shepherd",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -2829,13 +2828,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "迷你美国牧羊犬"
   },
   {
     "id": "dog.miniature-bull-terrier",
     "species": "dog",
     "name": "Miniature Bull Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "short",
@@ -2845,13 +2844,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "迷你牛头梗"
   },
   {
     "id": "dog.miniature-pinscher",
     "species": "dog",
     "name": "Miniature Pinscher",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "short",
@@ -2861,13 +2860,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "迷你品犬"
   },
   {
     "id": "dog.miniature-schnauzer",
     "species": "dog",
     "name": "Miniature Schnauzer",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "wire",
@@ -2877,13 +2876,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "迷你雪纳瑞"
   },
   {
     "id": "dog.mountain-cur",
     "species": "dog",
     "name": "Mountain Cur",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -2893,13 +2892,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "山犬"
   },
   {
     "id": "dog.mudi",
     "species": "dog",
     "name": "Mudi",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "curly",
@@ -2909,13 +2908,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Hungary"
+    "origin": "Hungary",
+    "name_cn": "穆迪犬"
   },
   {
     "id": "dog.neapolitan-mastiff",
     "species": "dog",
     "name": "Neapolitan Mastiff",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -2925,13 +2924,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Italy"
+    "origin": "Italy",
+    "name_cn": "那不勒斯獒犬"
   },
   {
     "id": "dog.nederlandse-kooikerhondje",
     "species": "dog",
     "name": "Nederlandse Kooikerhondje",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -2941,13 +2940,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "The Netherlands"
+    "origin": "The Netherlands",
+    "name_cn": "荷兰克伊克犬"
   },
   {
     "id": "dog.newfoundland",
     "species": "dog",
     "name": "Newfoundland",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -2957,13 +2956,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Canada"
+    "origin": "Canada",
+    "name_cn": "纽芬兰犬"
   },
   {
     "id": "dog.norfolk-terrier",
     "species": "dog",
     "name": "Norfolk Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "wire",
@@ -2973,13 +2972,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "诺福克梗"
   },
   {
     "id": "dog.norrbottenspets",
     "species": "dog",
     "name": "Norrbottenspets",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -2989,13 +2988,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Norway"
+    "origin": "Norway",
+    "name_cn": "北博滕犬"
   },
   {
     "id": "dog.norwegian-buhund",
     "species": "dog",
     "name": "Norwegian Buhund",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -3005,13 +3004,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Norway"
+    "origin": "Norway",
+    "name_cn": "挪威布哈德犬"
   },
   {
     "id": "dog.norwegian-elkhound",
     "species": "dog",
     "name": "Norwegian Elkhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -3021,13 +3020,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Norway"
+    "origin": "Norway",
+    "name_cn": "挪威猎犬"
   },
   {
     "id": "dog.norwegian-lundehund",
     "species": "dog",
     "name": "Norwegian Lundehund",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -3037,13 +3036,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Norway"
+    "origin": "Norway",
+    "name_cn": "挪威卢德猎犬"
   },
   {
     "id": "dog.norwich-terrier",
     "species": "dog",
     "name": "Norwich Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "wire",
@@ -3053,13 +3052,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "诺维奇梗"
   },
   {
     "id": "dog.nova-scotia-duck-tolling-retriever",
     "species": "dog",
     "name": "Nova Scotia Duck Tolling Retriever",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -3069,13 +3068,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Canada"
+    "origin": "Canada",
+    "name_cn": "新斯科舍诱鸭寻回犬"
   },
   {
     "id": "dog.old-danish-pointer",
     "species": "dog",
     "name": "Old Danish Pointer",
-    "pinyin": "",
     "initial": "",
     "size_category": null,
     "coat_type": null,
@@ -3085,13 +3084,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Denmark"
+    "origin": "Denmark",
+    "name_cn": "古老丹麦指示犬"
   },
   {
     "id": "dog.old-english-sheepdog",
     "species": "dog",
     "name": "Old English Sheepdog",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -3101,13 +3100,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "古代英国牧羊犬"
   },
   {
     "id": "dog.otterhound",
     "species": "dog",
     "name": "Otterhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -3117,13 +3116,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "水獭猎犬"
   },
   {
     "id": "dog.papillon",
     "species": "dog",
     "name": "Papillon",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "long",
@@ -3133,13 +3132,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "蝴蝶犬"
   },
   {
     "id": "dog.parson-russell-terrier",
     "species": "dog",
     "name": "Parson Russell Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -3149,13 +3148,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "帕森罗塞尔梗"
   },
   {
     "id": "dog.pekingese",
     "species": "dog",
     "name": "Pekingese",
-    "pinyin": "",
     "initial": "",
     "size_category": "toy",
     "coat_type": "double",
@@ -3165,13 +3164,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "China"
+    "origin": "China",
+    "name_cn": "北京犬"
   },
   {
     "id": "dog.pembroke-welsh-corgi",
     "species": "dog",
     "name": "Pembroke Welsh Corgi",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -3181,13 +3180,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Wales"
+    "origin": "Wales",
+    "name_cn": "彭布罗克威尔士柯基犬"
   },
   {
     "id": "dog.peruvian-inca-orchid",
     "species": "dog",
     "name": "Peruvian Inca Orchid",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "hairless",
@@ -3197,13 +3196,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Peru"
+    "origin": "Peru",
+    "name_cn": "秘鲁无毛犬"
   },
   {
     "id": "dog.petit-basset-griffon-vendeen",
     "species": "dog",
-    "name": "Petit Basset Griffon Vend\\u00e9en",
-    "pinyin": "",
+    "name": "Petit Basset Griffon Vendéen",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -3213,13 +3212,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "小格里芬旺代犬"
   },
   {
     "id": "dog.pharaoh-hound",
     "species": "dog",
     "name": "Pharaoh Hound",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -3229,13 +3228,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Malta"
+    "origin": "Malta",
+    "name_cn": "法老王猎犬"
   },
   {
     "id": "dog.plott-hound",
     "species": "dog",
     "name": "Plott Hound",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -3245,13 +3244,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "普罗特猎犬"
   },
   {
     "id": "dog.pointer",
     "species": "dog",
     "name": "Pointer",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -3261,13 +3260,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "指示犬"
   },
   {
     "id": "dog.polish-lowland-sheepdog",
     "species": "dog",
     "name": "Polish Lowland Sheepdog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -3277,13 +3276,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Poland"
+    "origin": "Poland",
+    "name_cn": "波兰低地牧羊犬"
   },
   {
     "id": "dog.pomeranian",
     "species": "dog",
     "name": "Pomeranian",
-    "pinyin": "",
     "initial": "",
     "size_category": "toy",
     "coat_type": "double",
@@ -3293,13 +3292,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Iceland"
+    "origin": "Iceland",
+    "name_cn": "博美犬"
   },
   {
     "id": "dog.pont-audemer-spaniel",
     "species": "dog",
     "name": "Pont-Audemer Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": null,
@@ -3309,13 +3308,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "蓬奥德梅猎犬"
   },
   {
     "id": "dog.poodle-miniature",
     "species": "dog",
     "name": "Poodle (Miniature)",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "curly",
@@ -3325,13 +3324,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "迷你贵宾犬"
   },
   {
     "id": "dog.poodle-standard",
     "species": "dog",
     "name": "Poodle (Standard)",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "curly",
@@ -3341,13 +3340,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "标准贵宾犬"
   },
   {
     "id": "dog.poodle-toy",
     "species": "dog",
     "name": "Poodle (Toy)",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "curly",
@@ -3357,13 +3356,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "玩具贵宾犬"
   },
   {
     "id": "dog.porcelaine",
     "species": "dog",
     "name": "Porcelaine",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -3373,13 +3372,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "瓷犬"
   },
   {
     "id": "dog.portuguese-podengo",
     "species": "dog",
     "name": "Portuguese Podengo",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "wire",
@@ -3389,13 +3388,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Portugal"
+    "origin": "Portugal",
+    "name_cn": "葡萄牙波登可犬"
   },
   {
     "id": "dog.portuguese-podengo-pequeno",
     "species": "dog",
     "name": "Portuguese Podengo Pequeno",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "wire",
@@ -3405,13 +3404,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Portugal"
+    "origin": "Portugal",
+    "name_cn": "迷你葡萄牙波登可犬"
   },
   {
     "id": "dog.portuguese-pointer",
     "species": "dog",
     "name": "Portuguese Pointer",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -3421,13 +3420,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Portugal"
+    "origin": "Portugal",
+    "name_cn": "葡萄牙指示犬"
   },
   {
     "id": "dog.portuguese-sheepdog",
     "species": "dog",
     "name": "Portuguese Sheepdog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -3437,13 +3436,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Portugal"
+    "origin": "Portugal",
+    "name_cn": "葡萄牙牧羊犬"
   },
   {
     "id": "dog.portuguese-water-dog",
     "species": "dog",
     "name": "Portuguese Water Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "curly",
@@ -3453,13 +3452,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Portugal"
+    "origin": "Portugal",
+    "name_cn": "葡萄牙水犬"
   },
   {
     "id": "dog.presa-canario",
     "species": "dog",
     "name": "Presa Canario",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -3469,13 +3468,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Spain"
+    "origin": "Spain",
+    "name_cn": "加纳利犬"
   },
   {
     "id": "dog.pudelpointer",
     "species": "dog",
     "name": "Pudelpointer",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "wire",
@@ -3485,13 +3484,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "普德尔指示犬"
   },
   {
     "id": "dog.pug",
     "species": "dog",
     "name": "Pug",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "short",
@@ -3501,13 +3500,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "China"
+    "origin": "China",
+    "name_cn": "巴哥犬"
   },
   {
     "id": "dog.puli",
     "species": "dog",
     "name": "Puli",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -3517,13 +3516,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Hungary"
+    "origin": "Hungary",
+    "name_cn": "波利犬"
   },
   {
     "id": "dog.pumi",
     "species": "dog",
     "name": "Pumi",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "curly",
@@ -3533,13 +3532,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Hungary"
+    "origin": "Hungary",
+    "name_cn": "波密犬"
   },
   {
     "id": "dog.pyrenean-mastiff",
     "species": "dog",
     "name": "Pyrenean Mastiff",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -3549,13 +3548,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Spain"
+    "origin": "Spain",
+    "name_cn": "比利牛斯獒犬"
   },
   {
     "id": "dog.pyrenean-shepherd",
     "species": "dog",
     "name": "Pyrenean Shepherd",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -3565,13 +3564,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "比利牛斯牧羊犬"
   },
   {
     "id": "dog.rafeiro-do-alentejo",
     "species": "dog",
     "name": "Rafeiro do Alentejo",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -3581,13 +3580,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Portugal"
+    "origin": "Portugal",
+    "name_cn": "阿连特茹獒犬"
   },
   {
     "id": "dog.rat-terrier",
     "species": "dog",
     "name": "Rat Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -3597,13 +3596,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "鼠梗"
   },
   {
     "id": "dog.redbone-coonhound",
     "species": "dog",
     "name": "Redbone Coonhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -3613,13 +3612,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "红骨猎浣熊犬"
   },
   {
     "id": "dog.rhodesian-ridgeback",
     "species": "dog",
     "name": "Rhodesian Ridgeback",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -3629,13 +3628,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Zambia/Zimbabwe (formerly Rhodesia)"
+    "origin": "Zambia/Zimbabwe (formerly Rhodesia)",
+    "name_cn": "罗得西亚脊背犬"
   },
   {
     "id": "dog.romanian-carpathian-shepherd",
     "species": "dog",
     "name": "Romanian Carpathian Shepherd",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": null,
@@ -3645,13 +3644,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Romania"
+    "origin": "Romania",
+    "name_cn": "罗马尼亚喀尔巴阡牧羊犬"
   },
   {
     "id": "dog.romanian-mioritic-shepherd-dog",
     "species": "dog",
     "name": "Romanian Mioritic Shepherd Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -3661,13 +3660,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Romania"
+    "origin": "Romania",
+    "name_cn": "罗马尼亚米奥里蒂克牧羊犬"
   },
   {
     "id": "dog.rottweiler",
     "species": "dog",
     "name": "Rottweiler",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -3677,13 +3676,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "罗威纳犬"
   },
   {
     "id": "dog.russell-terrier",
     "species": "dog",
     "name": "Russell Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "wire",
@@ -3693,13 +3692,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "罗塞尔梗"
   },
   {
     "id": "dog.russian-toy",
     "species": "dog",
     "name": "Russian Toy",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -3709,13 +3708,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Russia"
+    "origin": "Russia",
+    "name_cn": "俄罗斯玩具犬"
   },
   {
     "id": "dog.russian-tsvetnaya-bolonka",
     "species": "dog",
     "name": "Russian Tsvetnaya Bolonka",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "medium",
@@ -3725,13 +3724,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Russia"
+    "origin": "Russia",
+    "name_cn": "俄罗斯彩色博洛犬"
   },
   {
     "id": "dog.saarloos-wolfhond",
     "species": "dog",
     "name": "Saarloos Wolfhond",
-    "pinyin": "",
     "initial": "",
     "size_category": null,
     "coat_type": null,
@@ -3741,13 +3740,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Netherlands"
+    "origin": "Netherlands",
+    "name_cn": "萨尔路斯狼犬"
   },
   {
     "id": "dog.saluki",
     "species": "dog",
     "name": "Saluki",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -3757,13 +3756,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Middle East"
+    "origin": "Middle East",
+    "name_cn": "萨路基猎犬"
   },
   {
     "id": "dog.samoyed",
     "species": "dog",
     "name": "Samoyed",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -3773,13 +3772,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Siberia"
+    "origin": "Siberia",
+    "name_cn": "萨摩耶犬"
   },
   {
     "id": "dog.schapendoes",
     "species": "dog",
     "name": "Schapendoes",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -3789,13 +3788,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "The Netherlands"
+    "origin": "The Netherlands",
+    "name_cn": "荷兰牧羊犬"
   },
   {
     "id": "dog.schipperke",
     "species": "dog",
     "name": "Schipperke",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -3805,13 +3804,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Belgium"
+    "origin": "Belgium",
+    "name_cn": "西帕基犬"
   },
   {
     "id": "dog.scottish-deerhound",
     "species": "dog",
     "name": "Scottish Deerhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "wire",
@@ -3821,13 +3820,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Scotland"
+    "origin": "Scotland",
+    "name_cn": "苏格兰猎鹿犬"
   },
   {
     "id": "dog.scottish-terrier",
     "species": "dog",
     "name": "Scottish Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "wire",
@@ -3837,13 +3836,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Scotland"
+    "origin": "Scotland",
+    "name_cn": "苏格兰梗"
   },
   {
     "id": "dog.sealyham-terrier",
     "species": "dog",
     "name": "Sealyham Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "wire",
@@ -3853,13 +3852,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Wales"
+    "origin": "Wales",
+    "name_cn": "西里汉梗"
   },
   {
     "id": "dog.segugio-italiano",
     "species": "dog",
     "name": "Segugio Italiano",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": null,
@@ -3869,13 +3868,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Italy"
+    "origin": "Italy",
+    "name_cn": "意大利塞古犬"
   },
   {
     "id": "dog.shetland-sheepdog",
     "species": "dog",
     "name": "Shetland Sheepdog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -3885,13 +3884,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Scotland"
+    "origin": "Scotland",
+    "name_cn": "设得兰牧羊犬"
   },
   {
     "id": "dog.shiba-inu",
     "species": "dog",
     "name": "Shiba Inu",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -3901,13 +3900,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "柴犬"
   },
   {
     "id": "dog.shih-tzu",
     "species": "dog",
     "name": "Shih Tzu",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -3917,13 +3916,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "China"
+    "origin": "China",
+    "name_cn": "西施犬"
   },
   {
     "id": "dog.shikoku-ken",
     "species": "dog",
     "name": "Shikoku Ken",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -3933,13 +3932,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "四国犬"
   },
   {
     "id": "dog.siberian-husky",
     "species": "dog",
     "name": "Siberian Husky",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -3949,13 +3948,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Siberia"
+    "origin": "Siberia",
+    "name_cn": "西伯利亚哈士奇"
   },
   {
     "id": "dog.silken-windhound",
     "species": "dog",
     "name": "Silken Windhound",
-    "pinyin": "",
     "initial": "",
     "size_category": null,
     "coat_type": null,
@@ -3965,13 +3964,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "丝风犬"
   },
   {
     "id": "dog.silky-terrier",
     "species": "dog",
     "name": "Silky Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "long",
@@ -3981,13 +3980,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Australia"
+    "origin": "Australia",
+    "name_cn": "丝毛梗"
   },
   {
     "id": "dog.skye-terrier",
     "species": "dog",
     "name": "Skye Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -3997,13 +3996,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Scotland"
+    "origin": "Scotland",
+    "name_cn": "斯凯梗"
   },
   {
     "id": "dog.sloughi",
     "species": "dog",
     "name": "Sloughi",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -4013,13 +4012,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Arabian Greyhound"
+    "origin": "Arabian Greyhound",
+    "name_cn": "斯洛吉犬"
   },
   {
     "id": "dog.slovakian-wirehaired-pointer",
     "species": "dog",
     "name": "Slovakian Wirehaired Pointer",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "wire",
@@ -4029,13 +4028,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Czechoslovakia"
+    "origin": "Czechoslovakia",
+    "name_cn": "斯洛伐克硬毛指示犬"
   },
   {
     "id": "dog.slovensky-cuvac",
     "species": "dog",
     "name": "Slovensky Cuvac",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -4045,13 +4044,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Slovakia"
+    "origin": "Slovakia",
+    "name_cn": "斯洛伐克楚瓦克犬"
   },
   {
     "id": "dog.slovensky-kopov",
     "species": "dog",
     "name": "Slovensky Kopov",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -4061,13 +4060,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Slovakia"
+    "origin": "Slovakia",
+    "name_cn": "斯洛伐克猎犬"
   },
   {
     "id": "dog.small-munsterlander",
     "species": "dog",
     "name": "Small Munsterlander",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -4077,13 +4076,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "小蒙斯特兰德犬"
   },
   {
     "id": "dog.smooth-fox-terrier",
     "species": "dog",
     "name": "Smooth Fox Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -4093,13 +4092,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "平毛猎狐梗"
   },
   {
     "id": "dog.soft-coated-wheaten-terrier",
     "species": "dog",
     "name": "Soft Coated Wheaten Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "long",
@@ -4109,13 +4108,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Ireland"
+    "origin": "Ireland",
+    "name_cn": "软毛麦色梗"
   },
   {
     "id": "dog.spanish-mastiff",
     "species": "dog",
     "name": "Spanish Mastiff",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -4125,13 +4124,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Spain"
+    "origin": "Spain",
+    "name_cn": "西班牙獒犬"
   },
   {
     "id": "dog.spanish-water-dog",
     "species": "dog",
     "name": "Spanish Water Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "curly",
@@ -4141,13 +4140,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Spain"
+    "origin": "Spain",
+    "name_cn": "西班牙水犬"
   },
   {
     "id": "dog.spinone-italiano",
     "species": "dog",
     "name": "Spinone Italiano",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "wire",
@@ -4157,13 +4156,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Italy"
+    "origin": "Italy",
+    "name_cn": "意大利斯皮诺犬"
   },
   {
     "id": "dog.st-bernard",
     "species": "dog",
     "name": "Saint Bernard",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -4173,13 +4172,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": null
+    "origin": null,
+    "name_cn": "圣伯纳犬"
   },
   {
     "id": "dog.stabyhoun",
     "species": "dog",
     "name": "Stabyhoun",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -4189,13 +4188,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "The Netherlands"
+    "origin": "The Netherlands",
+    "name_cn": "斯塔比猎犬"
   },
   {
     "id": "dog.staffordshire-bull-terrier",
     "species": "dog",
     "name": "Staffordshire Bull Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -4205,13 +4204,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "斯塔福德郡斗牛梗"
   },
   {
     "id": "dog.standard-schnauzer",
     "species": "dog",
     "name": "Standard Schnauzer",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "wire",
@@ -4221,13 +4220,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "标准雪纳瑞"
   },
   {
     "id": "dog.sussex-spaniel",
     "species": "dog",
     "name": "Sussex Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -4237,13 +4236,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "苏塞克斯猎犬"
   },
   {
     "id": "dog.swedish-lapphund",
     "species": "dog",
     "name": "Swedish Lapphund",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -4253,13 +4252,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Sweden"
+    "origin": "Sweden",
+    "name_cn": "瑞典拉普猎犬"
   },
   {
     "id": "dog.swedish-vallhund",
     "species": "dog",
     "name": "Swedish Vallhund",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -4269,13 +4268,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Sweden"
+    "origin": "Sweden",
+    "name_cn": "瑞典柯基犬"
   },
   {
     "id": "dog.taiwan-dog",
     "species": "dog",
     "name": "Taiwan Dog",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -4285,13 +4284,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Taiwan"
+    "origin": "Taiwan",
+    "name_cn": "台湾犬"
   },
   {
     "id": "dog.teddy-roosevelt-terrier",
     "species": "dog",
     "name": "Teddy Roosevelt Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "short",
@@ -4301,13 +4300,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "泰迪罗斯福梗"
   },
   {
     "id": "dog.thai-bangkaew",
     "species": "dog",
     "name": "Thai Bangkaew",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": null,
@@ -4317,13 +4316,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Thailand"
+    "origin": "Thailand",
+    "name_cn": "泰国班克犬"
   },
   {
     "id": "dog.thai-ridgeback",
     "species": "dog",
     "name": "Thai Ridgeback",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": null,
@@ -4333,13 +4332,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Thailand"
+    "origin": "Thailand",
+    "name_cn": "泰国脊背犬"
   },
   {
     "id": "dog.tibetan-mastiff",
     "species": "dog",
     "name": "Tibetan Mastiff",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -4349,13 +4348,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Tibet"
+    "origin": "Tibet",
+    "name_cn": "藏獒"
   },
   {
     "id": "dog.tibetan-spaniel",
     "species": "dog",
     "name": "Tibetan Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -4365,13 +4364,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Tibet"
+    "origin": "Tibet",
+    "name_cn": "西藏猎犬"
   },
   {
     "id": "dog.tibetan-terrier",
     "species": "dog",
     "name": "Tibetan Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -4381,13 +4380,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Tibet"
+    "origin": "Tibet",
+    "name_cn": "西藏梗"
   },
   {
     "id": "dog.tornjak",
     "species": "dog",
     "name": "Tornjak",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "double",
@@ -4397,13 +4396,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Croatia/Bosnia and Herzegovina"
+    "origin": "Croatia/Bosnia and Herzegovina",
+    "name_cn": "托尔雅克犬"
   },
   {
     "id": "dog.tosa",
     "species": "dog",
     "name": "Tosa",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -4413,13 +4412,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "土佐犬"
   },
   {
     "id": "dog.toy-fox-terrier",
     "species": "dog",
     "name": "Toy Fox Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "short",
@@ -4429,13 +4428,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "玩具猎狐梗"
   },
   {
     "id": "dog.transylvanian-hound",
     "species": "dog",
     "name": "Transylvanian Hound",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -4445,13 +4444,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Hungary"
+    "origin": "Hungary",
+    "name_cn": "特兰西瓦尼亚猎犬"
   },
   {
     "id": "dog.treeing-tennessee-brindle",
     "species": "dog",
     "name": "Treeing Tennessee Brindle",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -4461,13 +4460,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "田纳西树纹犬"
   },
   {
     "id": "dog.treeing-walker-coonhound",
     "species": "dog",
     "name": "Treeing Walker Coonhound",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -4477,13 +4476,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "步行猎浣熊犬"
   },
   {
     "id": "dog.vizsla",
     "species": "dog",
     "name": "Vizsla",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -4493,13 +4492,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Hungary"
+    "origin": "Hungary",
+    "name_cn": "维兹拉犬"
   },
   {
     "id": "dog.volpino-italiano",
     "species": "dog",
     "name": "Volpino Italiano",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "long",
@@ -4509,13 +4508,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Italy"
+    "origin": "Italy",
+    "name_cn": "意大利狐狸犬"
   },
   {
     "id": "dog.weimaraner",
     "species": "dog",
     "name": "Weimaraner",
-    "pinyin": "",
     "initial": "",
     "size_category": "giant",
     "coat_type": "short",
@@ -4525,13 +4524,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Germany"
+    "origin": "Germany",
+    "name_cn": "威玛猎犬"
   },
   {
     "id": "dog.welsh-springer-spaniel",
     "species": "dog",
     "name": "Welsh Springer Spaniel",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "double",
@@ -4541,13 +4540,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Wales"
+    "origin": "Wales",
+    "name_cn": "威尔士史宾格犬"
   },
   {
     "id": "dog.welsh-terrier",
     "species": "dog",
     "name": "Welsh Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "wire",
@@ -4557,13 +4556,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Wales"
+    "origin": "Wales",
+    "name_cn": "威尔士梗"
   },
   {
     "id": "dog.west-highland-white-terrier",
     "species": "dog",
     "name": "West Highland White Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "double",
@@ -4573,13 +4572,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Scotland"
+    "origin": "Scotland",
+    "name_cn": "西高地白梗"
   },
   {
     "id": "dog.wetterhoun",
     "species": "dog",
     "name": "Wetterhoun",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "curly",
@@ -4589,13 +4588,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Netherlands"
+    "origin": "Netherlands",
+    "name_cn": "荷兰水猎犬"
   },
   {
     "id": "dog.whippet",
     "species": "dog",
     "name": "Whippet",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -4605,13 +4604,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "惠比特犬"
   },
   {
     "id": "dog.wire-fox-terrier",
     "species": "dog",
     "name": "Wire Fox Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "wire",
@@ -4621,13 +4620,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "刚毛猎狐梗"
   },
   {
     "id": "dog.wirehaired-pointing-griffon",
     "species": "dog",
     "name": "Wirehaired Pointing Griffon",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "wire",
@@ -4637,13 +4636,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Continental Europe"
+    "origin": "Continental Europe",
+    "name_cn": "硬毛指示格里芬犬"
   },
   {
     "id": "dog.wirehaired-vizsla",
     "species": "dog",
     "name": "Wirehaired Vizsla",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "wire",
@@ -4653,13 +4652,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Hungary"
+    "origin": "Hungary",
+    "name_cn": "硬毛维兹拉犬"
   },
   {
     "id": "dog.working-kelpie",
     "species": "dog",
     "name": "Working Kelpie",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -4669,13 +4668,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Australia"
+    "origin": "Australia",
+    "name_cn": "工作卡尔比犬"
   },
   {
     "id": "dog.xoloitzcuintli",
     "species": "dog",
     "name": "Xoloitzcuintli",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "hairless",
@@ -4685,13 +4684,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Mexico"
+    "origin": "Mexico",
+    "name_cn": "墨西哥无毛犬"
   },
   {
     "id": "dog.yakutian-laika",
     "species": "dog",
     "name": "Yakutian Laika",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "double",
@@ -4701,13 +4700,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Yakutia"
+    "origin": "Yakutia",
+    "name_cn": "雅库特莱卡犬"
   },
   {
     "id": "dog.yorkshire-terrier",
     "species": "dog",
     "name": "Yorkshire Terrier",
-    "pinyin": "",
     "initial": "",
     "size_category": "toy",
     "coat_type": "long",
@@ -4717,6 +4716,7 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "England"
+    "origin": "England",
+    "name_cn": "约克夏梗"
   }
 ]

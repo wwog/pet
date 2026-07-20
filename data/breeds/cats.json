@@ -3,7 +3,6 @@
     "id": "cat.abyssinian",
     "species": "cat",
     "name": "Abyssinian",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -13,13 +12,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Ethiopia"
+    "origin": "Ethiopia",
+    "name_cn": "阿比西尼亚猫"
   },
   {
     "id": "cat.american-bobtail",
     "species": "cat",
     "name": "American Bobtail",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "medium",
@@ -29,13 +28,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "美国短尾猫"
   },
   {
     "id": "cat.american-curl",
     "species": "cat",
     "name": "American Curl",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -45,13 +44,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "美国卷耳猫"
   },
   {
     "id": "cat.american-shorthair",
     "species": "cat",
     "name": "American Shorthair",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -61,13 +60,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "美国短毛猫"
   },
   {
     "id": "cat.american-wirehair",
     "species": "cat",
     "name": "American Wirehair",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "wire",
@@ -77,13 +76,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "美国硬毛猫"
   },
   {
     "id": "cat.balinese",
     "species": "cat",
     "name": "Balinese",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "long",
@@ -93,13 +92,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "巴厘猫"
   },
   {
     "id": "cat.bengal",
     "species": "cat",
     "name": "Bengal",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -109,13 +108,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "孟加拉猫"
   },
   {
     "id": "cat.birman",
     "species": "cat",
     "name": "Birman",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "long",
@@ -125,13 +124,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Myanmar (Burma)"
+    "origin": "Myanmar (Burma)",
+    "name_cn": "伯曼猫"
   },
   {
     "id": "cat.bombay",
     "species": "cat",
     "name": "Bombay",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -141,13 +140,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "孟买猫"
   },
   {
     "id": "cat.british-shorthair",
     "species": "cat",
     "name": "British Shorthair",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -157,13 +156,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United Kingdom"
+    "origin": "United Kingdom",
+    "name_cn": "英国短毛猫"
   },
   {
     "id": "cat.burmese",
     "species": "cat",
     "name": "Burmese",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -173,13 +172,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Myanmar (Burma)"
+    "origin": "Myanmar (Burma)",
+    "name_cn": "缅甸猫"
   },
   {
     "id": "cat.burmilla",
     "species": "cat",
     "name": "Burmilla",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -189,13 +188,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United Kingdom"
+    "origin": "United Kingdom",
+    "name_cn": "波米拉猫"
   },
   {
     "id": "cat.chartreux",
     "species": "cat",
     "name": "Chartreux",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -205,13 +204,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "France"
+    "origin": "France",
+    "name_cn": "沙特尔猫"
   },
   {
     "id": "cat.colorpoint-shorthair",
     "species": "cat",
     "name": "Colorpoint Shorthair",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -221,13 +220,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "重点色短毛猫"
   },
   {
     "id": "cat.cornish-rex",
     "species": "cat",
     "name": "Cornish Rex",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "curly",
@@ -237,13 +236,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United Kingdom"
+    "origin": "United Kingdom",
+    "name_cn": "柯尼斯卷毛猫"
   },
   {
     "id": "cat.devon-rex",
     "species": "cat",
     "name": "Devon Rex",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "curly",
@@ -253,13 +252,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United Kingdom"
+    "origin": "United Kingdom",
+    "name_cn": "德文卷毛猫"
   },
   {
     "id": "cat.egyptian-mau",
     "species": "cat",
     "name": "Egyptian Mau",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -269,13 +268,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Egypt"
+    "origin": "Egypt",
+    "name_cn": "埃及猫"
   },
   {
     "id": "cat.european-burmese",
     "species": "cat",
     "name": "European Burmese",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -285,13 +284,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Myanmar (Burma)"
+    "origin": "Myanmar (Burma)",
+    "name_cn": "欧洲缅甸猫"
   },
   {
     "id": "cat.exotic",
     "species": "cat",
     "name": "Exotic",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -301,13 +300,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "异国短毛猫"
   },
   {
     "id": "cat.havana-brown",
     "species": "cat",
     "name": "Havana Brown",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -317,13 +316,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United Kingdom"
+    "origin": "United Kingdom",
+    "name_cn": "哈瓦那棕猫"
   },
   {
     "id": "cat.japanese-bobtail",
     "species": "cat",
     "name": "Japanese Bobtail",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -333,13 +332,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Japan"
+    "origin": "Japan",
+    "name_cn": "日本短尾猫"
   },
   {
     "id": "cat.khao-manee",
     "species": "cat",
     "name": "Khao Manee",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -349,13 +348,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Thailand"
+    "origin": "Thailand",
+    "name_cn": "考拉猫"
   },
   {
     "id": "cat.korat",
     "species": "cat",
     "name": "Korat",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -365,13 +364,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Thailand"
+    "origin": "Thailand",
+    "name_cn": "科拉特猫"
   },
   {
     "id": "cat.laperm",
     "species": "cat",
     "name": "Laperm",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "curly",
@@ -381,13 +380,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "拉邦猫"
   },
   {
     "id": "cat.lykoi",
     "species": "cat",
     "name": "Lykoi",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "hairless",
@@ -397,13 +396,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "狼猫"
   },
   {
     "id": "cat.maine-coon-cat",
     "species": "cat",
     "name": "Maine Coon",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "long",
@@ -413,13 +412,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "缅因猫"
   },
   {
     "id": "cat.manx",
     "species": "cat",
     "name": "Manx",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -429,13 +428,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United Kingdom"
+    "origin": "United Kingdom",
+    "name_cn": "马恩岛猫"
   },
   {
     "id": "cat.norwegian-forest-cat",
     "species": "cat",
     "name": "Norwegian Forest Cat",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "long",
@@ -445,13 +444,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Norway"
+    "origin": "Norway",
+    "name_cn": "挪威森林猫"
   },
   {
     "id": "cat.ocicat",
     "species": "cat",
     "name": "Ocicat",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "short",
@@ -461,13 +460,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "奥西猫"
   },
   {
     "id": "cat.oriental",
     "species": "cat",
     "name": "Oriental",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -477,13 +476,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "东方猫"
   },
   {
     "id": "cat.persian",
     "species": "cat",
     "name": "Persian",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "long",
@@ -493,13 +492,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Iran (Persia)"
+    "origin": "Iran (Persia)",
+    "name_cn": "波斯猫"
   },
   {
     "id": "cat.ragamuffin",
     "species": "cat",
     "name": "RagaMuffin",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "long",
@@ -509,13 +508,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "拉格多尔猫"
   },
   {
     "id": "cat.ragdoll",
     "species": "cat",
     "name": "Ragdoll",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "long",
@@ -525,13 +524,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "布偶猫"
   },
   {
     "id": "cat.russian-blue",
     "species": "cat",
     "name": "Russian Blue",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -541,13 +540,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Russia"
+    "origin": "Russia",
+    "name_cn": "俄罗斯蓝猫"
   },
   {
     "id": "cat.scottish-fold",
     "species": "cat",
     "name": "Scottish Fold",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "medium",
@@ -557,13 +556,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United Kingdom"
+    "origin": "United Kingdom",
+    "name_cn": "苏格兰折耳猫"
   },
   {
     "id": "cat.selkirk-rex",
     "species": "cat",
     "name": "Selkirk Rex",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "curly",
@@ -573,13 +572,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "United States"
+    "origin": "United States",
+    "name_cn": "塞尔凯克卷毛猫"
   },
   {
     "id": "cat.siamese",
     "species": "cat",
     "name": "Siamese",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -589,13 +588,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Thailand"
+    "origin": "Thailand",
+    "name_cn": "暹罗猫"
   },
   {
     "id": "cat.siberian",
     "species": "cat",
     "name": "Siberian",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "long",
@@ -605,13 +604,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Russia"
+    "origin": "Russia",
+    "name_cn": "西伯利亚猫"
   },
   {
     "id": "cat.singapura",
     "species": "cat",
     "name": "Singapura",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "short",
@@ -621,13 +620,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Singapore"
+    "origin": "Singapore",
+    "name_cn": "新加坡猫"
   },
   {
     "id": "cat.somali",
     "species": "cat",
     "name": "Somali",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "long",
@@ -637,13 +636,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Ethiopia"
+    "origin": "Ethiopia",
+    "name_cn": "索马里猫"
   },
   {
     "id": "cat.sphynx",
     "species": "cat",
     "name": "Sphynx",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "hairless",
@@ -653,13 +652,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Canada"
+    "origin": "Canada",
+    "name_cn": "斯芬克斯猫"
   },
   {
     "id": "cat.tonkinese",
     "species": "cat",
     "name": "Tonkinese",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "short",
@@ -669,13 +668,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Canada"
+    "origin": "Canada",
+    "name_cn": "东奇尼猫"
   },
   {
     "id": "cat.toybob",
     "species": "cat",
     "name": "Toybob",
-    "pinyin": "",
     "initial": "",
     "size_category": "small",
     "coat_type": "medium",
@@ -685,13 +684,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Russia"
+    "origin": "Russia",
+    "name_cn": "玩具短尾猫"
   },
   {
     "id": "cat.turkish-angora",
     "species": "cat",
     "name": "Turkish Angora",
-    "pinyin": "",
     "initial": "",
     "size_category": "medium",
     "coat_type": "long",
@@ -701,13 +700,13 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Turkey"
+    "origin": "Turkey",
+    "name_cn": "土耳其安哥拉猫"
   },
   {
     "id": "cat.turkish-van",
     "species": "cat",
     "name": "Turkish Van",
-    "pinyin": "",
     "initial": "",
     "size_category": "large",
     "coat_type": "long",
@@ -717,6 +716,7 @@
     "life_span_max": null,
     "exercise_needs": null,
     "icon": null,
-    "origin": "Turkey"
+    "origin": "Turkey",
+    "name_cn": "土耳其梵猫"
   }
 ]
