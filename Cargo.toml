@@ -45,6 +45,9 @@ features = ["derive"]
 version = "0.8.0"
 features = ["sqlite"]
 
+[workspace.dependencies.toasty-cli]
+version = "0.8.0"
+
 [workspace.dependencies.tokio]
 version = "1.52.4"
 features = ["full"]

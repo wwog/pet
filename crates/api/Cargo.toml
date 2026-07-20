@@ -2,6 +2,7 @@
 name = "api"
 version = "0.1.0"
 edition.workspace = true
+default-run = "api"
 
 [dependencies]
 domain = { workspace = true }
@@ -23,3 +24,14 @@ dotenvy = { workspace = true }
 utoipa = { workspace = true }
 utoipa-axum = { workspace = true }
 utoipa-scalar = { workspace = true }
+toasty = { workspace = true }
+toasty-cli = { workspace = true }
+anyhow = { workspace = true }
+
+[[bin]]
+name = "api"
+path = "src/main.rs"
+
+[[bin]]
+name = "migrate"
+path = "src/bin/migrate.rs"

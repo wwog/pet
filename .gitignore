@@ -13,3 +13,5 @@ packages/admin/tsconfig.tsbuildinfo
 # 本地调试产物
 .playwright-mcp/
 admin-dashboard.png
+
+toasty

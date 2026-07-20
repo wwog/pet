@@ -48,14 +48,23 @@ async fn main() {
         .init();
 
     tracing::info!("connecting to database: {}", CONFIG.database_url);
+
+    // 启动时自动应用待执行迁移。复用 migrate binary 的同一套 ToastyCli 命令，
+    // 保证 server 与 migrate CLI 跑的是同一份 schema。迁移历史靠 `__toasty_migrations`
+    // 表追踪，已应用的会跳过。
+    let migrate_db = db::build_db(&CONFIG.database_url)
+        .await
+        .expect("failed to connect to database for migration");
+    let migrate_config = toasty_cli::Config::load()
+        .expect("failed to load Toasty.toml");
+    toasty_cli::ToastyCli::with_config(migrate_db, migrate_config)
+        .parse_from(["toasty", "migration", "apply"])
+        .await
+        .expect("failed to apply database migrations");
+
     let database = db::Database::connect(&CONFIG.database_url)
         .await
         .expect("failed to connect to database");
-
-    database
-        .ensure_schema()
-        .await
-        .expect("failed to initialize database schema");
 
     let state = Arc::new(AppState { db: database });
 
