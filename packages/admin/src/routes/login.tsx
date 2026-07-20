@@ -56,7 +56,7 @@ function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100">
+    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
       <div className="w-full max-w-sm rounded-xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <h1 className="text-2xl font-semibold text-slate-900">小狗人生 · 管理后台</h1>
         <p className="mt-2 text-sm text-slate-500">请使用管理员账号登录。</p>

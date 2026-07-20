@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 
 interface NavItem {
@@ -28,46 +29,85 @@ const MODULES: NavItem[] = [
   { label: '文件上传', to: '/upload' },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
+}
+
+export function Sidebar({ mobileOpen = false, onMobileClose }: SidebarProps) {
+  // 抽屉打开时锁定 body 滚动，避免移动端背景误触滚动。
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [mobileOpen]);
+
+  function handleNavigate() {
+    if (mobileOpen) {
+      onMobileClose?.();
+    }
+  }
+
   return (
-    <aside className="flex w-60 shrink-0 flex-col border-r border-slate-200 bg-white">
-      <div className="flex h-14 items-center px-5 text-base font-semibold text-slate-900">
-        小狗人生 OS
-      </div>
-      <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-2">
-        {MODULES.map((item) => {
-          const content = (
-            <span className="flex items-center justify-between">
-              <span>{item.label}</span>
-              {!item.available && (
-                <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-400">
-                  待接入
-                </span>
-              )}
-            </span>
-          );
-          if (!item.available) {
-            return (
-              <span
-                key={item.to}
-                className="block cursor-not-allowed rounded-md px-3 py-2 text-sm text-slate-400"
-              >
-                {content}
+    <>
+      {/* 移动端遮罩：仅在小屏且抽屉打开时可见 */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-slate-900/40 md:hidden"
+          onClick={onMobileClose}
+          aria-hidden
+        />
+      )}
+      <aside
+        className={[
+          'flex w-60 shrink-0 flex-col border-r border-slate-200 bg-white',
+          // 移动端：fixed 抽屉，translate-x 控制滑入/滑出；桌面端常驻
+          'fixed inset-y-0 left-0 z-40 transition-transform duration-200 ease-out md:static',
+          mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
+        ].join(' ')}
+      >
+        <div className="flex h-14 items-center px-5 text-base font-semibold text-slate-900">
+          小狗人生 OS
+        </div>
+        <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-2">
+          {MODULES.map((item) => {
+            const content = (
+              <span className="flex items-center justify-between">
+                <span>{item.label}</span>
+                {!item.available && (
+                  <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-400">
+                    待接入
+                  </span>
+                )}
               </span>
             );
-          }
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              activeProps={{ className: 'bg-slate-100 text-slate-900' }}
-              className="block rounded-md px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
-            >
-              {content}
-            </Link>
-          );
-        })}
-      </nav>
-    </aside>
+            if (!item.available) {
+              return (
+                <span
+                  key={item.to}
+                  className="block cursor-not-allowed rounded-md px-3 py-2 text-sm text-slate-400"
+                >
+                  {content}
+                </span>
+              );
+            }
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                activeProps={{ className: 'bg-slate-100 text-slate-900' }}
+                className="block rounded-md px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
+                onClick={handleNavigate}
+              >
+                {content}
+              </Link>
+            );
+          })}
+        </nav>
+      </aside>
+    </>
   );
 }

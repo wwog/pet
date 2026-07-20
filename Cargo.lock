@@ -1137,6 +1137,7 @@ dependencies = [
  "async-trait",
  "chrono",
  "domain",
+ "serde_json",
  "toasty",
  "uuid",
 ]

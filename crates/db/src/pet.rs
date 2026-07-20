@@ -1,6 +1,6 @@
 use async_trait::async_trait;
 use domain::app::{AppError, AppResult};
-use domain::pet::{self as domain_pet, Gender, NeuterStatus};
+use domain::pet::{self as domain_pet, AcquisitionSource, Gender, NeuterStatus, Species};
 use uuid::Uuid;
 
 /// toasty ORM 模型 — 对应 `pets` 表。
@@ -20,11 +20,16 @@ pub struct Pet {
     pub birth_year: i32,
     pub birth_month: Option<i32>,
     pub birth_approximate: bool,
+    pub species: String,
     pub breed_id: String,
     pub coat_color: String,
     pub coat_pattern: Option<String>,
     pub neuter_status: String,
     pub avatar: Option<String>,
+    pub acquisition_source: Option<String>,
+    pub source_org: Option<String>,
+    pub adopted_at: Option<String>,
+    pub extra_attributes: Option<String>,
 
     pub created_at: String,
 }
@@ -35,16 +40,17 @@ pub struct Breed {
     #[key]
     pub id: String,
 
+    pub species: String,
     pub name: String,
     pub pinyin: String,
     pub initial: String,
-    pub size_category: String,
-    pub coat_type: String,
-    pub standard_weight_min: f64,
-    pub standard_weight_max: f64,
-    pub life_span_min: i32,
-    pub life_span_max: i32,
-    pub exercise_needs: String,
+    pub size_category: Option<String>,
+    pub coat_type: Option<String>,
+    pub standard_weight_min: Option<f64>,
+    pub standard_weight_max: Option<f64>,
+    pub life_span_min: Option<i32>,
+    pub life_span_max: Option<i32>,
+    pub exercise_needs: Option<String>,
     pub icon: Option<String>,
     pub origin: Option<String>,
 }
@@ -79,6 +85,14 @@ fn parse_datetime(s: &str) -> chrono::DateTime<chrono::Utc> {
         .unwrap_or_else(|_| chrono::Utc::now())
 }
 
+fn serialize_extra(attr: &Option<serde_json::Value>) -> Option<String> {
+    attr.as_ref().map(|v| v.to_string())
+}
+
+fn deserialize_extra(s: &Option<String>) -> Option<serde_json::Value> {
+    s.as_ref().and_then(|raw| serde_json::from_str(raw).ok())
+}
+
 impl From<Pet> for domain_pet::Pet {
     fn from(p: Pet) -> Self {
         domain_pet::Pet {
@@ -90,12 +104,20 @@ impl From<Pet> for domain_pet::Pet {
             birth_year: p.birth_year,
             birth_month: p.birth_month,
             birth_approximate: p.birth_approximate,
+            species: Species::from_str(&p.species).unwrap_or(Species::Dog),
             breed_id: p.breed_id,
             coat_color: p.coat_color,
             coat_pattern: p.coat_pattern,
             neuter_status: NeuterStatus::from_str(&p.neuter_status)
                 .unwrap_or(NeuterStatus::Intact),
             avatar: p.avatar,
+            acquisition_source: p
+                .acquisition_source
+                .as_deref()
+                .and_then(AcquisitionSource::from_str),
+            source_org: p.source_org,
+            adopted_at: p.adopted_at.as_deref().map(parse_datetime),
+            extra_attributes: deserialize_extra(&p.extra_attributes),
             created_at: parse_datetime(&p.created_at),
         }
     }
@@ -105,9 +127,10 @@ impl From<Breed> for domain_pet::Breed {
     fn from(b: Breed) -> Self {
         domain_pet::Breed {
             id: b.id,
+            species: Species::from_str(&b.species).unwrap_or(Species::Dog),
             name: b.name,
             pinyin: b.pinyin,
-            initial: b.initial.chars().next().unwrap_or('?'),
+            initial: b.initial.chars().next().unwrap_or('?').to_string(),
             size_category: b.size_category,
             coat_type: b.coat_type,
             standard_weight_min: b.standard_weight_min,
@@ -176,6 +199,8 @@ impl domain_pet::PetRepository for PetRepository<'_> {
     async fn create(&self, pet: domain_pet::Pet) -> AppResult<domain_pet::Pet> {
         let mut db = self.db.clone();
         let now = pet.created_at.to_rfc3339();
+        let adopted_at = pet.adopted_at.map(|dt| dt.to_rfc3339());
+        let extra = serialize_extra(&pet.extra_attributes);
         let created = toasty::create!(Pet {
             id: pet.id,
             family_id: pet.family_id,
@@ -185,11 +210,16 @@ impl domain_pet::PetRepository for PetRepository<'_> {
             birth_year: pet.birth_year,
             birth_month: pet.birth_month,
             birth_approximate: pet.birth_approximate,
+            species: pet.species.as_str().to_owned(),
             breed_id: pet.breed_id,
             coat_color: pet.coat_color,
             coat_pattern: pet.coat_pattern,
             neuter_status: pet.neuter_status.as_str().to_owned(),
             avatar: pet.avatar,
+            acquisition_source: pet.acquisition_source.map(|s| s.as_str().to_owned()),
+            source_org: pet.source_org,
+            adopted_at,
+            extra_attributes: extra,
             created_at: now,
         })
         .exec(&mut db)
@@ -219,6 +249,8 @@ impl domain_pet::PetRepository for PetRepository<'_> {
 
     async fn update(&self, pet: domain_pet::Pet) -> AppResult<()> {
         let mut db = self.db.clone();
+        let adopted_at = pet.adopted_at.map(|dt| dt.to_rfc3339());
+        let extra = serialize_extra(&pet.extra_attributes);
         let mut update = Pet::update_by_id(pet.id);
         update.set_name(pet.name);
         update.set_emoji(pet.emoji);
@@ -226,11 +258,16 @@ impl domain_pet::PetRepository for PetRepository<'_> {
         update.set_birth_year(pet.birth_year);
         update.set_birth_month(pet.birth_month);
         update.set_birth_approximate(pet.birth_approximate);
+        update.set_species(pet.species.as_str().to_owned());
         update.set_breed_id(pet.breed_id);
         update.set_coat_color(pet.coat_color);
         update.set_coat_pattern(pet.coat_pattern);
         update.set_neuter_status(pet.neuter_status.as_str().to_owned());
         update.set_avatar(pet.avatar);
+        update.set_acquisition_source(pet.acquisition_source.map(|s| s.as_str().to_owned()));
+        update.set_source_org(pet.source_org);
+        update.set_adopted_at(adopted_at);
+        update.set_extra_attributes(extra);
         update.exec(&mut db)
             .await
             .map_err(|e| AppError::Database(e.to_string()))?;
@@ -270,13 +307,15 @@ impl domain_pet::BreedRepository for BreedRepository<'_> {
 
     async fn search(
         &self,
+        species: Species,
         keyword: &str,
         size: Option<&str>,
         page: u32,
         page_size: u32,
     ) -> AppResult<(Vec<domain_pet::Breed>, u64)> {
         let mut db = self.db.clone();
-        let mut query = Breed::all();
+        let species_str = species.as_str().to_owned();
+        let mut query = Breed::filter(Breed::fields().species().eq(species_str));
 
         if !keyword.is_empty() {
             let lower = keyword.to_lowercase();
@@ -290,6 +329,7 @@ impl domain_pet::BreedRepository for BreedRepository<'_> {
             );
         }
 
+        // 体型筛选仅对犬种有意义
         if let Some(size_cat) = size {
             query = query.filter(Breed::fields().size_category().eq(size_cat.to_owned()));
         }
