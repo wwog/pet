@@ -158,16 +158,8 @@ const parseDetailPage = (rawHtml, slug, fallbackName) => {
     id: `dog.${slug}`,
     species: "dog",
     name,
-    pinyin: "",
-    initial: "",
     size_category: sizeCategory,
     coat_type: coatType,
-    standard_weight_min: null,
-    standard_weight_max: null,
-    life_span_min: null,
-    life_span_max: null,
-    exercise_needs: null,
-    icon: null,
     origin,
   };
 };
