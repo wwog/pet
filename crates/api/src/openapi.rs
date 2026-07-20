@@ -9,7 +9,10 @@ use utoipa::{Modify, OpenApi};
         version = "0.1.0",
         description = "小狗人生 - 家庭 AI 宠物管家 API 文档"
     ),
-    tags((name = "auth", description = "账号认证"))
+    tags(
+        (name = "auth", description = "账号认证"),
+        (name = "pet", description = "宠物档案")
+    )
 )]
 pub struct ApiDoc;
 

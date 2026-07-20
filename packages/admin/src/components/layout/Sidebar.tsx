@@ -11,7 +11,7 @@ const MODULES: NavItem[] = [
   { label: '仪表盘', to: '/dashboard', available: true },
   { label: '认证', to: '/auth' },
   { label: '家庭', to: '/family' },
-  { label: '宠物档案', to: '/pet' },
+  { label: '宠物档案', to: '/pet', available: true },
   { label: '健康记录', to: '/health' },
   { label: '云相册', to: '/album' },
   { label: '智能日程', to: '/calendar' },

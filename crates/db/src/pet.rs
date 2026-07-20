@@ -351,6 +351,52 @@ impl domain_pet::BreedRepository for BreedRepository<'_> {
 
         Ok((results.into_iter().map(Into::into).collect(), total))
     }
+
+    async fn upsert_many(
+        &self,
+        breeds: Vec<domain_pet::Breed>,
+    ) -> AppResult<(usize, usize)> {
+        let mut db = self.db.clone();
+
+        let existing_ids: std::collections::HashSet<String> = Breed::all()
+            .exec(&mut db)
+            .await
+            .map_err(|e| AppError::Database(e.to_string()))?
+            .into_iter()
+            .map(|b| b.id)
+            .collect();
+
+        let to_insert: Vec<&domain_pet::Breed> =
+            breeds.iter().filter(|b| !existing_ids.contains(&b.id)).collect();
+
+        if to_insert.is_empty() {
+            return Ok((0, breeds.len()));
+        }
+
+        for breed in &to_insert {
+            toasty::create!(Breed {
+                id: breed.id.clone(),
+                species: breed.species.as_str().to_owned(),
+                name: breed.name.clone(),
+                pinyin: breed.pinyin.clone(),
+                initial: breed.initial.clone(),
+                size_category: breed.size_category.clone(),
+                coat_type: breed.coat_type.clone(),
+                standard_weight_min: breed.standard_weight_min,
+                standard_weight_max: breed.standard_weight_max,
+                life_span_min: breed.life_span_min,
+                life_span_max: breed.life_span_max,
+                exercise_needs: breed.exercise_needs.clone(),
+                icon: breed.icon.clone(),
+                origin: breed.origin.clone(),
+            })
+            .exec(&mut db)
+            .await
+            .map_err(|e| AppError::Database(e.to_string()))?;
+        }
+
+        Ok((to_insert.len(), breeds.len() - to_insert.len()))
+    }
 }
 
 #[async_trait]

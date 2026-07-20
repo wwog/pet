@@ -35,3 +35,7 @@ path = "src/main.rs"
 [[bin]]
 name = "migrate"
 path = "src/bin/migrate.rs"
+
+[[bin]]
+name = "seed_breeds"
+path = "src/bin/seed_breeds.rs"

@@ -223,6 +223,12 @@ pub trait BreedRepository: Send + Sync {
         page: u32,
         page_size: u32,
     ) -> AppResult<(Vec<Breed>, u64)>;
+
+    /// 幂等地批量写入品种 seed 数据。
+    ///
+    /// 已存在的 id 跳过，避免覆盖运营期后续补充的 `pinyin`/`initial`/数值字段；
+    /// 不存在的则插入。返回 (inserted, skipped) 计数。
+    async fn upsert_many(&self, breeds: Vec<Breed>) -> AppResult<(usize, usize)>;
 }
 
 #[async_trait]

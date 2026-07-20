@@ -17,8 +17,8 @@ pub mod family;
 pub mod pet;
 
 use crate::user::{UserRepository, SessionRepository};
-use crate::family::FamilyRepository;
-use crate::pet::PetRepository;
+use crate::family::{FamilyRepository, FamilyMemberRepository};
+use crate::pet::{PetRepository, BreedRepository, PersonalityTagRepository};
 
 /// 数据库连接管理器，封装 toasty ORM 连接池。
 ///
@@ -71,7 +71,19 @@ impl Database {
         FamilyRepository::new(&self.db)
     }
 
+    pub fn family_member_repository(&self) -> FamilyMemberRepository<'_> {
+        FamilyMemberRepository::new(&self.db)
+    }
+
     pub fn pet_repository(&self) -> PetRepository<'_> {
         PetRepository::new(&self.db)
+    }
+
+    pub fn breed_repository(&self) -> BreedRepository<'_> {
+        BreedRepository::new(&self.db)
+    }
+
+    pub fn personality_tag_repository(&self) -> PersonalityTagRepository<'_> {
+        PersonalityTagRepository::new(&self.db)
     }
 }
