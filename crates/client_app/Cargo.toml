@@ -11,6 +11,7 @@ serde_json = { workspace = true }
 chrono = { workspace = true }
 # rustls-tls: desktop 提供 TLS;wasm 下被自动 cfg 过滤,浏览器接管
 reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+once_cell = { workspace = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 web-sys = { version = "0.3.103", features = ["Window", "Storage", "Location"] }
