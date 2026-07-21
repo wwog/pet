@@ -1,4 +1,4 @@
+pub mod app_layout;
 pub mod pet_header;
 pub mod status_bar;
-// pub mod app_layout;   // Task 8
-// pub mod tab_bar;      // Task 8
+pub mod tab_bar;
