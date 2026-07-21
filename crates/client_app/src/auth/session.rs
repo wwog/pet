@@ -25,7 +25,10 @@ pub struct Session {
 
 impl Session {
     pub fn new() -> Self {
-        let state = use_signal(|| AuthState::Loading);
+        // 注意:此函数在 use_context_provider 的初始化闭包里调用,
+        // 该闭包运行在 hook 上下文中,不能再调用 use_signal 等 hook(会触发 BorrowMutError)。
+        // 用 Signal::new 直接构造,不触碰 hook list。
+        let state = Signal::new(AuthState::Loading);
         Self { state }
     }
 

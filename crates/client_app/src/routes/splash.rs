@@ -1,38 +1,27 @@
 use dioxus::prelude::*;
 
-use crate::api::types::UserInfo;
 use crate::app::Route;
-use crate::auth::session::{restore_session, AuthState, RestoreOutcome, Session};
+use crate::auth::session::{AuthState, Session};
 
+/// 启动页:展示加载动画,监听 Session 状态变化后跳转。
+/// 实际的 token restore 在 App 根组件的 use_effect 里执行,
+/// 这样无论用户从哪个 URL 进入都会先 restore(避免绕过 Splash)。
 #[component]
 pub fn Splash() -> Element {
-    let mut session = use_context::<Session>();
+    let session = use_context::<Session>();
+    let state = session.state;
 
     use_effect(move || {
-        spawn(async move {
-            let nav = navigator();
-            match restore_session().await {
-                Some(RestoreOutcome::Authed { access, refresh, expires_at, user }) => {
-                    session.state.set(AuthState::Authenticated {
-                        access_token: access,
-                        user: UserInfo {
-                            user_id: user.user_id,
-                            account: user.account,
-                            nickname: user.nickname,
-                            avatar: user.avatar,
-                            role: user.role,
-                        },
-                        refresh_token: refresh,
-                        expires_at,
-                    });
-                    nav.replace(Route::Briefing {});
-                }
-                None => {
-                    session.set_guest();
-                    nav.replace(Route::Login {});
-                }
+        let nav = navigator();
+        match *state.read() {
+            AuthState::Authenticated { .. } => {
+                nav.replace(Route::Briefing {});
             }
-        });
+            AuthState::Guest => {
+                nav.replace(Route::Login {});
+            }
+            AuthState::Loading => {}
+        }
     });
 
     rsx! {
