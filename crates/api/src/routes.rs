@@ -4,19 +4,20 @@
 //! axum 路由与 OpenAPI 文档路径。handler 的 `#[utoipa::path]` 路径应使用
 //! 组内相对路径，由 nest 自动补全前缀。
 
-use utoipa_axum::router::OpenApiRouter;
+use utoipa_axum::router::{OpenApiRouter, UtoipaMethodRouter};
 use utoipa_axum::routes;
 
 use crate::app_state::SharedState;
 use crate::{auth, pet};
 
-/// 后台管理端路由 — 仅 SuperAdmin 可访问。
+/// 后台管理端路由 - 仅 SuperAdmin 可访问。
 ///
 /// 登录入口 `POST /admin/login`（在 `admin_login` handler 内校验角色），
 /// 其余管理端点未来通过 `SuperAdminUser` 提取器保护。
 pub fn admin_router() -> OpenApiRouter<SharedState> {
+    let admin_login: UtoipaMethodRouter<SharedState> = routes!(auth::handler::admin_login);
     OpenApiRouter::<SharedState>::new()
-        .routes(routes!(auth::handler::admin_login))
+        .routes(admin_login)
         .merge(pet::admin_router())
 }
 
@@ -24,8 +25,9 @@ pub fn admin_router() -> OpenApiRouter<SharedState> {
 ///
 /// 包含客户端认证（注册 / 登录）与宠物档案的全部 CRUD。
 pub fn app_router() -> OpenApiRouter<SharedState> {
+    let register: UtoipaMethodRouter<SharedState> = routes!(auth::handler::register);
     OpenApiRouter::<SharedState>::new()
-        .routes(routes!(auth::handler::register))
+        .routes(register)
         .routes(routes!(auth::handler::login))
         .merge(pet::router())
 }
@@ -34,7 +36,8 @@ pub fn app_router() -> OpenApiRouter<SharedState> {
 ///
 /// 当前包含 `GET /common/auth/me` 与 `POST /common/auth/token/refresh`。
 pub fn common_router() -> OpenApiRouter<SharedState> {
+    let refresh_token: UtoipaMethodRouter<SharedState> = routes!(auth::handler::refresh_token);
     OpenApiRouter::<SharedState>::new()
-        .routes(routes!(auth::handler::refresh_token))
+        .routes(refresh_token)
         .routes(routes!(auth::handler::get_me))
 }
