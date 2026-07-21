@@ -58,7 +58,7 @@ pub struct RefreshRequest {
 }
 
 // ── 响应 DTO(字段与后端 dto.rs 对齐,snake_case)─────
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, PartialEq)]
 pub struct UserInfo {
     pub user_id: String,
     pub account: String,
