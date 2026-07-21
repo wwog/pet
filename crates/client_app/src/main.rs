@@ -1,5 +1,6 @@
 mod api;
 mod auth;
+mod components;
 
 use dioxus::prelude::*;
 
