@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use crate::api;
 use crate::api::types::{ApiError, MeResponse, UserInfo};
-use crate::auth::token::{self, StoredToken};
+use crate::auth::token;
 
 /// 全局鉴权状态
 #[derive(Clone, PartialEq)]

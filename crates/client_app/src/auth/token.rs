@@ -1,23 +1,12 @@
-use crate::api::types::LoginResponse;
-
 const KEY_ACCESS: &str = "petos.access_token";
 const KEY_REFRESH: &str = "petos.refresh_token";
 const KEY_EXPIRES: &str = "petos.expires_at";
-
-/// 提前 60 秒视为过期,避免边界竞态
-const EXPIRY_MARGIN_SECS: i64 = 60;
 
 #[derive(Debug, Clone)]
 pub struct StoredToken {
     pub access_token: String,
     pub refresh_token: String,
     pub expires_at: i64,
-}
-
-/// 从 LoginResponse 保存 token(expires_in 秒)
-pub fn save_from_login(resp: &LoginResponse) {
-    let expires_at = now_secs() + resp.expires_in as i64 - EXPIRY_MARGIN_SECS;
-    save_tokens(&resp.access_token, &resp.refresh_token, expires_at);
 }
 
 pub fn save_tokens(access: &str, refresh: &str, expires_at: i64) {
