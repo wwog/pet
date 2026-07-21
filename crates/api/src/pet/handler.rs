@@ -1,19 +1,20 @@
 use axum::{
     extract::{Path, Query, State},
-    http::StatusCode,
+    http::{header, StatusCode},
+    response::IntoResponse,
     Json,
 };
 use chrono::{Datelike, Utc};
 use domain::app::AppError;
 use domain::family::{FamilyMemberRepository, FamilyRepository};
 use domain::pet::{
-    BreedRepository, Gender, NeuterStatus, PersonalityTagRepository, PetRepository, Species,
+    Breed, BreedRepository, Gender, NeuterStatus, PersonalityTagRepository, PetRepository, Species,
 };
 use uuid::Uuid;
 
 use super::dto::*;
 use crate::app_state::SharedState;
-use crate::auth::middleware::AuthenticatedUser;
+use crate::auth::middleware::{AuthenticatedUser, SuperAdminUser};
 use crate::error::{ApiError, ApiResponse, ErrorResponse};
 
 /// 单家庭最多宠物数（业务规则 3003）。
@@ -634,9 +635,10 @@ pub async fn get_pet_stats(
     tag = "pet",
     operation_id = "list_pet_breeds",
     security(("bearer_auth" = [])),
-    params(("keyword" = Option<String>, Query, description = "名称/拼音首字母搜索"), ("size" = Option<String>, Query, description = "体型 small/medium/large"), ("page" = Option<u32>, Query, description = "页码，默认 1"), ("pageSize" = Option<u32>, Query, description = "每页条数，默认 20")),
+    params(("species" = Option<String>, Query, description = "物种 dog/cat/rabbit/...，默认 dog"), ("keyword" = Option<String>, Query, description = "名称/拼音首字母搜索"), ("size" = Option<String>, Query, description = "体型 small/medium/large"), ("page" = Option<u32>, Query, description = "页码，默认 1"), ("pageSize" = Option<u32>, Query, description = "每页条数，默认 20")),
     responses(
         (status = 200, description = "品种列表", body = ApiResponse<BreedListResponse>),
+        (status = 400, description = "物种参数不合法", body = ErrorResponse),
         (status = 401, description = "未认证", body = ErrorResponse),
     )
 )]
@@ -645,6 +647,11 @@ pub async fn list_pet_breeds(
     AuthenticatedUser { .. }: AuthenticatedUser,
     Query(params): Query<BreedQueryParams>,
 ) -> Result<Json<ApiResponse<BreedListResponse>>, ApiError> {
+    let species = match params.species.as_deref() {
+        Some(s) => Species::from_str(s)
+            .ok_or_else(|| AppError::Validation(format!("unknown species '{s}'")))?,
+        None => Species::Dog,
+    };
     let keyword = params.keyword.unwrap_or_default();
     let page = params.page.unwrap_or(1).max(1);
     let page_size = params.page_size.unwrap_or(20).clamp(1, 100);
@@ -652,7 +659,7 @@ pub async fn list_pet_breeds(
     let breed_repo = state.db.breed_repository();
     let (breeds, total) = breed_repo
         .search(
-            Species::Dog,
+            species,
             &keyword,
             params.size.as_deref(),
             page,
@@ -775,4 +782,158 @@ pub async fn list_personality_tags(
         message: "success".into(),
         data: PersonalityTagsResponse { categories },
     }))
+}
+
+/// 生成 breed id：`{species}.{kebab-case(name)}`。
+/// 与现有 seed JSON 的 id 规则一致：小写、非字母数字字符替换为 `-`、首尾不含 `-`。
+fn build_breed_id(species: &str, name: &str) -> String {
+    let slug: String = name
+        .to_lowercase()
+        .chars()
+        .map(|c| if c.is_ascii_alphanumeric() { c } else { '-' })
+        .collect();
+    let slug = slug.trim_matches('-');
+    format!("{species}.{slug}")
+}
+
+fn validate_nonempty(field: &str, value: &str) -> Result<(), AppError> {
+    if value.trim().is_empty() {
+        return Err(AppError::Validation(format!("{field} must not be empty")));
+    }
+    Ok(())
+}
+
+#[utoipa::path(
+    post,
+    path = "/breeds",
+    tag = "breed",
+    operation_id = "create_breed",
+    security(("bearer_auth" = [])),
+    request_body = CreateBreedRequest,
+    responses(
+        (status = 201, description = "创建成功", body = ApiResponse<BreedResponse>),
+        (status = 400, description = "参数校验失败", body = ErrorResponse),
+        (status = 401, description = "未认证", body = ErrorResponse),
+        (status = 403, description = "非超级管理员", body = ErrorResponse),
+        (status = 409, description = "id 已存在", body = ErrorResponse),
+    )
+)]
+pub async fn create_breed(
+    State(state): State<SharedState>,
+    SuperAdminUser { .. }: SuperAdminUser,
+    Json(body): Json<CreateBreedRequest>,
+) -> Result<(StatusCode, Json<ApiResponse<BreedResponse>>), ApiError> {
+    let species = Species::from_str(body.species.trim())
+        .ok_or_else(|| AppError::Validation(format!("unknown species '{}'", body.species)))?;
+    validate_nonempty("name", &body.name)?;
+    validate_nonempty("name_cn", &body.name_cn)?;
+
+    let id = build_breed_id(species.as_str(), body.name.trim());
+    let breed = Breed {
+        id,
+        species,
+        name: body.name.trim().to_owned(),
+        name_cn: body.name_cn.trim().to_owned(),
+        size_category: body.size_category.filter(|s| !s.is_empty()),
+        coat_type: body.coat_type.filter(|s| !s.is_empty()),
+        origin: body.origin.filter(|s| !s.is_empty()),
+    };
+
+    let data = BreedResponse {
+        breed_id: breed.id.clone(),
+        species: breed.species.as_str().to_owned(),
+        name: breed.name.clone(),
+        name_cn: breed.name_cn.clone(),
+        size_category: breed.size_category.clone(),
+        coat_type: breed.coat_type.clone(),
+        origin: breed.origin.clone(),
+    };
+
+    let breed_repo = state.db.breed_repository();
+    breed_repo.create(breed).await?;
+
+    Ok((
+        StatusCode::CREATED,
+        Json(ApiResponse {
+            code: 0,
+            message: "success".into(),
+            data,
+        }),
+    ))
+}
+
+#[utoipa::path(
+    delete,
+    path = "/breeds/{breedId}",
+    tag = "breed",
+    operation_id = "delete_breed",
+    security(("bearer_auth" = [])),
+    params(("breedId" = String, Path, description = "品种 ID")),
+    responses(
+        (status = 200, description = "删除成功"),
+        (status = 401, description = "未认证", body = ErrorResponse),
+        (status = 403, description = "非超级管理员", body = ErrorResponse),
+    )
+)]
+pub async fn delete_breed(
+    State(state): State<SharedState>,
+    SuperAdminUser { .. }: SuperAdminUser,
+    Path(breed_id): Path<String>,
+) -> Result<Json<ApiResponse<()>>, ApiError> {
+    let breed_repo = state.db.breed_repository();
+    breed_repo.delete(&breed_id).await?;
+    Ok(Json(ApiResponse {
+        code: 0,
+        message: "success".into(),
+        data: (),
+    }))
+}
+
+#[utoipa::path(
+    get,
+    path = "/breeds/export",
+    tag = "breed",
+    operation_id = "export_breeds",
+    security(("bearer_auth" = [])),
+    responses(
+        (status = 200, description = "seed JSON 文件下载", content_type = "application/json"),
+        (status = 401, description = "未认证", body = ErrorResponse),
+        (status = 403, description = "非超级管理员", body = ErrorResponse),
+    )
+)]
+pub async fn export_breeds(
+    State(state): State<SharedState>,
+    SuperAdminUser { .. }: SuperAdminUser,
+) -> Result<axum::response::Response, ApiError> {
+    let breed_repo = state.db.breed_repository();
+    let breeds = breed_repo.find_all().await?;
+
+    let items: Vec<BreedSeedItem> = breeds
+        .into_iter()
+        .map(|b| BreedSeedItem {
+            id: b.id,
+            species: b.species.as_str().to_owned(),
+            name: b.name,
+            size_category: b.size_category,
+            coat_type: b.coat_type,
+            origin: b.origin,
+            name_cn: b.name_cn,
+        })
+        .collect();
+
+    let body = serde_json::to_vec_pretty(&items)
+        .map_err(|e| AppError::Internal(format!("failed to serialize breeds: {e}")))?;
+
+    Ok((
+        StatusCode::OK,
+        [
+            (header::CONTENT_TYPE, "application/json; charset=utf-8"),
+            (
+                header::CONTENT_DISPOSITION,
+                "attachment; filename=\"breeds.json\"",
+            ),
+        ],
+        body,
+    )
+        .into_response())
 }

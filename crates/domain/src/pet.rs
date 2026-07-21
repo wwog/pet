@@ -216,11 +216,18 @@ pub trait BreedRepository: Send + Sync {
         page: u32,
         page_size: u32,
     ) -> AppResult<(Vec<Breed>, u64)>;
+    async fn find_all(&self) -> AppResult<Vec<Breed>>;
 
     /// 幂等地批量写入品种 seed 数据。
     ///
     /// 已存在的 id 跳过；不存在的则插入。返回 (inserted, skipped) 计数。
     async fn upsert_many(&self, breeds: Vec<Breed>) -> AppResult<(usize, usize)>;
+
+    /// 新增单条品种。id 重复时返回 `AppError::Conflict`。
+    async fn create(&self, breed: Breed) -> AppResult<Breed>;
+
+    /// 按 id 删除单条品种。不存在视为成功（幂等）。
+    async fn delete(&self, id: &str) -> AppResult<()>;
 }
 
 #[async_trait]

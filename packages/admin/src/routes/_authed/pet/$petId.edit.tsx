@@ -408,13 +408,11 @@ function PetEditPage() {
                         ].join(' ')}
                       >
                         <span>
-                          <span className="mr-1">{breed.icon ?? '🐶'}</span>
                           {breed.name}
                           {breed.sizeCategory && (
                             <span className="ml-2 text-xs text-slate-400">{breed.sizeCategory}</span>
                           )}
                         </span>
-                        <span className="text-xs text-slate-400">{breed.pinyin}</span>
                       </button>
                     ))
                   )}
@@ -423,12 +421,6 @@ function PetEditPage() {
               {selectedBreed && (
                 <p className="mt-1 text-xs text-slate-500">
                   已选：{selectedBreed.name}
-                  {selectedBreed.standardWeightMin && selectedBreed.standardWeightMax
-                    ? ` · 标准体重 ${selectedBreed.standardWeightMin}-${selectedBreed.standardWeightMax}kg`
-                    : ''}
-                  {selectedBreed.lifeSpanMin && selectedBreed.lifeSpanMax
-                    ? ` · 寿命 ${selectedBreed.lifeSpanMin}-${selectedBreed.lifeSpanMax}年`
-                    : ''}
                 </p>
               )}
             </Field>

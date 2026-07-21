@@ -167,6 +167,44 @@ pub struct BreedListResponse {
     pub has_more: bool,
 }
 
+#[derive(Debug, Deserialize, ToSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct CreateBreedRequest {
+    /// 物种，dog/cat/rabbit/...
+    pub species: String,
+    /// 英文名（AKC/CFA 官方名），用于生成 id
+    pub name: String,
+    /// 中文名
+    pub name_cn: String,
+    pub size_category: Option<String>,
+    pub coat_type: Option<String>,
+    pub origin: Option<String>,
+}
+
+#[derive(Debug, Serialize, ToSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct BreedResponse {
+    pub breed_id: String,
+    pub species: String,
+    pub name: String,
+    pub name_cn: String,
+    pub size_category: Option<String>,
+    pub coat_type: Option<String>,
+    pub origin: Option<String>,
+}
+
+/// 导出 seed JSON 的单条记录，字段顺序与 data/breeds/*.json 保持一致。
+#[derive(Debug, Serialize, ToSchema)]
+pub struct BreedSeedItem {
+    pub id: String,
+    pub species: String,
+    pub name: String,
+    pub size_category: Option<String>,
+    pub coat_type: Option<String>,
+    pub origin: Option<String>,
+    pub name_cn: String,
+}
+
 #[derive(Debug, Serialize, ToSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct PersonalityTagCategory {
@@ -192,6 +230,7 @@ pub struct PersonalityTagsResponse {
 
 #[derive(Debug, Deserialize, ToSchema)]
 pub struct BreedQueryParams {
+    pub species: Option<String>,
     pub keyword: Option<String>,
     pub size: Option<String>,
     pub page: Option<u32>,

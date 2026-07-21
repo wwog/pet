@@ -337,6 +337,15 @@ impl domain_pet::BreedRepository for BreedRepository<'_> {
         Ok((results.into_iter().map(Into::into).collect(), total))
     }
 
+    async fn find_all(&self) -> AppResult<Vec<domain_pet::Breed>> {
+        let mut db = self.db.clone();
+        let breeds = Breed::all()
+            .exec(&mut db)
+            .await
+            .map_err(|e| AppError::Database(e.to_string()))?;
+        Ok(breeds.into_iter().map(Into::into).collect())
+    }
+
     async fn upsert_many(
         &self,
         breeds: Vec<domain_pet::Breed>,
@@ -374,6 +383,48 @@ impl domain_pet::BreedRepository for BreedRepository<'_> {
         }
 
         Ok((to_insert.len(), breeds.len() - to_insert.len()))
+    }
+
+    async fn create(&self, breed: domain_pet::Breed) -> AppResult<domain_pet::Breed> {
+        let mut db = self.db.clone();
+
+        // id 判重，避免重复创建
+        let existing = Breed::filter(Breed::fields().id().eq(breed.id.clone()))
+            .first()
+            .exec(&mut db)
+            .await
+            .map_err(|e| AppError::Database(e.to_string()))?;
+        if existing.is_some() {
+            return Err(AppError::Conflict(format!(
+                "breed id '{}' already exists",
+                breed.id
+            )));
+        }
+
+        toasty::create!(Breed {
+            id: breed.id.clone(),
+            species: breed.species.as_str().to_owned(),
+            name: breed.name.clone(),
+            name_cn: breed.name_cn.clone(),
+            size_category: breed.size_category.clone(),
+            coat_type: breed.coat_type.clone(),
+            origin: breed.origin.clone(),
+        })
+        .exec(&mut db)
+        .await
+        .map_err(|e| AppError::Database(e.to_string()))?;
+
+        Ok(breed)
+    }
+
+    async fn delete(&self, id: &str) -> AppResult<()> {
+        let mut db = self.db.clone();
+        Breed::filter(Breed::fields().id().eq(id.to_owned()))
+            .delete()
+            .exec(&mut db)
+            .await
+            .map_err(|e| AppError::Database(e.to_string()))?;
+        Ok(())
     }
 }
 

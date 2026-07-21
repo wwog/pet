@@ -19,3 +19,11 @@ pub fn router() -> OpenApiRouter<SharedState> {
         .routes(routes!(handler::list_pet_breeds))
         .routes(routes!(handler::list_personality_tags))
 }
+
+/// 后台管理专用路由（品种增删/导出）。由 routes.rs 挂载到 `/admin`。
+pub fn admin_router() -> OpenApiRouter<SharedState> {
+    OpenApiRouter::new()
+        .routes(routes!(handler::create_breed))
+        .routes(routes!(handler::delete_breed))
+        .routes(routes!(handler::export_breeds))
+}

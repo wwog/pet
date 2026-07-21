@@ -15,7 +15,9 @@ use crate::{auth, pet};
 /// 登录入口 `POST /admin/login`（在 `admin_login` handler 内校验角色），
 /// 其余管理端点未来通过 `SuperAdminUser` 提取器保护。
 pub fn admin_router() -> OpenApiRouter<SharedState> {
-    OpenApiRouter::new().routes(routes!(auth::handler::admin_login))
+    OpenApiRouter::new()
+        .routes(routes!(auth::handler::admin_login))
+        .merge(pet::admin_router())
 }
 
 /// 客户端路由 — 面向终端用户（client_app）。
