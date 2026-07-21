@@ -4,10 +4,17 @@ version = "0.1.0"
 authors = ["wwog"]
 edition = "2024"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 dioxus = { version = "0.7.1", features = ["router"] }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+# rustls-tls: desktop 提供 TLS;wasm 下被自动 cfg 过滤,浏览器接管
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+web-sys = { version = "0.3.103", features = ["Window", "Storage", "Location"] }
+js-sys = "0.3.103"
 
 [features]
 default = ["desktop"]

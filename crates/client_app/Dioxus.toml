@@ -1,21 +1,21 @@
 [application]
 
 [web.app]
+title = "小狗人生 · Puppy Life OS"
 
-# HTML title tag content
-title = "client_app"
-
-# include `assets` in web platform
 [web.resource]
-
-# Additional CSS style files
 style = []
 
-# Additional JavaScript files
-script = []
-
 [web.resource.dev]
-
-# Javascript code file
-# serve: [dev-server] only
 script = []
+
+# Dev proxy: 转发到后端 http://localhost:3000
+# Dioxus 0.7 proxy 不支持路径重写,故每个后端前缀单独配置
+[[web.proxy]]
+backend = "http://localhost:3000/app/"
+
+[[web.proxy]]
+backend = "http://localhost:3000/common/"
+
+[[web.proxy]]
+backend = "http://localhost:3000/admin/"
