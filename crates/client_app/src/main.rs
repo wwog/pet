@@ -1,4 +1,5 @@
 mod api;
+mod auth;
 
 use dioxus::prelude::*;
 
