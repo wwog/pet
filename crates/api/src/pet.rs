@@ -7,7 +7,7 @@ mod dto;
 mod handler;
 
 pub fn router() -> OpenApiRouter<SharedState> {
-    OpenApiRouter::new()
+    OpenApiRouter::<SharedState>::new()
         .routes(routes!(handler::list_pets))
         .routes(routes!(handler::create_pet))
         .routes(routes!(handler::get_pet))
@@ -22,7 +22,7 @@ pub fn router() -> OpenApiRouter<SharedState> {
 
 /// 后台管理专用路由（品种增删/导出）。由 routes.rs 挂载到 `/admin`。
 pub fn admin_router() -> OpenApiRouter<SharedState> {
-    OpenApiRouter::new()
+    OpenApiRouter::<SharedState>::new()
         .routes(routes!(handler::create_breed))
         .routes(routes!(handler::delete_breed))
         .routes(routes!(handler::export_breeds))

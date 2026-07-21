@@ -15,7 +15,7 @@ use crate::{auth, pet};
 /// 登录入口 `POST /admin/login`（在 `admin_login` handler 内校验角色），
 /// 其余管理端点未来通过 `SuperAdminUser` 提取器保护。
 pub fn admin_router() -> OpenApiRouter<SharedState> {
-    OpenApiRouter::new()
+    OpenApiRouter::<SharedState>::new()
         .routes(routes!(auth::handler::admin_login))
         .merge(pet::admin_router())
 }
@@ -24,7 +24,7 @@ pub fn admin_router() -> OpenApiRouter<SharedState> {
 ///
 /// 包含客户端认证（注册 / 登录）与宠物档案的全部 CRUD。
 pub fn app_router() -> OpenApiRouter<SharedState> {
-    OpenApiRouter::new()
+    OpenApiRouter::<SharedState>::new()
         .routes(routes!(auth::handler::register))
         .routes(routes!(auth::handler::login))
         .merge(pet::router())
@@ -34,7 +34,7 @@ pub fn app_router() -> OpenApiRouter<SharedState> {
 ///
 /// 当前包含 `GET /common/auth/me` 与 `POST /common/auth/token/refresh`。
 pub fn common_router() -> OpenApiRouter<SharedState> {
-    OpenApiRouter::new()
+    OpenApiRouter::<SharedState>::new()
         .routes(routes!(auth::handler::refresh_token))
         .routes(routes!(auth::handler::get_me))
 }
